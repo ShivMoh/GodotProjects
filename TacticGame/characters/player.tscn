@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://crlx1t73so7gj"]
+
+[ext_resource type="Script" path="res://characters/player.cs" id="1_afwlc"]
+[ext_resource type="PackedScene" uid="uid://dt42t7w3ltoy2" path="res://assets/Rin_(Native).blend" id="1_linyx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a3k51"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_afwlc")
+
+[node name="Rin_(Native)" parent="." instance=ExtResource("1_linyx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0610483, 0, -0.130976)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.171114, 0.70457, -0.34512)
+shape = SubResource("CapsuleShape3D_a3k51")

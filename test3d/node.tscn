@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvrlmxvjamqxw"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fcpq7"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_m81ym"]
+
+[sub_resource type="Environment" id="Environment_rjtbn"]
+
+[node name="Node" type="Node"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("CylinderShape3D_fcpq7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("CylinderMesh_m81ym")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.999934, 0, 0.0115189, 0, 1, 0, -0.0115189, 0, 0.999934, 0, 0, 4.13891)
+environment = SubResource("Environment_rjtbn")
