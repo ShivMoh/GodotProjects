@@ -1,18 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://dcxc7k45ewuyc"]
+[gd_scene load_steps=5 format=3 uid="uid://dcxc7k45ewuyc"]
 
-[ext_resource type="PackedScene" uid="uid://crlx1t73so7gj" path="res://characters/player.tscn" id="1_alem0"]
+[ext_resource type="Script" path="res://scenes/newPlayer.cs" id="1_nyxox"]
+[ext_resource type="PackedScene" uid="uid://d0mx2q1dqjhs4" path="res://assets/Knight.glb" id="2_ff24t"]
 [ext_resource type="PackedScene" uid="uid://li6xjwevipu2" path="res://characters/floor.tscn" id="2_nx8sb"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uxe10"]
 
 [node name="main" type="Node3D"]
 
-[node name="camera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0971117, 0.888574, 1.61497)
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("1_nyxox")
+
+[node name="camera" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.826098, 0.563526, 0, -0.563526, 0.826098, 0.0971117, 3.62934, 7.29446)
+
+[node name="Knight" parent="CharacterBody3D" instance=ExtResource("2_ff24t")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3326, 0)
+shape = SubResource("CapsuleShape3D_uxe10")
+
+[node name="StaticBody3D" parent="." instance=ExtResource("2_nx8sb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.59299, -11.5906, -1.04355)
+disable_mode = 1
 
 [node name="light" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0971117, 0.888574, 1.61497)
-
-[node name="CharacterBody3D" parent="." instance=ExtResource("1_alem0")]
-transform = Transform3D(1, 0, 0, 0, 0.612424, 0, 0, 0, 1, 0.342459, 0.555444, -0.50889)
-
-[node name="StaticBody3D" parent="." instance=ExtResource("2_nx8sb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.59299, -6.38319, -1.04355)

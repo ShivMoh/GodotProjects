@@ -4,8 +4,7 @@ using System;
 public partial class player : CharacterBody3D
 {
 	public const float Speed = 5.0f;
-	public const float JumpVelocity = 4.5f;
-	
+	public const float JumpVelocity = 4.5f;	
 	public float gravity = 0;
 
 	// ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
