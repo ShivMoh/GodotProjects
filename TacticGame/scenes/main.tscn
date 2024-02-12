@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcxc7k45ewuyc"]
+[gd_scene load_steps=7 format=3 uid="uid://dcxc7k45ewuyc"]
 
 [ext_resource type="Script" path="res://scenes/newPlayer.cs" id="1_nyxox"]
 [ext_resource type="PackedScene" uid="uid://d0mx2q1dqjhs4" path="res://assets/Knight.glb" id="2_ff24t"]
 [ext_resource type="PackedScene" uid="uid://li6xjwevipu2" path="res://characters/floor.tscn" id="2_nx8sb"]
+[ext_resource type="Script" path="res://scenes/light.cs" id="4_r0jeo"]
+[ext_resource type="PackedScene" uid="uid://1uq6dusa2yma" path="res://characters/knight.tscn" id="5_x4tux"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uxe10"]
 
@@ -21,9 +23,20 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3326, 0)
 shape = SubResource("CapsuleShape3D_uxe10")
 
+[node name="light" type="DirectionalLight3D" parent="." node_paths=PackedStringArray("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.097, 1, -3.072)
+visible = false
+light_energy = 5.0
+light_indirect_energy = 5.0
+light_angular_distance = 0.2
+script = ExtResource("4_r0jeo")
+player = NodePath("../CharacterBody3D")
+
 [node name="StaticBody3D" parent="." instance=ExtResource("2_nx8sb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.59299, -11.5906, -1.04355)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.59299, -0.455457, -1.04355)
 disable_mode = 1
 
-[node name="light" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0971117, 0.888574, 1.61497)
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.997579, 0.00143951, 0.0695327, -0.0695475, 0.0206481, 0.997365, 0, -0.999786, 0.0206982, 0.097, 3.54096, -3.072)
+
+[node name="Knight" parent="." instance=ExtResource("5_x4tux")]
