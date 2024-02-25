@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpinxxcb4js5p"]
+
+[ext_resource type="Texture2D" uid="uid://cm60dvpupsl2g" path="res://icon.svg" id="1_cg7f4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gojan"]
+
+[node name="RigidBody2D" type="RigidBody2D"]
+position = Vector2(104, 56)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gojan")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="CollisionShape2D"]
+position = Vector2(10, 10)
+node_a = NodePath("../..")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(0.33789, 0.33789)
+texture = ExtResource("1_cg7f4")

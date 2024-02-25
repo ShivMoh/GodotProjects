@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://cduabnv8qkc3"]
+
+[ext_resource type="Script" path="res://PowerMeter.gd" id="1_hgryu"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_l60cc"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_0w4r1"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_k5bpf"]
+
+[node name="PowerMeter" type="TextureProgressBar"]
+offset_right = 77.0
+offset_bottom = 12.0
+nine_patch_stretch = true
+texture_under = SubResource("CanvasTexture_l60cc")
+texture_over = SubResource("CanvasTexture_0w4r1")
+texture_progress = SubResource("CanvasTexture_k5bpf")
+tint_under = Color(0.623529, 0, 0.286275, 0)
+tint_over = Color(1, 1, 1, 0)
+tint_progress = Color(0, 0.745098, 0, 1)
+script = ExtResource("1_hgryu")

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8kq7i18rq7pd"]
+
+[ext_resource type="PackedScene" uid="uid://gjtphcoe41t5" path="res://Scenes/Player/player.tscn" id="1_hqmny"]
+[ext_resource type="Script" path="res://Scenes/World/Enemies.cs" id="2_65tjj"]
+[ext_resource type="PackedScene" uid="uid://bj6hv6ylb8as8" path="res://Scenes/Player/Dummy.tscn" id="2_j2let"]
+
+[node name="World" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_hqmny")]
+
+[node name="Enemies" type="Node2D" parent="."]
+position = Vector2(595, -64)
+script = ExtResource("2_65tjj")
+
+[node name="DummyEnemy" parent="Enemies" instance=ExtResource("2_j2let")]
+position = Vector2(2019, 954)
+
+[node name="Timer" type="Timer" parent="Enemies"]
+wait_time = 5.0
+autostart = true

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxnunapio057s"]
+
+[ext_resource type="Script" path="res://StateMachine.gd" id="1_80in3"]
+[ext_resource type="Script" path="res://Start.gd" id="2_g3arb"]
+[ext_resource type="Script" path="res://Run.gd" id="3_7lkkg"]
+
+[node name="StateMachine" type="Node2D" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_80in3")
+initial_state = NodePath("Start")
+
+[node name="Start" type="Node2D" parent="."]
+script = ExtResource("2_g3arb")
+
+[node name="Run" type="Node2D" parent="."]
+script = ExtResource("3_7lkkg")

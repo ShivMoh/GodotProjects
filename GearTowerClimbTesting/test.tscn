@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://i0ldjv88gx0e"]
+
+[ext_resource type="Texture2D" uid="uid://dxilhcfuqbgm6" path="res://assets/new_gear.png" id="1_uf7tr"]
+[ext_resource type="Script" path="res://NewGear.gd" id="2_e4mjl"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iuy3y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocm30"]
+size = Vector2(1146, 114)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5fard"]
+size = Vector2(218, 85)
+
+[node name="test" type="Node2D"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(960, 585)
+scale = Vector2(2, 2)
+
+[node name="NewGear" type="Sprite2D" parent="RigidBody2D"]
+texture = ExtResource("1_uf7tr")
+script = ExtResource("2_e4mjl")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
+polygon = PackedVector2Array(-3.5, -31.5, 3.5, -31.5, 6, -26.5, 10.5, -26, 14.5, -23, 20, -25.5, 25, -21, 23, -15, 25.5, -9.5, 26, -6, 32, -4, 32, 4.5, 27.5, 6, 24.5, 12, 23, 16, 25, 20.5, 21, 26, 14.5, 23.5, 10.5, 26, 5, 26.5, 3.5, 31.5, -3.5, 32, -6, 26.5, -11, 26, -14.5, 23.5, -20, 26, -25.5, 21.5, -23, 15, -26, 9.5, -26.5, 5, -26.5, 5, -31.5, 4.5, -32, -4.5, -27.5, -4.5, -24.5, -11.5, -22.5, -15, -25, -20.5, -20.5, -25.5, -14.5, -23.5, -11, -25.5, -6, -26)
+
+[node name="RigidBody2D4" type="RigidBody2D" parent="."]
+position = Vector2(875, 418)
+scale = Vector2(2, 2)
+
+[node name="NewGear" type="Sprite2D" parent="RigidBody2D4"]
+texture = ExtResource("1_uf7tr")
+script = ExtResource("2_e4mjl")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D4"]
+polygon = PackedVector2Array(-3.5, -31.5, 3.5, -31.5, 6, -26.5, 10.5, -26, 14.5, -23, 20, -25.5, 25, -21, 23, -15, 25.5, -9.5, 26, -6, 32, -4, 32, 4.5, 27.5, 6, 24.5, 12, 23, 16, 25, 20.5, 21, 26, 14.5, 23.5, 10.5, 26, 5, 26.5, 3.5, 31.5, -3.5, 32, -6, 26.5, -11, 26, -14.5, 23.5, -20, 26, -25.5, 21.5, -23, 15, -26, 9.5, -26.5, 5, -26.5, 5, -31.5, 4.5, -32, -4.5, -27.5, -4.5, -24.5, -11.5, -22.5, -15, -25, -20.5, -20.5, -25.5, -14.5, -23.5, -11, -25.5, -6, -26)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(619, 653)
+physics_material_override = SubResource("PhysicsMaterial_iuy3y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-41, 47)
+shape = SubResource("RectangleShape2D_ocm30")
+
+[node name="RigidBody2D3" type="RigidBody2D" parent="."]
+position = Vector2(389, 623)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D3"]
+position = Vector2(14, 0)
+shape = SubResource("RectangleShape2D_5fard")
+
+[node name="RigidBody2D2" type="RigidBody2D" parent="."]
+position = Vector2(609, 558)
+scale = Vector2(2, 2)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D2"]
+position = Vector2(2.5, 21)
+polygon = PackedVector2Array(-3, -13, 18.5, -5, 7, 6.5, -6, 19, -19, 5.5, -12, -2.5)

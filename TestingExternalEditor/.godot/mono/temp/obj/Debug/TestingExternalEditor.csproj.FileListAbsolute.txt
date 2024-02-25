@@ -1,0 +1,17 @@
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\bin\Debug\TestingExternalEditor.deps.json
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\bin\Debug\TestingExternalEditor.runtimeconfig.json
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\bin\Debug\TestingExternalEditor.dll
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\bin\Debug\TestingExternalEditor.pdb
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\bin\Debug\GodotSharp.dll
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\TestingExternalEditor.csproj.AssemblyReference.cache
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\TestingExternalEditor.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\TestingExternalEditor.AssemblyInfoInputs.cache
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\TestingExternalEditor.AssemblyInfo.cs
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\TestingExternalEditor.csproj.CoreCompileInputs.cache
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\TestingExternalEditor.csproj.CopyComplete
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\TestingExternalEditor.dll
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\refint\TestingExternalEditor.dll
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\TestingExternalEditor.pdb
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\TestingExternalEditor.genruntimeconfig.cache
+c:\Users\shive\OneDrive\Documents\GodotProjects\TestingExternalEditor\.godot\mono\temp\obj\Debug\ref\TestingExternalEditor.dll

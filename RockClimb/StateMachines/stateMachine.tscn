@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://cp8yy5haa5wsm"]
+
+[ext_resource type="Script" path="res://StateMachines/stateMachine.gd" id="1_sr50x"]
+[ext_resource type="Script" path="res://StateMachines/start.gd" id="2_wl1aw"]
+[ext_resource type="Script" path="res://StateMachines/run.gd" id="3_y5fyu"]
+[ext_resource type="Script" path="res://StateMachines/jump.gd" id="4_r51sh"]
+[ext_resource type="Script" path="res://StateMachines/climb.gd" id="5_jrnsg"]
+[ext_resource type="Script" path="res://StateMachines/shoot.gd" id="6_we3yj"]
+
+[node name="playerStateMachine" type="Node2D" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_sr50x")
+initial_state = NodePath("start")
+
+[node name="start" type="Node2D" parent="."]
+script = ExtResource("2_wl1aw")
+
+[node name="run" type="Node2D" parent="."]
+script = ExtResource("3_y5fyu")
+
+[node name="jump" type="Node2D" parent="."]
+script = ExtResource("4_r51sh")
+
+[node name="climb" type="Node2D" parent="."]
+script = ExtResource("5_jrnsg")
+
+[node name="shoot" type="Node2D" parent="."]
+script = ExtResource("6_we3yj")

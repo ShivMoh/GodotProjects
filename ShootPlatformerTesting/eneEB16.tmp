@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://ddj3rhsyj35un"]
+
+[ext_resource type="Texture2D" uid="uid://cm60dvpupsl2g" path="res://icon.svg" id="1_b4gqm"]
+[ext_resource type="Script" path="res://enemy.gd" id="1_opgqv"]
+[ext_resource type="Script" path="res://Control.gd" id="3_inmqw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7cog"]
+size = Vector2(117, 117)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_oq8u6"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_abb5s"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_rsj7n"]
+
+[node name="Enemy" type="Area2D"]
+position = Vector2(449, 360)
+script = ExtResource("1_opgqv")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(3, 1)
+texture = ExtResource("1_b4gqm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, 0.5)
+shape = SubResource("RectangleShape2D_p7cog")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -19.0
+offset_top = -144.0
+offset_right = 21.0
+offset_bottom = -104.0
+script = ExtResource("3_inmqw")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = -91.0
+offset_right = 140.0
+offset_bottom = 40.0
+nine_patch_stretch = true
+texture_under = SubResource("CanvasTexture_oq8u6")
+texture_over = SubResource("CanvasTexture_abb5s")
+texture_progress = SubResource("CanvasTexture_rsj7n")
+tint_under = Color(1, 0, 0, 1)
+tint_over = Color(0, 0.584314, 0, 1)
+tint_progress = Color(0.784314, 0.784314, 0, 1)

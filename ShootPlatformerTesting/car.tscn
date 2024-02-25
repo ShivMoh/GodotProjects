@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://csjb7cflhd24h"]
+
+[ext_resource type="Script" path="res://Car.gd" id="1_xguc3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_203oe"]
+radius = 20.0998
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Car" type="RigidBody2D" parent="."]
+position = Vector2(9, 252)
+mass = 0.79
+script = ExtResource("1_xguc3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Car"]
+position = Vector2(97, 52)
+shape = SubResource("CircleShape2D_203oe")
+
+[node name="Car2" type="RigidBody2D" parent="."]
+visible = false
+position = Vector2(27, -38)
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Car2"]
+position = Vector2(22, 133)
+shape = SubResource("CircleShape2D_203oe")
+debug_color = Color(0.976471, 0, 0.396078, 0.419608)

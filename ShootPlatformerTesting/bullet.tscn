@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://cy67mad3k6r1q"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o10to"]
+load_path = "res://.godot/imported/All_Fire_Bullet_Pixel_16x16.png-cd6f5b22ea43ff167479fff395f13a59.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jl6vf"]
+atlas = SubResource("CompressedTexture2D_o10to")
+region = Rect2(225, 352, 45, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rknj8"]
+atlas = SubResource("CompressedTexture2D_o10to")
+region = Rect2(270, 352, 45, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kv124"]
+atlas = SubResource("CompressedTexture2D_o10to")
+region = Rect2(315, 352, 45, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kgllt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jl6vf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rknj8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kv124")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vl4ao"]
+radius = 8.24621
+
+[node name="Bullet" type="Area2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kgllt")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_vl4ao")

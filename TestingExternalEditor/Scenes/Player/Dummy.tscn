@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://bj6hv6ylb8as8"]
+
+[ext_resource type="Script" path="res://Scenes/Player/Enemy.cs" id="1_q73lh"]
+[ext_resource type="Texture2D" uid="uid://bsdifo5guxsal" path="res://Assets/icon.svg" id="2_8tb6e"]
+[ext_resource type="PackedScene" uid="uid://bvwsjf2p3bw6h" path="res://Scenes/HealthBar/health_bar.tscn" id="2_s3vvc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nxysg"]
+size = Vector2(118, 114)
+
+[node name="DummyEnemy" type="CharacterBody2D" groups=["Enemy"]]
+modulate = Color(0.0823529, 0.858824, 0.905882, 1)
+collision_layer = 2
+script = ExtResource("1_q73lh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 0)
+shape = SubResource("RectangleShape2D_nxysg")
+
+[node name="Icon" type="Sprite2D" parent="."]
+modulate = Color(0.862745, 0.470588, 0, 1)
+position = Vector2(-2, 1)
+texture = ExtResource("2_8tb6e")
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("body") instance=ExtResource("2_s3vvc")]
+offset_left = -139.0
+offset_top = -133.0
+offset_right = 150.0
+offset_bottom = -93.0
+body = NodePath("..")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="BulletPack" type="Node2D" parent="."]

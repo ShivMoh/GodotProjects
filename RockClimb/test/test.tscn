@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://c53l32e35ndve"]
+
+[ext_resource type="Script" path="res://RigidBody2D.gd" id="1_gyvly"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6rlb"]
+size = Vector2(75, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8m3kp"]
+size = Vector2(20, 59)
+
+[node name="RigidBody2D" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(73.5, 24)
+shape = SubResource("RectangleShape2D_j6rlb")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+mass = 2.0
+script = ExtResource("1_gyvly")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(76, 127)
+shape = SubResource("RectangleShape2D_8m3kp")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(76, 35)
+node_a = NodePath("..")
+node_b = NodePath("../RigidBody2D")

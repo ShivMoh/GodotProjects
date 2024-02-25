@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://vynaxp4dk0ge"]
+
+[ext_resource type="PackedScene" uid="uid://dn70u7crqjbd4" path="res://Player/player.tscn" id="1_bnumw"]
+[ext_resource type="PackedScene" uid="uid://cirmikw8gdkqt" path="res://Mobs/boar.tscn" id="2_18jfb"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wk8bj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cqoij"]
+size = Vector2(1155, 134)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(6, 443)
+collision_layer = 2
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_wk8bj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+modulate = Color(1, 0.0705882, 1, 1)
+position = Vector2(567.5, 141)
+shape = SubResource("RectangleShape2D_cqoij")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(567.5, 141)
+
+[node name="Player" parent="." instance=ExtResource("1_bnumw")]
+position = Vector2(276, 157)
+
+[node name="Boar" parent="." instance=ExtResource("2_18jfb")]
+position = Vector2(693, 496)
+
+[node name="Boar2" parent="." instance=ExtResource("2_18jfb")]
+position = Vector2(888, 485)
+
+[node name="Boar3" parent="." instance=ExtResource("2_18jfb")]
+position = Vector2(521, 494)
+
+[editable path="Boar"]

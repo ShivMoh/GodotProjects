@@ -1,0 +1,73 @@
+[gd_scene load_steps=14 format=3 uid="uid://cbb41vy3cgjm7"]
+
+[ext_resource type="Script" path="res://player2.gd" id="1_jfcad"]
+[ext_resource type="Texture2D" uid="uid://baya47lgsrlcd" path="res://Assets/frame0000.png" id="2_sov0t"]
+[ext_resource type="Texture2D" uid="uid://cerofrim48myl" path="res://Assets/frame0001.png" id="3_bip8b"]
+[ext_resource type="Texture2D" uid="uid://dw5e5vbvb83kd" path="res://Assets/frame0002.png" id="4_a73nd"]
+[ext_resource type="Texture2D" uid="uid://cbdi3bwhvfpp5" path="res://Assets/frame0003.png" id="5_0xllj"]
+[ext_resource type="Texture2D" uid="uid://dpcmum6ptqsgu" path="res://Assets/frame0004.png" id="6_u3drw"]
+[ext_resource type="Texture2D" uid="uid://sj15qvp6wlaa" path="res://Assets/frame0005.png" id="7_dk66l"]
+[ext_resource type="Script" path="res://Statemachine.gd" id="8_o6uhw"]
+[ext_resource type="Script" path="res://Air.gd" id="9_jgqvn"]
+[ext_resource type="Script" path="res://Start.gd" id="9_k3hkk"]
+[ext_resource type="Script" path="res://Run.gd" id="10_ti80y"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a622f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_sov0t")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_bip8b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_a73nd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_0xllj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_u3drw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dk66l")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_at82j"]
+height = 64.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_jfcad")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_a622f")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_at82j")
+
+[node name="BulletPack" type="Node2D" parent="."]
+
+[node name="StateMachine" type="Node2D" parent="."]
+script = ExtResource("8_o6uhw")
+initial_state = NodePath("Start")
+
+[node name="Start" type="Node2D" parent="StateMachine"]
+script = ExtResource("9_k3hkk")
+
+[node name="Air" type="Node2D" parent="StateMachine"]
+script = ExtResource("9_jgqvn")
+
+[node name="Run" type="Node2D" parent="StateMachine"]
+script = ExtResource("10_ti80y")

@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "/wQH0KuxIt5Kbm82fvQzVz2DwuClKgqu3zVD7uwfvLnhJdtX1n3ja42kzaXM1fmLjard8B/ikLxwLzoJa+gb9w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\shive\\OneDrive\\Documents\\GodotProjects\\TestingExternalEditor\\TestingExternalEditor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\shive\\.nuget\\packages\\godot.sourcegenerators\\4.1.1\\godot.sourcegenerators.4.1.1.nupkg.sha512",
+    "C:\\Users\\shive\\.nuget\\packages\\godotsharp\\4.1.1\\godotsharp.4.1.1.nupkg.sha512",
+    "C:\\Users\\shive\\.nuget\\packages\\godotsharpeditor\\4.1.1\\godotsharpeditor.4.1.1.nupkg.sha512"
+  ],
+  "logs": []
+}
