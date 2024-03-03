@@ -9,6 +9,14 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("3_hxpvs")
+}],
+"loop": true,
+"name": &"hide",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("1_qe4bq")
 }, {
 "duration": 1.0,
@@ -37,14 +45,16 @@ animations = [{
 radius = 7.0
 
 [node name="TopGuy" type="CharacterBody2D"]
+position = Vector2(0, -8)
+scale = Vector2(2.04, 2.04)
 collision_mask = 2
 script = ExtResource("1_hpy54")
+metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="topguy" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_uums1")
-animation = &"walk"
-frame = 1
-frame_progress = 0.40819
+animation = &"hide"
+autoplay = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
@@ -52,4 +62,6 @@ shape = SubResource("CircleShape2D_nx6my")
 
 [node name="raycast" type="RayCast2D" parent="."]
 position = Vector2(0, 4)
+rotation = 6.28319
 target_position = Vector2(-19, 0)
+collision_mask = 3

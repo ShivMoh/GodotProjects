@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://hlw2uroyviil"]
+[gd_scene load_steps=9 format=3 uid="uid://hlw2uroyviil"]
 
 [ext_resource type="Texture2D" uid="uid://ex1lx2txckck" path="res://assets/Tilemap/tilemap.png" id="1_vdj82"]
 [ext_resource type="PackedScene" uid="uid://6nqoiojyouk6" path="res://player.tscn" id="2_2ai3r"]
 [ext_resource type="PackedScene" uid="uid://bbni13opfttke" path="res://test_dummy.tscn" id="3_qddgw"]
 [ext_resource type="PackedScene" uid="uid://b2i4e03ch1f4x" path="res://enemies/top_guy.tscn" id="4_7o8cv"]
+[ext_resource type="PackedScene" uid="uid://b5vddmd3kq5am" path="res://player/bullet.tscn" id="5_qc1yg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7p62"]
 
@@ -615,4 +616,8 @@ position = Vector2(28, 459)
 position = Vector2(245, 412)
 
 [node name="TopGuy" parent="." instance=ExtResource("4_7o8cv")]
-position = Vector2(392, 423)
+position = Vector2(442, 399)
+direction = 1
+
+[node name="Bullet" parent="." instance=ExtResource("5_qc1yg")]
+position = Vector2(124, 484)

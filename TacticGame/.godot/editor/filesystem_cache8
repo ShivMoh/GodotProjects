@@ -1,0 +1,10 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1708794706
+icon.svg::CompressedTexture2D::2852285475129041638::1707667696::1707667747::1::::<><>::
+::res://assets/::1707667696
+::res://characters/::1707667696
+floor.tscn::PackedScene::790516108992393103::1707667696::0::1::::<><>::
+player.cs::CSharpScript::-1::1707667696::0::1::::<><>::
+player.tscn::PackedScene::5990203834676793573::1707667696::0::1::::<><>::res://characters/player.cs<>uid://dt42t7w3ltoy2::::res://assets/Rin_(Native).blend
+::res://scenes/::1707667696
+main.tscn::PackedScene::7347299577491358578::1707667696::0::1::::<><>::uid://crlx1t73so7gj::::res://characters/player.tscn<>uid://li6xjwevipu2::::res://characters/floor.tscn
