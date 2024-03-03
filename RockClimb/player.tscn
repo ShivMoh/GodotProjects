@@ -12,6 +12,7 @@ collision_mask = 2
 script = ExtResource("1_3yvi0")
 
 [node name="raycast" type="RayCast2D" parent="."]
+rotation = 3.14159
 target_position = Vector2(47, 0)
 
 [node name="PlayerStateMachine" parent="." instance=ExtResource("2_ub64w")]
