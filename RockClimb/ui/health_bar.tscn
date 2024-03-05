@@ -1,15 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4t1ennm00yy7"]
+[gd_scene load_steps=2 format=3 uid="uid://b4t1ennm00yy7"]
 
 [ext_resource type="Script" path="res://ui/health.gd" id="1_ur08k"]
-[ext_resource type="PackedScene" uid="uid://cvpsmfn7gaw4g" path="res://ui/heart.tscn" id="2_jo03w"]
 
 [node name="health" type="Node2D"]
+position = Vector2(20, 20)
 script = ExtResource("1_ur08k")
-
-[node name="heart" parent="." instance=ExtResource("2_jo03w")]
-
-[node name="heart2" parent="." instance=ExtResource("2_jo03w")]
-position = Vector2(20, 0)
-
-[node name="heart3" parent="." instance=ExtResource("2_jo03w")]
-position = Vector2(40, 0)

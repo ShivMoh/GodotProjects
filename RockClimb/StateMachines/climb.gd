@@ -1,6 +1,6 @@
 extends State
 
-func Enter():
+func Enter(_args = []):
 	player.velocity = Vector2.ZERO
 	print("I am on climb")
 	

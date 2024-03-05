@@ -5,7 +5,7 @@ const JUMP_VELOCITY = -500
 
 var delta_time = 0
 
-func Enter():
+func Enter(_args = []):
 	delta_time = 0
 	print("I am on Run")
 

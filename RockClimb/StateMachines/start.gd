@@ -11,18 +11,22 @@ var time_passed_since_previous_tap : float = 0.0
 var player_sprite : Sprite2D
 var player_raycast : RayCast2D
 
-func Enter():
+var direction : float = 1.0
+
+func Enter(_args = []):
 	double_tap = 0
 	time_passed_since_previous_tap = 0
 	print("I am on start")
 
 	player_sprite = player.get_node("sprite")
 	player_raycast = player.get_node("raycast")
-	
+
+
 func Physics_Update(delta: float):
 	
 	if not player.is_on_floor():
 		player.velocity.y += gravity * delta
+
 
 	if detect_object_type("test"):
 		Transitioned.emit(self, "climb")
@@ -31,14 +35,13 @@ func Physics_Update(delta: float):
 		Transitioned.emit(self, "run")
 
 	if Input.is_action_just_pressed("shoot"):
-		Transitioned.emit(self, "shoot")
+		Transitioned.emit(self, "shoot", [player_sprite.flip_h])
 		
 	count_double_tap(delta)
 
 	if Input.is_action_just_pressed("ui_accept"):
 		Transitioned.emit(self, "jump")
 
-	var direction = Input.get_axis("ui_left", "ui_right")
 
 	if direction:
 		player.velocity.x = direction * SPEED
@@ -52,6 +55,8 @@ func Physics_Update(delta: float):
 			player_raycast.rotation_degrees = 180
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, SPEED)
+	
+	direction = Input.get_axis("ui_left", "ui_right")
 
 	player.move_and_slide()
 

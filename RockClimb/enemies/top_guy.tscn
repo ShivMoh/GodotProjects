@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b2i4e03ch1f4x"]
+[gd_scene load_steps=8 format=3 uid="uid://b2i4e03ch1f4x"]
 
 [ext_resource type="Script" path="res://enemies/top_guy.gd" id="1_hpy54"]
 [ext_resource type="Texture2D" uid="uid://cx3n4rh311kil" path="res://assets/Tiles/Characters/tile_0015.png" id="1_qe4bq"]
 [ext_resource type="Texture2D" uid="uid://bs3oglysm5cpi" path="res://assets/Tiles/Characters/tile_0016.png" id="2_tn5lb"]
 [ext_resource type="Texture2D" uid="uid://dcl28tkv78m7g" path="res://assets/Tiles/Characters/tile_0017.png" id="3_hxpvs"]
+[ext_resource type="PackedScene" uid="uid://b4t1ennm00yy7" path="res://ui/health_bar.tscn" id="5_m0qok"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uums1"]
 animations = [{
@@ -44,20 +45,23 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_nx6my"]
 radius = 7.0
 
-[node name="TopGuy" type="CharacterBody2D"]
+[node name="TopGuy" type="CharacterBody2D" groups=["enemy"]]
 position = Vector2(0, -8)
-scale = Vector2(2.04, 2.04)
+collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_hpy54")
+health = 8
 metadata/_edit_group_ = true
 
 [node name="topguy" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_uums1")
 animation = &"hide"
 autoplay = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
+position = Vector2(0, 8)
+scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_nx6my")
 
 [node name="raycast" type="RayCast2D" parent="."]
@@ -65,3 +69,17 @@ position = Vector2(0, 4)
 rotation = 6.28319
 target_position = Vector2(-19, 0)
 collision_mask = 3
+
+[node name="health" parent="." node_paths=PackedStringArray("mob") instance=ExtResource("5_m0qok")]
+position = Vector2(-7.84314, -8.82353)
+mob = NodePath("..")
+spacing = 30
+
+[node name="hide_timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="cool_down_timer" type="Timer" parent="."]
+wait_time = 10.0
+
+[connection signal="timeout" from="hide_timer" to="." method="_on_hide_timer_timeout"]
+[connection signal="timeout" from="cool_down_timer" to="." method="_on_cool_down_timer_timeout"]

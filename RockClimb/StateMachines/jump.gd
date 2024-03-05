@@ -8,7 +8,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var double_tap : float = 0.0
 var time_passed_since_previous_tap : float = 0.0
 
-func Enter():
+func Enter(_args = []):
 	print("I am on jump")
 
 func Physics_Update(delta: float) -> void:

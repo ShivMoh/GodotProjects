@@ -28,8 +28,12 @@ func if_colliding() -> int:
 	
 	if raycast.is_colliding:
 		var object = raycast.get_collider()
-		
-		if object != Player and object != null:
+
+		if object != null:
+			
+			if object.name == "player":
+				return direction
+
 			sprite.flip_h = !sprite.flip_h
 			raycast.rotation_degrees += 180
 			
@@ -39,3 +43,6 @@ func if_colliding() -> int:
 				return -1
 
 	return direction
+
+func take_damage():
+	set_health(get_health() - 1)

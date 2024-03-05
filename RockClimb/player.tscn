@@ -1,14 +1,54 @@
-[gd_scene load_steps=5 format=3 uid="uid://6nqoiojyouk6"]
+[gd_scene load_steps=10 format=3 uid="uid://6nqoiojyouk6"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_3yvi0"]
 [ext_resource type="PackedScene" uid="uid://cp8yy5haa5wsm" path="res://StateMachines/stateMachine.tscn" id="2_ub64w"]
 [ext_resource type="Texture2D" uid="uid://lopb7dsw4dbe" path="res://assets/Tiles/Characters/tile_0000.png" id="3_v4sby"]
+[ext_resource type="PackedScene" uid="uid://b4t1ennm00yy7" path="res://ui/health_bar.tscn" id="4_nm1sx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5lin4"]
 size = Vector2(16, 23)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1agv"]
+
+[sub_resource type="Animation" id="Animation_oka55"]
+resource_name = "phase"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.392157), Color(1, 1, 1, 1), Color(1, 1, 1, 0.392157), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_rjons"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hjkbm"]
+_data = {
+"RESET": SubResource("Animation_rjons"),
+"phase": SubResource("Animation_oka55")
+}
+
 [node name="player" type="CharacterBody2D"]
-collision_mask = 2
+collision_mask = 10
 script = ExtResource("1_3yvi0")
 
 [node name="raycast" type="RayCast2D" parent="."]
@@ -20,10 +60,34 @@ target_position = Vector2(47, 0)
 [node name="sprite" type="Sprite2D" parent="."]
 texture = ExtResource("3_v4sby")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_5lin4")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_left = 0
 limit_bottom = 700
+
+[node name="health" parent="." node_paths=PackedStringArray("mob") instance=ExtResource("4_nm1sx")]
+position = Vector2(-18, -27)
+mob = NodePath("..")
+spacing = 30
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="hitbox_collision" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("RectangleShape2D_p1agv")
+debug_color = Color(0.882353, 0.270588, 0.517647, 0.419608)
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hjkbm")
+}
+
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

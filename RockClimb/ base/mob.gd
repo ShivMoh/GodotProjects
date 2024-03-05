@@ -8,3 +8,5 @@ func get_health() -> int:
 
 func set_health(new_health : int):
     self.health = new_health
+    
+
