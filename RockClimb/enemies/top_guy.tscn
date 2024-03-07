@@ -53,7 +53,7 @@ script = ExtResource("1_hpy54")
 health = 8
 metadata/_edit_group_ = true
 
-[node name="topguy" type="AnimatedSprite2D" parent="."]
+[node name="sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_uums1")
 animation = &"hide"

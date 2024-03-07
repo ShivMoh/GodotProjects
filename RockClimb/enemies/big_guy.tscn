@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://bl8qssxjqqy3s"]
+
+[ext_resource type="Script" path="res://enemies/big_guy.gd" id="1_6uki3"]
+[ext_resource type="Texture2D" uid="uid://lps8hxvm6psr" path="res://assets/Tiles/Characters/tile_0021.png" id="1_bo230"]
+[ext_resource type="Texture2D" uid="uid://d1fdpj4083wal" path="res://assets/Tiles/Characters/tile_0022.png" id="2_4f350"]
+[ext_resource type="Texture2D" uid="uid://b5iq8hdfpqm70" path="res://assets/Tiles/Characters/tile_0023.png" id="3_j2vht"]
+[ext_resource type="PackedScene" uid="uid://b4t1ennm00yy7" path="res://ui/health_bar.tscn" id="5_hrjsb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p3yim"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_bo230")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_4f350")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_j2vht")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gfjmw"]
+size = Vector2(48, 40)
+
+[node name="big_guy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_6uki3")
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2.08333, 2.08333)
+sprite_frames = SubResource("SpriteFrames_p3yim")
+autoplay = "default"
+frame = 2
+frame_progress = 0.217654
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_gfjmw")
+
+[node name="raycast" type="RayCast2D" parent="."]
+target_position = Vector2(-38, 0)
+collision_mask = 3
+
+[node name="health" parent="." node_paths=PackedStringArray("mob") instance=ExtResource("5_hrjsb")]
+position = Vector2(-28, -30)
+mob = NodePath("..")
+spacing = 30

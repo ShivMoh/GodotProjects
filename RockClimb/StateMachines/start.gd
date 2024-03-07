@@ -16,11 +16,8 @@ var direction : float = 1.0
 func Enter(_args = []):
 	double_tap = 0
 	time_passed_since_previous_tap = 0
-	print("I am on start")
-
 	player_sprite = player.get_node("sprite")
-	player_raycast = player.get_node("raycast")
-
+	player.detect_object_type("test")
 
 func Physics_Update(delta: float):
 	
@@ -28,7 +25,7 @@ func Physics_Update(delta: float):
 		player.velocity.y += gravity * delta
 
 
-	if detect_object_type("test"):
+	if player.is_detecting():
 		Transitioned.emit(self, "climb")
 		
 	if double_tap > 1:
@@ -48,11 +45,9 @@ func Physics_Update(delta: float):
 
 		if direction == 1:
 			player_sprite.flip_h = true
-			player_raycast.rotation_degrees = 0
 		
 		if direction == -1:
 			player_sprite.flip_h = false
-			player_raycast.rotation_degrees = 180
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, SPEED)
 	
@@ -70,15 +65,3 @@ func count_double_tap(delta) -> void:
 	if time_passed_since_previous_tap > (delta * 10):
 		double_tap = 0
 		
-func detect_object_type(type: String) -> bool:
-	# this should check if object is a ladder
-	var cast : RayCast2D = player.get_node("raycast")
-
-	if cast.is_colliding:
-		var collider = cast.get_collider() 
-		if collider != null:
-			if collider.is_in_group(type):
-				return true
-
-	return false
-	

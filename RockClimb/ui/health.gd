@@ -14,7 +14,7 @@ func _ready():
 	initialize_health()
 	generate_health_bar()
 	initialize()
-
+		
 func _physics_process(_delta):
 	substract_health()		
 
@@ -27,9 +27,8 @@ func initialize_health() -> void:
 
 func generate_health_bar() -> void:
 	for x in range(health/2):
-		var heart : Heart = create_heart(x)
-		hearts.append(heart)
-
+		create_heart(x)
+			
 
 func substract_health() -> void:
 
@@ -71,9 +70,24 @@ func initialize() -> void:
 	heart_animation = current_heart.get_node("animation")
 	heart_animated_sprite = current_heart.get_node("animated_sprite")	
 
-func create_heart(id) -> Heart:
+func create_heart(id) -> void:
 	var heart_instance : Heart = heart_scene.instantiate()
-	heart_instance.position = self.position + Vector2(id * spacing, 0)
+	heart_instance.position = self.position + Vector2(spacing * id, 0)
 	self.add_child(heart_instance)
+	hearts.append(heart_instance)
 
-	return heart_instance
+	#var heart_instance_1 : Heart = heart_scene.instantiate()
+#
+	#if even:
+		#heart_instance_1.position = self.position + Vector2(spacing * (id + 1), 0) + Vector2((spacing) * id, 0)
+	#else:
+		#heart_instance_1.position = self.position - Vector2(spacing * (id + 1), 0) - Vector2((spacing) * id, 0)
+#
+	#self.add_child(heart_instance_1)
+		#
+	#hearts[0] = null
+	#if even:
+		#hearts[health/2/2 + id] = heart_instance_1
+	#else:
+		#hearts[health/2/2 - 1 - id] = heart_instance_1
+		#

@@ -1,9 +1,5 @@
 extends Enemy
 
-const SPEED : float = 100.0
-const JUMP_VELOCITY : float = -400.0
-
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var animated_sprite : AnimatedSprite2D
 var hide_timer : Timer
@@ -13,13 +9,14 @@ var cool_down : bool
 var hidden_state : bool
 
 func _ready():
-	animated_sprite = get_node("topguy")
+	animated_sprite = get_node("sprite")
 	random = RandomNumberGenerator.new()
 	random.randomize()
 	hide_timer = get_node("hide_timer")
 	cool_down_timer = get_node("cool_down_timer")
 	cool_down = false
 	hidden_state = false
+	SPEED = 200
 
 func _physics_process(delta):
 	if not is_on_floor():
