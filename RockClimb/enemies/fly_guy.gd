@@ -4,6 +4,7 @@ extends Enemy
 var initial_position : Vector2
 
 func _ready():
+	super()
 	gravity = 0
 	set_target()
 	# print(initial_position)

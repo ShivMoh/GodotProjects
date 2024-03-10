@@ -9,6 +9,7 @@ var cool_down : bool
 var hidden_state : bool
 
 func _ready():
+	super()
 	animated_sprite = get_node("sprite")
 	random = RandomNumberGenerator.new()
 	random.randomize()

@@ -26,8 +26,8 @@ func spawn_bullet():
 
 func fire_bullet(bullet : Bullet, angle):
 	var tween : Tween = get_tree().create_tween()
-	# bullet.add_constant_force(Vector2(400 * direction, 0), Vector2(10, 0))
-	var impulse = Vector2(cos(angle), sin(angle)) * 1000
+	bullet.add_constant_force(Vector2(400 * direction, 0), Vector2(10, 0))
+	# var impulse = Vector2(cos(angle), sin(angle)) * 1000
 
 	#bullet.apply_force(Vector2(400,0), Vector2(0, 0))
 	tween.tween_property(bullet, "modulate:a", 0, 2);
