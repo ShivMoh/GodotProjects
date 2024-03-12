@@ -39,7 +39,7 @@ polygon = PackedVector2Array(0, 9, 2, 9, 9, 2, 9, -4, 6, -8, 2, -8, 2, -3, -2, -
 
 [node name="raycast" type="RayCast2D" parent="."]
 target_position = Vector2(-23, 0)
-collision_mask = 3
+collision_mask = 11
 
 [node name="health" parent="." node_paths=PackedStringArray("mob") instance=ExtResource("5_l1gtg")]
 position = Vector2(-9.33333, -16)

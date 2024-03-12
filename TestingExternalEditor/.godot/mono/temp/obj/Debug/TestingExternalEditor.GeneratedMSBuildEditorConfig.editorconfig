@@ -1,9 +1,12 @@
 is_global = true
+<<<<<<< HEAD
 build_property.GodotDisabledSourceGenerators = 
 build_property.GodotProjectDir = /home/shivesh/Documents/godot_projects/TestingExternalEditor/
 build_property.GodotProjectDirBase64 = 
 build_property.GodotSourceGenerators = 
 build_property.IsGodotToolsProject = 
+=======
+>>>>>>> 747074f9e12e5b32f9a5d7289ce27dcee2383cdb
 build_property.TargetFramework = net6.0
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = 
@@ -13,6 +16,10 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TestingExternalEditor
+<<<<<<< HEAD
 build_property.ProjectDir = /home/shivesh/Documents/godot_projects/TestingExternalEditor/
+=======
+build_property.ProjectDir = /home/shivesh/Documents/GodotProjects/TestingExternalEditor/
+>>>>>>> 747074f9e12e5b32f9a5d7289ce27dcee2383cdb
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

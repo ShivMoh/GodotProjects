@@ -44,7 +44,7 @@ shape = SubResource("RectangleShape2D_gfjmw")
 
 [node name="raycast" type="RayCast2D" parent="."]
 target_position = Vector2(-38, 0)
-collision_mask = 3
+collision_mask = 11
 
 [node name="health" parent="." node_paths=PackedStringArray("mob") instance=ExtResource("5_hrjsb")]
 position = Vector2(-28, -30)

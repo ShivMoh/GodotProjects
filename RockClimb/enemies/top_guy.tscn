@@ -68,7 +68,7 @@ shape = SubResource("CircleShape2D_nx6my")
 position = Vector2(0, 4)
 rotation = 6.28319
 target_position = Vector2(-19, 0)
-collision_mask = 3
+collision_mask = 11
 
 [node name="health" parent="." node_paths=PackedStringArray("mob") instance=ExtResource("5_m0qok")]
 position = Vector2(-7.84314, -8.82353)

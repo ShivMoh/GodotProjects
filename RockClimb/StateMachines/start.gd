@@ -24,6 +24,13 @@ func Physics_Update(delta: float):
 	if not player.is_on_floor():
 		player.velocity.y += gravity * delta
 
+	if Input.is_action_just_pressed("lookup"):
+		print("I should be rotating")
+		rotate_player(1)
+
+	if Input.is_action_just_pressed("lookdown"):
+		print("I should be rotating")
+		rotate_player(-1)
 
 	if player.is_detecting():
 		Transitioned.emit(self, "climb")
@@ -65,3 +72,5 @@ func count_double_tap(delta) -> void:
 	if time_passed_since_previous_tap > (delta * 10):
 		double_tap = 0
 		
+func rotate_player(_direction) -> void:
+	self.rotation_degrees += _direction

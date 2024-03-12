@@ -1,9 +1,10 @@
 extends Enemy
 
-var distance : Vector2 = Vector2(200.0, 0)
+@export var distance : Vector2 = Vector2(200.0, 0)
 var initial_position : Vector2
 
 func _ready():
+	super()
 	gravity = 0
 	set_target()
 	# print(initial_position)
