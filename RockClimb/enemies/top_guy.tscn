@@ -59,7 +59,7 @@ sprite_frames = SubResource("SpriteFrames_uums1")
 animation = &"hide"
 autoplay = "walk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
 scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_nx6my")

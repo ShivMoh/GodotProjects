@@ -9,11 +9,17 @@ const JUMP_VELOCITY : float = -400.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @export var direction : int = -1
-
+@export var enemy_scale : int = 1
 
 func _ready():
 	var raycast: RayCast2D = self.get_node("raycast")
 	var sprite : AnimatedSprite2D = self.get_node("sprite")
+	var collision  = self.get_node("collision")
+
+	raycast.scale = raycast.scale * enemy_scale
+	sprite.scale = sprite.scale * enemy_scale
+	collision.scale = collision.scale * enemy_scale
+
 
 	if direction == 1:
 		sprite.flip_h = true

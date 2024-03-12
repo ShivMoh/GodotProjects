@@ -33,7 +33,7 @@ scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_n11mq")
 autoplay = "default"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="collision" type="CollisionPolygon2D" parent="."]
 scale = Vector2(1.5, 1.5)
 polygon = PackedVector2Array(0, 9, 2, 9, 9, 2, 9, -4, 6, -8, 2, -8, 2, -3, -2, -3, -2, -8, -6, -8, -9, -4, -9, 2)
 
