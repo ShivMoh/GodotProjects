@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TestingExternalEditor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23e32c0d4665e4435c6a6fe210add22fa9ad425e")]
 [assembly: System.Reflection.AssemblyProductAttribute("TestingExternalEditor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TestingExternalEditor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

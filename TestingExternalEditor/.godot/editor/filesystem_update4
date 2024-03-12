@@ -1,8 +1,8 @@
+res://Scenes/World/world.tscn
 res://Scenes/Player/Dummy.tscn
 res://Scenes/Bullet/bullet_pack.tscn
 res://Scenes/HealthBar/health_bar.tscn
 res://Scenes/Player/player.tscn
-res://Scenes/World/world.tscn
 res://Scenes/Score/score.tscn
 res://data.cs
 res://Icon.cs
