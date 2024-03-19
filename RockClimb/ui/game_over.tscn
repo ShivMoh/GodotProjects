@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://6cp5atclpgbs"]
+
+[ext_resource type="Script" path="res://ui/start.gd" id="1_t5amx"]
+[ext_resource type="PackedScene" uid="uid://hrp77rrjrg7o" path="res://background/bg1.tscn" id="1_y33sk"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_t5amx")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 509.0
+offset_top = 127.0
+offset_right = 596.0
+offset_bottom = 150.0
+scale = Vector2(2, 2)
+text = "Game Over"
+
+[node name="Play Again" type="Button" parent="."]
+offset_left = 442.0
+offset_top = 247.0
+offset_right = 733.0
+offset_bottom = 278.0
+text = "Play Again"
+
+[node name="Back to Main" type="Button" parent="."]
+offset_left = 442.0
+offset_top = 301.0
+offset_right = 743.0
+offset_bottom = 332.0
+text = "Back to Main"
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("1_y33sk")]
+
+[node name="ParallaxLayer3" parent="ParallaxBackground" index="0"]
+modulate = Color(1, 0.192157, 0, 1)
+
+[node name="ParallaxLayer" parent="ParallaxBackground" index="1"]
+modulate = Color(1, 0, 0, 1)
+
+[connection signal="pressed" from="Play Again" to="." method="_on_play_again_pressed"]
+[connection signal="pressed" from="Back to Main" to="." method="_on_back_to_main_pressed"]
+
+[editable path="ParallaxBackground"]

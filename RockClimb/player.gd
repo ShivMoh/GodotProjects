@@ -14,7 +14,24 @@ func _ready():
 	is_detecting_type = false
 	
 func _physics_process(delta):
-	pass
+	if is_past_fall_limit():
+		return
+
+	if is_not_alive():
+		return
+
+func is_past_fall_limit() -> bool:
+	if self.position.y >= 1600:
+		get_tree().change_scene_to_file("res://ui/game_over.tscn")
+		return true
+	return false
+
+func  is_not_alive() -> bool:
+	if self.get_health() <= 0:
+		get_tree().change_scene_to_file("res://ui/game_over.tscn")
+		return true
+	return false
+
 
 func _on_hitbox_body_entered(body):	
 	if body.is_in_group("enemy"):

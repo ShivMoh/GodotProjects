@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://xislmgi02m6d"]
+
+[ext_resource type="Script" path="res://ui/start.gd" id="1_8nplq"]
+[ext_resource type="PackedScene" uid="uid://hrp77rrjrg7o" path="res://background/bg1.tscn" id="2_x7eet"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_tl2ru"]
+specular_color = Color(1, 0.0196078, 1, 1)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_8nplq")
+
+[node name="Play" type="Button" parent="."]
+offset_left = 432.0
+offset_top = 242.0
+offset_right = 666.0
+offset_bottom = 273.0
+text = "PLay
+"
+icon = SubResource("CanvasTexture_tl2ru")
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 435.0
+offset_top = 303.0
+offset_right = 666.0
+offset_bottom = 334.0
+text = "Quit"
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("2_x7eet")]
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
