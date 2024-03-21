@@ -53,6 +53,7 @@ _data = {
 y_sort_enabled = true
 collision_mask = 10
 script = ExtResource("1_3yvi0")
+health = 4
 
 [node name="PlayerStateMachine" parent="." instance=ExtResource("2_ub64w")]
 
@@ -70,7 +71,7 @@ limit_top = 0
 [node name="health" parent="." node_paths=PackedStringArray("mob") instance=ExtResource("4_nm1sx")]
 position = Vector2(0, -19)
 mob = NodePath("..")
-spacing = 15
+spacing = 30
 
 [node name="hitbox" type="Area2D" parent="."]
 collision_layer = 0
