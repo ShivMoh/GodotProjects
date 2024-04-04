@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b13fuuyf1i122"]
+
+[ext_resource type="Script" path="res://cube_mover.cs" id="1_bajpj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_j25w5"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_bajpj")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.68467)
+
+[node name="cube" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.686591, 0, 0, 0, 0.607142, 0, 0, 0, 0.801657, 1.75344, -0.0748506, -0.987924)
+mesh = SubResource("BoxMesh_j25w5")
+skeleton = NodePath("../Camera3D")
