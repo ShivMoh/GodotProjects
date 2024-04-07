@@ -19,6 +19,10 @@ public partial class cube_mover : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		
+	}
+
+	public void SpawnCube() {
 		var default_cube = GD.Load<PackedScene>("res://default_cube.tscn");
 
 		default_cube csdfd = default_cube.Instantiate<default_cube>();

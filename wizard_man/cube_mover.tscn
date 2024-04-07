@@ -1,16 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://b13fuuyf1i122"]
+[gd_scene load_steps=6 format=3 uid="uid://b13fuuyf1i122"]
 
 [ext_resource type="Script" path="res://cube_mover.cs" id="1_bajpj"]
+[ext_resource type="PackedScene" uid="uid://ccbm0e5qxhaem" path="res://mage.tscn" id="3_5jst1"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_j25w5"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_djmyc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8shdw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xh7dh"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_bajpj")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.68467)
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.22364, 0)
+physics_material_override = SubResource("PhysicsMaterial_djmyc")
 
-[node name="cube" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.686591, 0, 0, 0, 0.607142, 0, 0, 0, 0.801657, 1.75344, -0.0748506, -0.987924)
-mesh = SubResource("BoxMesh_j25w5")
-skeleton = NodePath("../Camera3D")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
+shape = SubResource("BoxShape3D_8shdw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("BoxMesh_xh7dh")
+
+[node name="Mage" parent="." instance=ExtResource("3_5jst1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.08312, 0)
+
+[node name="scene_camera" type="Camera3D" parent="."]
+transform = Transform3D(-0.998719, 0.0504998, -0.00309453, 0.0118297, 0.292546, 0.956178, 0.0491921, 0.954917, -0.292769, 0.549737, 9.0734, -1.87043)
+current = true

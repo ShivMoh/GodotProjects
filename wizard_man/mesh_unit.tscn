@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bihwv4rgfumjj"]
+
+[ext_resource type="Script" path="res://mesh_unit.cs" id="1_fkncl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_55dst"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_nuqwr"]
+
+[node name="UnitMesh" type="StaticBody3D"]
+script = ExtResource("1_fkncl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_55dst")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_nuqwr")
+skeleton = NodePath("../CollisionShape3D")

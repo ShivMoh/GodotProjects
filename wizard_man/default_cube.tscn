@@ -1,19 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://kbwrgbps8rxt"]
-
-[ext_resource type="Script" path="res://default_cube.cs" id="1_bno6o"]
+[gd_scene load_steps=3 format=3 uid="uid://kbwrgbps8rxt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bxhxi"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_kl2so"]
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
-script = ExtResource("1_bno6o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_bxhxi")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.947093, 0.32096, 0, -0.32096, 0.947093, 0.983282, 1.66171, 3.04953)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_kl2so")

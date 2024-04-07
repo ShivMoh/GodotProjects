@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbuess1byg45o"]
+
+[ext_resource type="Script" path="res://mesh_drawer.cs" id="1_jga2h"]
+
+[node name="MeshDrawer" type="Node3D"]
+script = ExtResource("1_jga2h")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.76367)
