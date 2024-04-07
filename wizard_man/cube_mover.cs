@@ -3,8 +3,7 @@ using System;
 
 public partial class cube_mover : Node3D
 {
-	// Called when the node enters the scene tree for the first time.
-	[Export]
+	
 	MeshInstance3D cube;
 
 	Vector3 cubeCoords = new Vector3(1.0f, 1.0f, 1.0f);
