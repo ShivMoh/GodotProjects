@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://gjbx15kx3yo5"]
+
+[ext_resource type="Script" path="res://Ja.cs" id="1_amugr"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_djmyc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8shdw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4tmno"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xh7dh"]
+
+[node name="Tile" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.22364, 13.6689)
+physics_material_override = SubResource("PhysicsMaterial_djmyc")
+script = ExtResource("1_amugr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
+shape = SubResource("BoxShape3D_8shdw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_4tmno")
+mesh = SubResource("BoxMesh_xh7dh")

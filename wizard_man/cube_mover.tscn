@@ -1,92 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://b13fuuyf1i122"]
+[gd_scene load_steps=4 format=3 uid="uid://b13fuuyf1i122"]
 
 [ext_resource type="Script" path="res://cube_mover.cs" id="1_bajpj"]
-[ext_resource type="Script" path="res://Ja.cs" id="2_3xmv5"]
 [ext_resource type="PackedScene" uid="uid://ccbm0e5qxhaem" path="res://mage.tscn" id="3_5jst1"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_djmyc"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_8shdw"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_xh7dh"]
+[ext_resource type="PackedScene" uid="uid://bbuess1byg45o" path="res://mesh_drawer.tscn" id="3_ugbiv"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_bajpj")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." node_paths=PackedStringArray("mage")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.22364, 0)
-physics_material_override = SubResource("PhysicsMaterial_djmyc")
-script = ExtResource("2_3xmv5")
-mage = NodePath("../Mage")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-shape = SubResource("BoxShape3D_8shdw")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("BoxMesh_xh7dh")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="." node_paths=PackedStringArray("mage")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.22364, 13.6689)
-physics_material_override = SubResource("PhysicsMaterial_djmyc")
-script = ExtResource("2_3xmv5")
-mage = NodePath("../Mage")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-shape = SubResource("BoxShape3D_8shdw")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("BoxMesh_xh7dh")
-
-[node name="StaticBody3D3" type="StaticBody3D" parent="." node_paths=PackedStringArray("mage")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.241, -1.22364, 13.6689)
-physics_material_override = SubResource("PhysicsMaterial_djmyc")
-script = ExtResource("2_3xmv5")
-mage = NodePath("../Mage")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-shape = SubResource("BoxShape3D_8shdw")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("BoxMesh_xh7dh")
-
-[node name="StaticBody3D4" type="StaticBody3D" parent="." node_paths=PackedStringArray("mage")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.241, -1.22364, -0.111282)
-physics_material_override = SubResource("PhysicsMaterial_djmyc")
-script = ExtResource("2_3xmv5")
-mage = NodePath("../Mage")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-shape = SubResource("BoxShape3D_8shdw")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D4"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("BoxMesh_xh7dh")
-
-[node name="StaticBody3D5" type="StaticBody3D" parent="." node_paths=PackedStringArray("mage")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.241, -1.22364, -0.111282)
-physics_material_override = SubResource("PhysicsMaterial_djmyc")
-script = ExtResource("2_3xmv5")
-mage = NodePath("../Mage")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D5"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-shape = SubResource("BoxShape3D_8shdw")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D5"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("BoxMesh_xh7dh")
-
-[node name="Mage" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("3_5jst1")]
-camera = NodePath("../scene_camera")
+[node name="Mage" parent="." instance=ExtResource("3_5jst1")]
 
 [node name="scene_camera" type="Camera3D" parent="."]
 transform = Transform3D(-0.998719, 0.0504998, -0.00309457, 0.0118297, 0.292546, 0.956178, 0.0491921, 0.954917, -0.292769, 6.7656, 22.0579, 5.43895)
 current = true
 fov = 90.0
+
+[node name="MeshDrawer" parent="." node_paths=PackedStringArray("mage") instance=ExtResource("3_ugbiv")]
+mage = NodePath("../Mage")

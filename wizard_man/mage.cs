@@ -20,7 +20,7 @@ public partial class mage : CharacterBody3D
 
 	private int moves = 0;
 
-	private int maxMoves = 5;
+	private int maxMoves = 2000;
 
 	public override void _Ready()
 	{

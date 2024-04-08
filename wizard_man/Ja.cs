@@ -4,16 +4,24 @@ using System;
 public partial class Ja : StaticBody3D
 {
 
+	
+	public mage mage;
+
 	[Export]
-	mage mage;
+	public bool active;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (active) {
+			StandardMaterial3D material = GetNode<MeshInstance3D>("MeshInstance3D").GetActiveMaterial(0) as StandardMaterial3D;
+			material.AlbedoColor = new Color(0, 0, 1);;
+		}
 	}
 
 
