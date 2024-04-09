@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://fst1s4v31ux6"]
+
+[ext_resource type="PackedScene" uid="uid://gjbx15kx3yo5" path="res://tile.tscn" id="1_juirb"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Tile" parent="." instance=ExtResource("1_juirb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.22364, 28.6689)
+active = true
+
+[node name="Tile2" parent="." instance=ExtResource("1_juirb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.22364, 28.6689)
+active = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0115364, 0.999933, 0, -0.999933, -0.0115364, 0, 24.3183, 20.4237)

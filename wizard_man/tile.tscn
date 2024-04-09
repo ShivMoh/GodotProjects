@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://gjbx15kx3yo5"]
+[gd_scene load_steps=7 format=3 uid="uid://gjbx15kx3yo5"]
 
 [ext_resource type="Script" path="res://Ja.cs" id="1_amugr"]
 
@@ -6,9 +6,14 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8shdw"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4tmno"]
-
 [sub_resource type="BoxMesh" id="BoxMesh_xh7dh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13b62"]
+resource_local_to_scene = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6b1lb"]
+size = Vector3(10, 1, 10)
 
 [node name="Tile" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.22364, 13.6689)
@@ -19,7 +24,12 @@ script = ExtResource("1_amugr")
 transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
 shape = SubResource("BoxShape3D_8shdw")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_4tmno")
 mesh = SubResource("BoxMesh_xh7dh")
+surface_material_override/0 = SubResource("StandardMaterial3D_13b62")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_6b1lb")

@@ -10,7 +10,7 @@ script = ExtResource("1_bajpj")
 [node name="Mage" parent="." instance=ExtResource("3_5jst1")]
 
 [node name="scene_camera" type="Camera3D" parent="."]
-transform = Transform3D(-0.998719, 0.0504998, -0.00309457, 0.0118297, 0.292546, 0.956178, 0.0491921, 0.954917, -0.292769, 6.7656, 22.0579, 5.43895)
+transform = Transform3D(-0.999999, -0.00166911, 0.000510298, 0, 0.292372, 0.956305, -0.00174537, 0.956303, -0.292371, 6.7656, 77.7766, 1.9044)
 current = true
 fov = 90.0
 
