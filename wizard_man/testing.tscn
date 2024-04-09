@@ -6,7 +6,6 @@
 
 [node name="Tile" parent="." instance=ExtResource("1_juirb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.22364, 28.6689)
-active = true
 
 [node name="Tile2" parent="." instance=ExtResource("1_juirb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.22364, 28.6689)

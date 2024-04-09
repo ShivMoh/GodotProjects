@@ -11,12 +11,18 @@ public partial class Ja : StaticBody3D
 	public bool active;
 
 	private Area3D areaDetector;
+
+	// [Signal]
+	// public delegate void NodeActivatedEventHandler(Vector2 coords);
+	
 	// Called when the node enters the scene tree for the first time.
+	
+	public Vector2 coordinates = Vector2.Zero;
 	public override void _Ready()
 	{	
-		areaDetector = GetNode<Area3D>("Area3D");
-		areaDetector.MouseEntered += MouseOver;
-		areaDetector.MouseExited += MouseOut;
+		// areaDetector = GetNode<Area3D>("Area3D");
+		// areaDetector.MouseEntered += MouseOver;
+		// areaDetector.MouseExited += MouseOut;
 
 		// if (active) {
 			
@@ -29,6 +35,15 @@ public partial class Ja : StaticBody3D
 	public override void _Process(double delta)
 	{
 		
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		base._PhysicsProcess(delta);
+
+		if (active) {
+			changeColor(new Color(1.0f, 0.0f, 0.0f));
+		}
 	}
 
 
@@ -46,15 +61,16 @@ public partial class Ja : StaticBody3D
 		
 	}
 
-	public void MouseOver() {
-		// active = true;
-		changeColor(new Color(0, 0, 1));
-	}
+	// public void MouseOver() {
+	// 	active = true;
+	// 	EmitSignal(SignalName.NodeActivated, this.coordinates);
+	// 	changeColor(new Color(0.0f, 1.0f, 0.0f));
+	// }
 
-	public void MouseOut() {
-		// active = false;
-		changeColor(new Color(1, 0, 0));
-	}
+	// public void MouseOut() {
+	// 	active = false;
+		
+	// }
 
 	public void changeColor(Color color) {
 		MeshInstance3D mes = GetNode<MeshInstance3D>("mesh");
