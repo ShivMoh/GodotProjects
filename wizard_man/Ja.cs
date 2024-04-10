@@ -8,8 +8,9 @@ public partial class Ja : StaticBody3D
 	public mage mage;
 
 	[Export]
-	public bool active;
+	public bool active = false;
 
+	private bool active_state;
 	private Area3D areaDetector;
 
 	// [Signal]
@@ -20,6 +21,8 @@ public partial class Ja : StaticBody3D
 	public Vector2 coordinates = Vector2.Zero;
 	public override void _Ready()
 	{	
+
+		active_state = active;
 		// areaDetector = GetNode<Area3D>("Area3D");
 		// areaDetector.MouseEntered += MouseOver;
 		// areaDetector.MouseExited += MouseOut;
@@ -43,7 +46,12 @@ public partial class Ja : StaticBody3D
 
 		if (active) {
 			changeColor(new Color(1.0f, 0.0f, 0.0f));
+		} 
+
+		if (!active) {
+			changeColor(new Color(0.0f, 0.0f, 1.0f));
 		}
+		
 	}
 
 
