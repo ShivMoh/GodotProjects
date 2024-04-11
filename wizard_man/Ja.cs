@@ -44,13 +44,7 @@ public partial class Ja : StaticBody3D
 	{
 		base._PhysicsProcess(delta);
 
-		if (active) {
-			changeColor(new Color(1.0f, 0.0f, 0.0f));
-		} 
 
-		if (!active) {
-			changeColor(new Color(0.0f, 0.0f, 1.0f));
-		}
 		
 	}
 
