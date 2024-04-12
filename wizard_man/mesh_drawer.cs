@@ -5,14 +5,14 @@ public partial class mesh_drawer : Node3D
 {
 	
 	PackedScene tile;
-
+	
 	[Export]
 	mage mage;
 
 	Ja[,] tile_map = new Ja[10, 10];
 	int [,] grid = new int[10, 10];	
 
-	int max_moves = 30;
+	int max_moves = 10;
 
 	int moves = 0;
 	int cursorX = 0;
@@ -20,24 +20,38 @@ public partial class mesh_drawer : Node3D
 
 	Vector2 [] graph_positions = new Vector2[100];
 
+	bool init = true;
 	int currentNode = -1;
+
+	
+	bool moving = false;
+
+	int iteration = 0;
+	
+	int n = 10;
+
+	bool characterSelected = false;
+	Vector3  destinationTarget = Vector3.Zero;
 	public override void _Ready()
 	{
 		tile = GD.Load<PackedScene>("res://tile.tscn");
-		initGrid(10);
-		drawPlatform(10, new Vector3(-(5.0f * 10.0f), 0.0f, -(5.0f * 10.0f)));
+		initGrid(n);
+		drawPlatform(n, new Vector3(-(5.0f * 10.0f), 0.0f, -(5.0f * 10.0f)));
 		placeCursor(0, 0);
-
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-
+		
+					
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
+
+		if (init ) {
+			destinationTarget = tile_map[(int) graph_positions[currentNode].X, (int) graph_positions[currentNode].Y].	
+			GlobalPosition;
+			mage.GlobalPosition = destinationTarget;
+			init = false;
+		}
+
 
 		if (Input.IsActionJustPressed("ui_text_delete")) {
 			for(int x = 0; x < currentNode; x++) {
@@ -45,7 +59,7 @@ public partial class mesh_drawer : Node3D
 			}
 		}
 		if (Input.IsActionJustPressed("ui_right")) {
-			cursorY = Mathf.Min(cursorY + 1, 9);
+			cursorY = Mathf.Min(cursorY + 1, n - 1);
 			moves+=1;
 			placeCursor(cursorX, cursorY);
 		} 
@@ -66,28 +80,73 @@ public partial class mesh_drawer : Node3D
 		
 		if (Input.IsActionJustPressed("ui_down")) {
 			
-			cursorX = Mathf.Min(cursorX + 1, 9);
+			cursorX = Mathf.Min(cursorX + 1, n - 1);
 			moves+=1;
 			placeCursor(cursorX, cursorY);
 		} 
 
+		if (Input.IsActionJustPressed("ui_accept")) {
+			moving = true;
+		}
+
+		if (moving) {
+			if 
+			(
+				Mathf.Round(mage.Position.X) == Mathf.Round(destinationTarget.X) &&
+				Mathf.Round(mage.Position.Z) == Mathf.Round(destinationTarget.Z)	
+			) {
+				moveCharacter(iteration);
+				iteration += 1;
+			}
+		}
+
+		GD.Print("Mage Postion", Mathf.Round(mage.Position.X), Mathf.Round(mage.Position.Z));
+		GD.Print("Destination", Mathf.Round(destinationTarget.X), Mathf.Round(destinationTarget.Z));
+		// Vector2 vec = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_right");
+	
+		// Vector3 direction = (Transform.Basis * new Vector3(vec.X, 0.0f, vec.Y)).Normalized();
 		
 	}
 	
 
 	public Ja createMeshUnit(Vector3 position) {
 		Ja tile_instance = tile.Instantiate<Ja>();
-		tile_instance.mage = mage;
 		AddChild(tile_instance);
 		return tile_instance;
 	}
 
+	public void moveCharacter(int iter) {
+		
+		destinationTarget = tile_map[(int) graph_positions[iter].X, (int) graph_positions[iter].Y].GlobalPosition; 
+		mage.toPosition = destinationTarget;
+		mage.move = true;
+		
+		if (iter == currentNode) {
+			moving = false;
+			iteration = 0;
+			GD.Print("This should run at the end");
+		}
+	}
+
 	public void placeCursor(int m, int n) {
 
-		// if (moves >= (max_moves + 1)) {
-		// 	GD.Print("Maximum moves exceeded");
-		// 	return;
-		// }
+		if (moves >= (max_moves + 1)) {
+			GD.Print("Maximum moves exceeded");
+			return;
+		}
+
+		if (!characterSelected) {
+			
+			if (currentNode != -1) {
+				
+				tile_map[(int) graph_positions[0].X, (int) graph_positions[0].Y].changeColor(new Color(0.0f, 0.0f, 1.0f));
+			}
+			tile_map[m, n].changeColor(new Color(0.0f, 1.0f, 0.0f));
+			currentNode = 0;
+			graph_positions[currentNode] = new Vector2(m, n);
+
+			return;
+		}
 
 		// the way to determine if its a revert, is if the node
 		// your moving to is active
@@ -95,50 +154,37 @@ public partial class mesh_drawer : Node3D
 		// rule: you can't go on any node that is active unless that node is the previous node
 		// rule: to revert, is to go back to the previous node, and deactivate the node at the prior coordinates
 
-		// GD.Print(graph_positions[Mathf.Max(currentNode - 1, 0)]);
-
-		// GD.Print("PREVIOUS NODE BEFORE: ");
-		// GD.Print("Current Node Index", currentNode);	
-		// GD.Print("Cursor", new Vector2(m, n));
-		// GD.Print("Previous Node", graph_positions[Mathf.Max(currentNode - 1, 0)]);
-
-		if (currentNode != -1) {
-
-			GD.Print(new Vector2(m, n));
-			GD.Print("CurrentNode", currentNode);
-			GD.Print(graph_positions[currentNode]);
-		}
-		 
 		if (new Vector2(m, n) == graph_positions[Mathf.Max(currentNode - 1, 0)] && currentNode != -1) {
-			
-			
+			// move back
 			tile_map[(int) graph_positions[currentNode].X, (int) graph_positions[currentNode].Y].changeColor(new Color(0.0f, 0.0f, 1.0f));
-
+			Vector2 current = graph_positions[currentNode];
+			grid[(int) current.X, (int) current.Y] = 0;
+			tile_map[(int) current.X, (int) current.Y].active = false;
 			graph_positions[currentNode] = Vector2.Zero;
-
 			if (currentNode > 0) {
 				currentNode--;
-				GD.Print("helloooooooo?");
 			}
 
-			// GD.Print("PREVIOUS NODE AFTER: ");
-			// GD.Print("Current Node Index", currentNode);	
-			// GD.Print("Cursor", new Vector2(m, n));
-			// GD.Print("Previous Node", graph_positions[Mathf.Max(currentNode - 1, 0)]);
-			grid[m, n] = 0;
-			tile_map[m, n].active = false;
 		} else if (!tile_map[m, n].active){
+
+			// move forward
 			grid[m, n] = 1;
 			tile_map[m, n].active = true;
 			tile_map[m, n].changeColor(new Color(1.0f, 0.0f, 0.0f));
 			currentNode++;		
 			graph_positions[currentNode] = new Vector2(m, n);
-			GD.Print("This is running");
+		} else if (tile_map[m, n].active) {
+
+			// to not move if square has already been moved on
+			cursorX = (int) graph_positions[currentNode].X;
+			cursorY = (int) graph_positions[currentNode].Y;
 		}
 
-		// GD.Print(new Vector2(m, n));
-		// GD.Print(graph_positions[currentNode]);
-		
+		if (currentNode >= 0) {
+			// to have the color of the current node be different
+			tile_map[m, n].changeColor(new Color(0.0f, 1.0f, 0.0f));
+			tile_map[(int) graph_positions[currentNode - 1].X, (int) graph_positions[currentNode - 1].Y].changeColor(new Color(1.0f, 0.0f, 0.0f));
+		}
 
 	}
 
