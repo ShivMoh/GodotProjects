@@ -20,7 +20,7 @@ public partial class mesh_drawer : Node3D
 
 	Vector2 [] graph_positions = new Vector2[100];
 
-	int currentNode = 0;
+	int currentNode = -1;
 	public override void _Ready()
 	{
 		tile = GD.Load<PackedScene>("res://tile.tscn");
@@ -96,32 +96,50 @@ public partial class mesh_drawer : Node3D
 		// rule: to revert, is to go back to the previous node, and deactivate the node at the prior coordinates
 
 		// GD.Print(graph_positions[Mathf.Max(currentNode - 1, 0)]);
-		if (new Vector2(m, n) == graph_positions[Mathf.Max(currentNode - 2, 0)] && currentNode != 0) {
-			
-			
-			tile_map[(int) graph_positions[currentNode - 1].X, (int) graph_positions[currentNode - 1].Y].changeColor(new Color(0.0f, 0.0f, 1.0f));
 
-			graph_positions[Mathf.Max(currentNode - 1, 0)] = Vector2.Zero;
+		// GD.Print("PREVIOUS NODE BEFORE: ");
+		// GD.Print("Current Node Index", currentNode);	
+		// GD.Print("Cursor", new Vector2(m, n));
+		// GD.Print("Previous Node", graph_positions[Mathf.Max(currentNode - 1, 0)]);
+
+		if (currentNode != -1) {
+
+			GD.Print(new Vector2(m, n));
+			GD.Print("CurrentNode", currentNode);
+			GD.Print(graph_positions[currentNode]);
+		}
+		 
+		if (new Vector2(m, n) == graph_positions[Mathf.Max(currentNode - 1, 0)] && currentNode != -1) {
+			
+			
+			tile_map[(int) graph_positions[currentNode].X, (int) graph_positions[currentNode].Y].changeColor(new Color(0.0f, 0.0f, 1.0f));
+
+			graph_positions[currentNode] = Vector2.Zero;
 
 			if (currentNode > 0) {
 				currentNode--;
+				GD.Print("helloooooooo?");
 			}
 
-			GD.Print("THIS IS RUNNING?");
-			GD.Print(currentNode);	
-			GD.Print(new Vector2(m, n));
-			GD.Print(graph_positions[Mathf.Max(currentNode - 2, 0)]);
+			// GD.Print("PREVIOUS NODE AFTER: ");
+			// GD.Print("Current Node Index", currentNode);	
+			// GD.Print("Cursor", new Vector2(m, n));
+			// GD.Print("Previous Node", graph_positions[Mathf.Max(currentNode - 1, 0)]);
 			grid[m, n] = 0;
 			tile_map[m, n].active = false;
-		}
-		
-		if (!tile_map[m, n].active){
+		} else if (!tile_map[m, n].active){
 			grid[m, n] = 1;
 			tile_map[m, n].active = true;
 			tile_map[m, n].changeColor(new Color(1.0f, 0.0f, 0.0f));
+			currentNode++;		
 			graph_positions[currentNode] = new Vector2(m, n);
-			currentNode++;
+			GD.Print("This is running");
 		}
+
+		// GD.Print(new Vector2(m, n));
+		// GD.Print(graph_positions[currentNode]);
+		
+
 	}
 
 	public void initGrid(int n) {
