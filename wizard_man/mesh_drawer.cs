@@ -10,9 +10,21 @@ public partial class mesh_drawer : Node3D
 	mage mage;
 
 	Ja[,] tile_map = new Ja[10, 10];
-	int [,] grid = new int[10, 10];	
+	meta [] characters = { 
+		new meta(
+			m: 2,
+			n: 2,
+			character_path: "res://mage.tscn"
+		),
+		new meta(
+			m: 2,
+			n: 8,
+			character_path: "res://mage.tscn"
+		),
 
-	int max_moves = 10;
+	};
+
+	int max_moves = 200;
 
 	int moves = 0;
 	int cursorX = 0;
@@ -35,23 +47,25 @@ public partial class mesh_drawer : Node3D
 	public override void _Ready()
 	{
 		tile = GD.Load<PackedScene>("res://tile.tscn");
-		initGrid(n);
+		
 		drawPlatform(n, new Vector3(-(5.0f * 10.0f), 0.0f, -(5.0f * 10.0f)));
+		loadCharacters();
 		placeCursor(0, 0);
 		
-					
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 
 		if (init ) {
-			destinationTarget = tile_map[(int) graph_positions[currentNode].X, (int) graph_positions[currentNode].Y].	
-			GlobalPosition;
+			destinationTarget = tile_map[(int) graph_positions[currentNode].X, (int) graph_positions[currentNode].Y].GlobalPosition;
 			mage.GlobalPosition = destinationTarget;
 			init = false;
 		}
 
+		if (Input.IsActionJustPressed("ui_focus_next")) {
+			selectCharacter(cursorX, cursorY);
+		}
 
 		if (Input.IsActionJustPressed("ui_text_delete")) {
 			for(int x = 0; x < currentNode; x++) {
@@ -65,21 +79,18 @@ public partial class mesh_drawer : Node3D
 		} 
 
 		if (Input.IsActionJustPressed("ui_left")) {
-			
 			cursorY = Mathf.Max(cursorY - 1, 0);
 			moves+=1;
 			placeCursor(cursorX, cursorY);
 		} 
 
 		if (Input.IsActionJustPressed("ui_up")) {
-			
 			cursorX = Mathf.Max(cursorX - 1, 0);
 			moves+=1;
 			placeCursor(cursorX, cursorY);
 		} 
 		
 		if (Input.IsActionJustPressed("ui_down")) {
-			
 			cursorX = Mathf.Min(cursorX + 1, n - 1);
 			moves+=1;
 			placeCursor(cursorX, cursorY);
@@ -87,7 +98,12 @@ public partial class mesh_drawer : Node3D
 
 		if (Input.IsActionJustPressed("ui_accept")) {
 			moving = true;
+			tile_map[cursorX, cursorY].has_mage = false;
+			tile_map[cursorX, cursorY].mage = null;
+		
 		}
+
+		// if (currentNode >= 0) GD.Print(graph_positions[currentNode]);
 
 		if (moving) {
 			if 
@@ -100,14 +116,42 @@ public partial class mesh_drawer : Node3D
 			}
 		}
 
-		GD.Print("Mage Postion", Mathf.Round(mage.Position.X), Mathf.Round(mage.Position.Z));
-		GD.Print("Destination", Mathf.Round(destinationTarget.X), Mathf.Round(destinationTarget.Z));
+		// GD.Print("Mage Postion", Mathf.Round(mage.Position.X), Mathf.Round(mage.Position.Z));
+		// GD.Print("Destination", Mathf.Round(destinationTarget.X), Mathf.Round(destinationTarget.Z));
 		// Vector2 vec = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_right");
 	
 		// Vector3 direction = (Transform.Basis * new Vector3(vec.X, 0.0f, vec.Y)).Normalized();
 		
 	}
 	
+	public void selectCharacter(int m, int n) {
+		if (tile_map[m, n].has_mage) {
+			characterSelected = true;
+			mage = tile_map[m, n].mage;
+			GD.Print(m, n);
+			destinationTarget = tile_map[m, n].GlobalPosition;
+			GD.Print("Character Selected", destinationTarget);
+		} else if (characterSelected) {
+			characterSelected = false;
+			clearVectors();
+			graph_positions = new Vector2[100];
+			currentNode = -1;
+			iteration = 0;
+			tile_map[m, n].has_mage = true;
+			tile_map[m, n].mage = mage;
+			tile_map[m, n].changeColor(new Color(0.0f, 0.0f, 1.0f));
+			placeCursor(m, n);
+
+		}
+	}
+
+	public void clearVectors() {
+		for (int i = 0; i < currentNode; i++) {
+			// tile_map[cursorX, cursorY].changeColor(new Color(0.0f, 0.0f, 1.0f));
+			tile_map[(int) graph_positions[i].X, (int) graph_positions[i].Y].changeColor(new Color(0.0f, 0.0f, 1.0f));
+			tile_map[(int) graph_positions[i].X, (int) graph_positions[i].Y].active = false;
+		}
+	}
 
 	public Ja createMeshUnit(Vector3 position) {
 		Ja tile_instance = tile.Instantiate<Ja>();
@@ -117,36 +161,37 @@ public partial class mesh_drawer : Node3D
 
 	public void moveCharacter(int iter) {
 		
+		
 		destinationTarget = tile_map[(int) graph_positions[iter].X, (int) graph_positions[iter].Y].GlobalPosition; 
 		mage.toPosition = destinationTarget;
 		mage.move = true;
 		
 		if (iter == currentNode) {
 			moving = false;
-			iteration = 0;
 			GD.Print("This should run at the end");
+			
 		}
 	}
 
 	public void placeCursor(int m, int n) {
+
+		if (!characterSelected) {
+			
+			if (currentNode != -1) {
+				tile_map[(int) graph_positions[0].X, (int) graph_positions[0].Y].changeColor(new Color(0.0f, 0.0f, 1.0f));
+			}
+			tile_map[m, n].changeColor(new Color(0.0f, 1.0f, 0.0f));
+			currentNode = 0;
+			graph_positions[currentNode] = new Vector2(m, n);
+			return;
+		}
 
 		if (moves >= (max_moves + 1)) {
 			GD.Print("Maximum moves exceeded");
 			return;
 		}
 
-		if (!characterSelected) {
-			
-			if (currentNode != -1) {
-				
-				tile_map[(int) graph_positions[0].X, (int) graph_positions[0].Y].changeColor(new Color(0.0f, 0.0f, 1.0f));
-			}
-			tile_map[m, n].changeColor(new Color(0.0f, 1.0f, 0.0f));
-			currentNode = 0;
-			graph_positions[currentNode] = new Vector2(m, n);
-
-			return;
-		}
+	
 
 		// the way to determine if its a revert, is if the node
 		// your moving to is active
@@ -158,7 +203,7 @@ public partial class mesh_drawer : Node3D
 			// move back
 			tile_map[(int) graph_positions[currentNode].X, (int) graph_positions[currentNode].Y].changeColor(new Color(0.0f, 0.0f, 1.0f));
 			Vector2 current = graph_positions[currentNode];
-			grid[(int) current.X, (int) current.Y] = 0;
+			// grid[(int) current.X, (int) current.Y] = 0;
 			tile_map[(int) current.X, (int) current.Y].active = false;
 			graph_positions[currentNode] = Vector2.Zero;
 			if (currentNode > 0) {
@@ -168,7 +213,7 @@ public partial class mesh_drawer : Node3D
 		} else if (!tile_map[m, n].active){
 
 			// move forward
-			grid[m, n] = 1;
+			// grid[m, n] = 1;
 			tile_map[m, n].active = true;
 			tile_map[m, n].changeColor(new Color(1.0f, 0.0f, 0.0f));
 			currentNode++;		
@@ -188,11 +233,23 @@ public partial class mesh_drawer : Node3D
 
 	}
 
-	public void initGrid(int n) {
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				grid[i, j] = 0;
-			}
+	public mage instantiateCharacter(string path, int m, int n) {
+		PackedScene character_scene = GD.Load<PackedScene>(path);
+		mage instance = character_scene.Instantiate<mage>();
+		instance.Position = tile_map[m, n].GlobalPosition;		
+		tile_map[m, n].mage = instance;
+		tile_map[m, n].has_mage = true;
+		AddChild(instance);
+
+		return instance;
+	}
+	public void loadCharacters() {
+		for (int i = 0; i < characters.Length; i++) {
+			instantiateCharacter(
+				characters[i].character_path,
+				characters[i].m,
+				characters[i].n
+			);
 		}
 	}
 
@@ -205,9 +262,7 @@ public partial class mesh_drawer : Node3D
 				tile_instance.coordinates = new Vector2(i, j);
 				tile_map[i, j] = tile_instance;
 				tile_map[i, j].Position = start;
-				// tile_map[i, j].NodeActivated += ActivateNode;
-				
-				// mesh.GetAabb().Size.X
+	
 				start += new Vector3(10.0f, 0.0f, 0.0f);
 			}
 			start = new Vector3(startPosition.X, startPosition.Y, start.Z + 10.0f);

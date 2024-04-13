@@ -8,6 +8,9 @@ public partial class Ja : StaticBody3D
 	[Export]
 	public bool active = false;
 	
+	public mage mage;
+
+	public bool has_mage = false;
 	public Vector2 coordinates = Vector2.Zero;
 
 	public override void _Ready()
