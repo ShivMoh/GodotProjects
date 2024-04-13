@@ -51,7 +51,6 @@ public partial class mesh_drawer : Node3D
 		drawPlatform(n, new Vector3(-(5.0f * 10.0f), 0.0f, -(5.0f * 10.0f)));
 		loadCharacters();
 		placeCursor(0, 0);
-		
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -63,47 +62,59 @@ public partial class mesh_drawer : Node3D
 			init = false;
 		}
 
-		if (Input.IsActionJustPressed("ui_focus_next")) {
-			selectCharacter(cursorX, cursorY);
-		}
+		if (!moving) {
+			if (Input.IsActionJustPressed("ui_focus_next")) {
+				selectCharacter(cursorX, cursorY);
+			}
 
-		if (Input.IsActionJustPressed("ui_text_delete")) {
-			for(int x = 0; x < currentNode; x++) {
-				tile_map[(int) graph_positions[x].X, (int) graph_positions[x].Y].changeColor(new Color(0.0f, 1.0f, 0.0f));
+			if (Input.IsActionJustPressed("ui_text_delete")) {
+				for(int x = 0; x <= currentNode; x++) {
+					tile_map[(int) graph_positions[x].X, (int) graph_positions[x].Y].changeColor(new Color(1.0f, 0.0f, 1.0f));
+				}
+			}
+			if (Input.IsActionJustPressed("ui_right")) {
+				cursorY = Mathf.Min(cursorY + 1, n - 1);
+				moves+=1;
+				placeCursor(cursorX, cursorY);
+			} 
+
+			if (Input.IsActionJustPressed("ui_left")) {
+				cursorY = Mathf.Max(cursorY - 1, 0);
+				moves+=1;
+				placeCursor(cursorX, cursorY);
+			} 
+
+			if (Input.IsActionJustPressed("ui_up")) {
+				cursorX = Mathf.Max(cursorX - 1, 0);
+				moves+=1;
+				placeCursor(cursorX, cursorY);
+			} 
+			
+			if (Input.IsActionJustPressed("ui_down")) {
+				cursorX = Mathf.Min(cursorX + 1, n - 1);
+				moves+=1;
+				placeCursor(cursorX, cursorY);
+			} 
+
+			if (Input.IsActionJustPressed("ui_accept")) {
+				moving = true;
+				tile_map[cursorX, cursorY].has_mage = false;
+				tile_map[cursorX, cursorY].mage = null;
 			}
 		}
-		if (Input.IsActionJustPressed("ui_right")) {
-			cursorY = Mathf.Min(cursorY + 1, n - 1);
-			moves+=1;
-			placeCursor(cursorX, cursorY);
-		} 
-
-		if (Input.IsActionJustPressed("ui_left")) {
-			cursorY = Mathf.Max(cursorY - 1, 0);
-			moves+=1;
-			placeCursor(cursorX, cursorY);
-		} 
-
-		if (Input.IsActionJustPressed("ui_up")) {
-			cursorX = Mathf.Max(cursorX - 1, 0);
-			moves+=1;
-			placeCursor(cursorX, cursorY);
-		} 
 		
-		if (Input.IsActionJustPressed("ui_down")) {
-			cursorX = Mathf.Min(cursorX + 1, n - 1);
-			moves+=1;
-			placeCursor(cursorX, cursorY);
-		} 
-
-		if (Input.IsActionJustPressed("ui_accept")) {
-			moving = true;
-			tile_map[cursorX, cursorY].has_mage = false;
-			tile_map[cursorX, cursorY].mage = null;
-		
+		// for printing the active state of the grid
+		if (Input.IsActionJustPressed("ui_cancel")) {
+			for (int i = 0; i < 10; i++) {
+				var str = "[";
+				for (int j = 0; j < 10; j++) {
+					
+					str += (tile_map[i,j].active ? 1 : 0).ToString() + " | ";
+				}
+				str += "]";
+				GD.Print(str);
+			}
 		}
-
-		// if (currentNode >= 0) GD.Print(graph_positions[currentNode]);
 
 		if (moving) {
 			if 
@@ -115,12 +126,6 @@ public partial class mesh_drawer : Node3D
 				iteration += 1;
 			}
 		}
-
-		// GD.Print("Mage Postion", Mathf.Round(mage.Position.X), Mathf.Round(mage.Position.Z));
-		// GD.Print("Destination", Mathf.Round(destinationTarget.X), Mathf.Round(destinationTarget.Z));
-		// Vector2 vec = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_right");
-	
-		// Vector3 direction = (Transform.Basis * new Vector3(vec.X, 0.0f, vec.Y)).Normalized();
 		
 	}
 	
@@ -128,9 +133,7 @@ public partial class mesh_drawer : Node3D
 		if (tile_map[m, n].has_mage) {
 			characterSelected = true;
 			mage = tile_map[m, n].mage;
-			GD.Print(m, n);
 			destinationTarget = tile_map[m, n].GlobalPosition;
-			GD.Print("Character Selected", destinationTarget);
 		} else if (characterSelected) {
 			characterSelected = false;
 			clearVectors();
@@ -146,8 +149,7 @@ public partial class mesh_drawer : Node3D
 	}
 
 	public void clearVectors() {
-		for (int i = 0; i < currentNode; i++) {
-			// tile_map[cursorX, cursorY].changeColor(new Color(0.0f, 0.0f, 1.0f));
+		for (int i = 0; i <= currentNode; i++) {
 			tile_map[(int) graph_positions[i].X, (int) graph_positions[i].Y].changeColor(new Color(0.0f, 0.0f, 1.0f));
 			tile_map[(int) graph_positions[i].X, (int) graph_positions[i].Y].active = false;
 		}
@@ -160,16 +162,13 @@ public partial class mesh_drawer : Node3D
 	}
 
 	public void moveCharacter(int iter) {
-		
-		
+
 		destinationTarget = tile_map[(int) graph_positions[iter].X, (int) graph_positions[iter].Y].GlobalPosition; 
 		mage.toPosition = destinationTarget;
 		mage.move = true;
 		
 		if (iter == currentNode) {
 			moving = false;
-			GD.Print("This should run at the end");
-			
 		}
 	}
 
@@ -191,8 +190,6 @@ public partial class mesh_drawer : Node3D
 			return;
 		}
 
-	
-
 		// the way to determine if its a revert, is if the node
 		// your moving to is active
 		
@@ -210,24 +207,21 @@ public partial class mesh_drawer : Node3D
 				currentNode--;
 			}
 
-		} else if (!tile_map[m, n].active){
-
-			// move forward
-			// grid[m, n] = 1;
-			tile_map[m, n].active = true;
-			tile_map[m, n].changeColor(new Color(1.0f, 0.0f, 0.0f));
-			currentNode++;		
-			graph_positions[currentNode] = new Vector2(m, n);
 		} else if (tile_map[m, n].active) {
-
 			// to not move if square has already been moved on
 			cursorX = (int) graph_positions[currentNode].X;
 			cursorY = (int) graph_positions[currentNode].Y;
+			return;
 		}
 
-		if (currentNode >= 0) {
+		if (currentNode >= 0 && !tile_map[m, n].active) {
 			// to have the color of the current node be different
 			tile_map[m, n].changeColor(new Color(0.0f, 1.0f, 0.0f));
+			tile_map[m, n].active = true;
+			currentNode++;		
+			graph_positions[currentNode] = new Vector2(m, n);
+
+			// changes the previous one back to platform
 			tile_map[(int) graph_positions[currentNode - 1].X, (int) graph_positions[currentNode - 1].Y].changeColor(new Color(1.0f, 0.0f, 0.0f));
 		}
 
@@ -269,20 +263,4 @@ public partial class mesh_drawer : Node3D
 		}
 	}
 
-
-	// public void ActivateNode(Vector2 coords) {
-	// 	tile_map[(int) coords.X, (int) coords.Y].changeColor(new Color(0, 0, 1));
-	// }
-
-	
-
-	public void activate(Ja mesh) {
-		MeshInstance3D mes = mesh.GetNode<MeshInstance3D>("mesh");
-		StandardMaterial3D material = mes.GetSurfaceOverrideMaterial(0) as StandardMaterial3D;
-		material.AlbedoColor = new Color(0, 0, 1);
-
-		// StandardMaterial3D material = new StandardMaterial3D();
-		// material.AlbedoColor = new Color(0, 0, 1);
-		// mesh.GetNode<MeshInstance3D>("mesh").MaterialOverride = material;
-	}
 }
