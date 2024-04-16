@@ -217,11 +217,11 @@ public partial class mesh_drawer : Node3D
 		if (currentNode >= 0 && !tile_map[m, n].active) {
 			// to have the color of the current node be different
 			tile_map[m, n].changeColor(new Color(0.0f, 1.0f, 0.0f));
+			// changes the previous one back to platform
 			tile_map[m, n].active = true;
 			currentNode++;		
 			graph_positions[currentNode] = new Vector2(m, n);
 
-			// changes the previous one back to platform
 			tile_map[(int) graph_positions[currentNode - 1].X, (int) graph_positions[currentNode - 1].Y].changeColor(new Color(1.0f, 0.0f, 0.0f));
 		}
 
