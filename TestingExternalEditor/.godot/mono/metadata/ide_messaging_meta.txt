@@ -1,2 +1,0 @@
-﻿39237
-/home/shivesh/Desktop/godot/godot.x86_64
