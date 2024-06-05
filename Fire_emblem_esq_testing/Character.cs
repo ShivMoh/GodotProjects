@@ -3,17 +3,17 @@ using System;
 using System.Numerics;
 
 using Vector2 = Godot.Vector2;
-public partial class player_test : CharacterBody2D
+public partial class Character : CharacterBody2D
 {
 	public const float Speed = 100.0f;
 
-	public Vector2 target_position;
+	public Vector2 targetPosition;
 	public bool move = false;
 	
 	private AnimatedSprite2D animatedSprite;
 	public override void _Ready()
 	{
-		target_position = this.GlobalPosition;
+		targetPosition = this.GlobalPosition;
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 	}
 
@@ -47,8 +47,8 @@ public partial class player_test : CharacterBody2D
 	}
 
 	private Vector2 calculateDirection() {
-		float directionX =  Mathf.Round(target_position.X - this.GlobalPosition.X);
-		float directionY = Mathf.Round(target_position.Y - this.GlobalPosition.Y);
+		float directionX =  Mathf.Round(targetPosition.X - this.GlobalPosition.X);
+		float directionY = Mathf.Round(targetPosition.Y - this.GlobalPosition.Y);
 
 		Vector2 direction = new Vector2(directionX, directionY).Normalized();
 		return direction;

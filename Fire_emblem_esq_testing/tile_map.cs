@@ -8,92 +8,170 @@ public partial class tile_map : TileMap
 
 
 	[Export]
-	player_test character;
+	Character selectedCharacter;
 
-	Vector2I current_tile_coords;
+	[Export]
+	Node2D container;
+
+	Vector2I currentTileCoords;
+	Vector2I previousTileCoords;
 
 	Queue<Vector2I> path = new Queue<Vector2I>();
 
 	bool move = false;
 
+	CharacterMeta[] characters = {
+		new CharacterMeta(
+			tileCoord: new Vector2I(0, 0),
+			characterPath : "res://player_test.tscn"
+		),
+		new CharacterMeta(
+			tileCoord: new Vector2I(0, 1),
+			characterPath : "res://player_test.tscn"
+		),
+		new CharacterMeta(
+			tileCoord: new Vector2I(1, 0),
+			characterPath : "res://player_test.tscn"
+		),
+	};
+
+	private Character[] loadedCharacters;
+
+	private Vector2I lastTile;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GD.Print("hello world");
 		// var tiles = this.GetUsedCells(0);
 		// GD.Print(this.GetCellTileData(0, tiles[0]));
-		current_tile_coords = new Vector2I(0, 0);
+		currentTileCoords = new Vector2I(0, 0);
+		selectedCharacter = null;
+		loadCharacters();
+		placeCursor();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{	
-		if (Input.IsActionJustPressed("ui_right")) {
-			current_tile_coords.X += 1;
+		previousTileCoords = currentTileCoords;
+
+		if (Input.IsActionJustPressed("right")) {
+			currentTileCoords.X += 1;
 			this.placeCursor();
 		}
 
-		if (Input.IsActionJustPressed("ui_left")) {
-			current_tile_coords.X -= 1;
+		if (Input.IsActionJustPressed("left")) {
+			currentTileCoords.X -= 1;
 			this.placeCursor();
 		}
 
-		if (Input.IsActionJustPressed("ui_up")) {
-			current_tile_coords.Y -= 1;
+		if (Input.IsActionJustPressed("up")) {
+			currentTileCoords.Y -= 1;
 			this.placeCursor();
-
 		}
 
-		if (Input.IsActionJustPressed("ui_down")) {
-			current_tile_coords.Y += 1;
+		if (Input.IsActionJustPressed("down")) {
+			currentTileCoords.Y += 1;
 			this.placeCursor();
-
 		}
 
 		if (Input.IsActionJustPressed("ui_text_delete")) {
-			GD.Print("hello?");
-			moveChacater();
-			move = true;
+			moveCharacter();
+			selectedCharacter.move = true;
+			lastTile = path.Last();
 		}
 
-		if (move) {
-			moveChacater();
+		if (selectedCharacter != null) {
+			if (selectedCharacter.move) {
+				moveCharacter();
+			}
 		}
 
 	}
 
 	// private void updateCharacterPosition(Vector2I toCoords) {
-	// 	character.Position = target_position;
+	// 	selectedCharacter.Position = targetPosition;
 	// }
 
-	private void moveChacater() {
+	private void moveCharacter() {
 
-		if (Math.Abs(character.GlobalPosition.X - character.target_position.X) < 2.0f
-			&& Math.Abs(character.GlobalPosition.Y - character.target_position.Y) < 2.0f
-		) {
+		bool reachDestination = 	Math.Abs(selectedCharacter.GlobalPosition.X - selectedCharacter.targetPosition.X) < 2.0f
+									&& Math.Abs(selectedCharacter.GlobalPosition.Y - selectedCharacter.targetPosition.Y) < 2.0f;
+	 
+		if (reachDestination && path.Count != 0) {
 			Vector2I next_tile = path.Dequeue();
-			character.target_position = this.MapToLocal(next_tile);
-			GD.Print("is this working");
+			selectedCharacter.targetPosition = this.MapToLocal(next_tile);			
 		} 
 
-	
+		Vector2 lastCoordinates = this.MapToLocal(lastTile);
 
-		if (path.Count <= 0) {
-			move = false;
+		bool reachLast = 	Math.Abs(selectedCharacter.GlobalPosition.X - lastCoordinates.X) < 2.0f
+									&& Math.Abs(selectedCharacter.GlobalPosition.Y - lastCoordinates.Y) < 2.0f;
+	 
+		if (reachLast) {
+			selectedCharacter.move = false;
 		}
 	}
 
-	private void placeCursor() {
-		this.SetCell(
-			0,
-			current_tile_coords,
-			7,
-			new Vector2I(1, 0)
-		);
-
-		path.Enqueue(current_tile_coords);
+	private void selectCharacter() {
+		Character character = loadedCharacters.FirstOrDefault<Character>(character => character.GlobalPosition == MapToLocal(currentTileCoords), null);
+		selectedCharacter = character;
 	}
 	
+	private void printQueue() {
+		foreach (var element in path.ToList())
+		{
+			GD.Print(element);
+		}
+	}
+
+
+
+	private void placeCursor() {
+
+		if (selectedCharacter == null) {
+			this.EraseCell(
+				2,
+				previousTileCoords
+			);
+
+			this.SetCell(
+				2,
+				currentTileCoords,
+				7,
+				new Vector2I(1, 0)
+			);
+		} else {
+			this.SetCell(
+				2,
+				currentTileCoords,
+				7,
+				new Vector2I(1, 0)
+			);
+
+			path.Enqueue(currentTileCoords);
+		}
+
+	}
+
+	private Character instantiateCharacter(Vector2I tileCoords, string path) {
+		PackedScene characterScene = GD.Load<PackedScene>(path);
+		var instance = characterScene.Instantiate<Character>();
+		instance.GlobalPosition = this.MapToLocal(tileCoords);	
+
+		container.AddChild(instance);
+		loadedCharacters.Append<Character>(instance);
+
+		return instance;
+	}
+	
+	public void loadCharacters() {
+		for (int i = 0; i < characters.Length; i++) {
+			instantiateCharacter(
+				characters[i].tileCoord,
+				characters[i].characterPath
+			);
+		}
+	}
 
 }

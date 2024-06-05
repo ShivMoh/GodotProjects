@@ -5,8 +5,11 @@
 
 [node name="main" type="Node2D"]
 
-[node name="TileMap" parent="." node_paths=PackedStringArray("character") instance=ExtResource("1_och5k")]
-character = NodePath("../CharacterBody2D")
+[node name="TileMap" parent="." node_paths=PackedStringArray("selectedCharacter", "container") instance=ExtResource("1_och5k")]
+selectedCharacter = NodePath("../CharacterBody2D")
+container = NodePath("../container")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_grb8w")]
-position = Vector2(1, 0)
+position = Vector2(28, 14)
+
+[node name="container" type="Node2D" parent="."]
