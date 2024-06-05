@@ -1,5 +1,6 @@
-[gd_scene load_steps=26 format=3 uid="uid://80nbk6xa2imy"]
+[gd_scene load_steps=27 format=3 uid="uid://80nbk6xa2imy"]
 
+[ext_resource type="Script" path="res://player_test.cs" id="1_vnkqe"]
 [ext_resource type="Texture2D" uid="uid://deu57u4l6vq1g" path="res://assets/characters/idle.png" id="2_fye13"]
 [ext_resource type="Texture2D" uid="uid://b5xv32i6xq2fs" path="res://assets/characters/walk_back.png" id="2_j3xh2"]
 [ext_resource type="Texture2D" uid="uid://bdvl0bque1odu" path="res://assets/characters/walk_forward.png" id="4_uam1s"]
@@ -169,6 +170,7 @@ animations = [{
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 z_index = 10
+script = ExtResource("1_vnkqe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
@@ -176,3 +178,8 @@ z_index = 10
 sprite_frames = SubResource("SpriteFrames_8ir6w")
 animation = &"front"
 autoplay = "idle"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+process_callback = 0
+editor_draw_limits = true
