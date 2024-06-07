@@ -2,6 +2,9 @@ using Godot;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Numerics;
+using Vector2 = Godot.Vector2;
+
 
 public partial class tile_map : TileMap
 {
@@ -16,30 +19,29 @@ public partial class tile_map : TileMap
 	Vector2I currentTileCoords;
 	Vector2I previousTileCoords;
 
-	Queue<Vector2I> path = new Queue<Vector2I>();
+	List<Vector2I> path = new List<Vector2I>();
 
 	bool move = false;
 
 	CharacterMeta[] characters = {
 		new CharacterMeta(
-			tileCoord: new Vector2I(0, 0),
+			tileCoord: new Vector2I(5, 5),
 			characterPath : "res://player_test.tscn"
 		),
 		new CharacterMeta(
-			tileCoord: new Vector2I(0, 1),
+			tileCoord: new Vector2I(0, 7),
 			characterPath : "res://player_test.tscn"
 		),
 		new CharacterMeta(
-			tileCoord: new Vector2I(1, 0),
+			tileCoord: new Vector2I(5, 0),
 			characterPath : "res://player_test.tscn"
 		),
 	};
 
-	private Character[] loadedCharacters;
+	List<Character> loadedCharacters = new List<Character>();
 
 	private Vector2I lastTile;
 	
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		// var tiles = this.GetUsedCells(0);
@@ -50,7 +52,6 @@ public partial class tile_map : TileMap
 		placeCursor();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{	
 		previousTileCoords = currentTileCoords;
@@ -81,6 +82,10 @@ public partial class tile_map : TileMap
 			lastTile = path.Last();
 		}
 
+		if (Input.IsActionJustPressed("select")) {
+			selectCharacter();
+		}
+
 		if (selectedCharacter != null) {
 			if (selectedCharacter.move) {
 				moveCharacter();
@@ -99,7 +104,8 @@ public partial class tile_map : TileMap
 									&& Math.Abs(selectedCharacter.GlobalPosition.Y - selectedCharacter.targetPosition.Y) < 2.0f;
 	 
 		if (reachDestination && path.Count != 0) {
-			Vector2I next_tile = path.Dequeue();
+			Vector2I next_tile = path.ElementAt(0); 
+			path.RemoveAt(0);
 			selectedCharacter.targetPosition = this.MapToLocal(next_tile);			
 		} 
 
@@ -114,64 +120,111 @@ public partial class tile_map : TileMap
 	}
 
 	private void selectCharacter() {
-		Character character = loadedCharacters.FirstOrDefault<Character>(character => character.GlobalPosition == MapToLocal(currentTileCoords), null);
-		selectedCharacter = character;
+		var character = loadedCharacters.FirstOrDefault<Character>(character => character.GlobalPosition == MapToLocal(currentTileCoords), null);
+
+		if (character is not null) {
+			selectedCharacter = character;
+		}
 	}
 	
 	private void printQueue() {
+		int index = 0;
 		foreach (var element in path.ToList())
 		{
-			GD.Print(element);
+			GD.Print("Index: ", index, "Element: ", element);
+			index++;
 		}
 	}
 
-
-
 	private void placeCursor() {
-
+		int layer = 3;
+		
 		if (selectedCharacter == null) {
 			this.EraseCell(
-				2,
+				layer,
 				previousTileCoords
 			);
 
 			this.SetCell(
-				2,
+				layer,
 				currentTileCoords,
 				7,
 				new Vector2I(1, 0)
 			);
 		} else {
-			this.SetCell(
-				2,
+			createPath();
+		}
+
+		// this.SetCell(
+		// 	layer, 
+		// 	currentTileCoords, 
+		// 	7,
+		// 	new Vector2I(0, 0)
+		// );
+
+	}
+
+	private void createPath() {
+
+		GD.Print("Current Tile coords", currentTileCoords);
+		GD.Print("Previous Tile Coordinates", previousTileCoords);
+		if (path.Count() != 0) {
+			Vector2I removedElement = path.Last();
+			path.RemoveAt(path.IndexOf(path.Last()));
+
+			if (path.Count() != 0) {
+				if (path.Last() == currentTileCoords) {
+					GD.Print("Removed something");
+					this.EraseCell(
+						3,
+						previousTileCoords
+					);
+
+					return;
+				}
+			}
+
+			path.Add(removedElement);
+			printQueue();
+			
+		} 
+			
+		if (path.Contains(currentTileCoords)) { 
+			currentTileCoords = previousTileCoords;
+			return;
+		}
+
+		this.SetCell(
+				3,
 				currentTileCoords,
 				7,
 				new Vector2I(1, 0)
 			);
-
-			path.Enqueue(currentTileCoords);
-		}
-
+		path.Add(currentTileCoords);
 	}
 
 	private Character instantiateCharacter(Vector2I tileCoords, string path) {
 		PackedScene characterScene = GD.Load<PackedScene>(path);
-		var instance = characterScene.Instantiate<Character>();
+		Character instance = characterScene.Instantiate<Character>();
 		instance.GlobalPosition = this.MapToLocal(tileCoords);	
 
 		container.AddChild(instance);
-		loadedCharacters.Append<Character>(instance);
+	
+		loadedCharacters.Add(instance);
 
+		GD.Print("character loaded", instance);
 		return instance;
 	}
 	
 	public void loadCharacters() {
 		for (int i = 0; i < characters.Length; i++) {
-			instantiateCharacter(
+			this.instantiateCharacter(
 				characters[i].tileCoord,
 				characters[i].characterPath
 			);
 		}
+
+		GD.Print(loadedCharacters);
 	}
 
 }

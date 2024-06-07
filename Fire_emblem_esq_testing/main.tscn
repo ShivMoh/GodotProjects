@@ -6,6 +6,11 @@
 [node name="main" type="Node2D"]
 
 [node name="TileMap" parent="." node_paths=PackedStringArray("selectedCharacter", "container") instance=ExtResource("1_och5k")]
+layer_1/z_index = 2
+layer_2/z_index = 3
+layer_3/name = "cursor"
+layer_3/z_index = 1
+layer_3/tile_data = PackedInt32Array()
 selectedCharacter = NodePath("../CharacterBody2D")
 container = NodePath("../container")
 
