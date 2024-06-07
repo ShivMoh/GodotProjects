@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Numerics;
 using Vector2 = Godot.Vector2;
+using System.IO;
 
 
 public partial class tile_map : TileMap
@@ -22,6 +23,7 @@ public partial class tile_map : TileMap
 	List<Vector2I> path = new List<Vector2I>();
 
 	bool move = false;
+	int characterMoveIndex = 0;
 
 	CharacterMeta[] characters = {
 		new CharacterMeta(
@@ -77,9 +79,9 @@ public partial class tile_map : TileMap
 		}
 
 		if (Input.IsActionJustPressed("ui_text_delete")) {
-			moveCharacter();
 			selectedCharacter.move = true;
 			lastTile = path.Last();
+			moveCharacter();
 		}
 
 		if (Input.IsActionJustPressed("select")) {
@@ -103,10 +105,13 @@ public partial class tile_map : TileMap
 		bool reachDestination = 	Math.Abs(selectedCharacter.GlobalPosition.X - selectedCharacter.targetPosition.X) < 2.0f
 									&& Math.Abs(selectedCharacter.GlobalPosition.Y - selectedCharacter.targetPosition.Y) < 2.0f;
 	 
-		if (reachDestination && path.Count != 0) {
-			Vector2I next_tile = path.ElementAt(0); 
-			path.RemoveAt(0);
+		if (reachDestination && path.Count() != 0 && characterMoveIndex < path.Count()) {
+			GD.Print(characterMoveIndex);
+			GD.Print(path.Count());
+			Vector2I next_tile = path.ElementAt(characterMoveIndex); 
+			
 			selectedCharacter.targetPosition = this.MapToLocal(next_tile);			
+			characterMoveIndex++;
 		} 
 
 		Vector2 lastCoordinates = this.MapToLocal(lastTile);
@@ -116,14 +121,31 @@ public partial class tile_map : TileMap
 	 
 		if (reachLast) {
 			selectedCharacter.move = false;
+			characterMoveIndex = 0;
+			this.clearPath();
 		}
 	}
 
+	private void clearPath() {
+		
+		ClearLayer(3);
+		path.Clear();
+
+		this.SetCell(
+			3,
+			currentTileCoords,
+			7,
+			new Vector2I(0, 0)
+		);
+
+	}
+	
 	private void selectCharacter() {
 		var character = loadedCharacters.FirstOrDefault<Character>(character => character.GlobalPosition == MapToLocal(currentTileCoords), null);
 
 		if (character is not null) {
 			selectedCharacter = character;
+			
 		}
 	}
 	
@@ -165,19 +187,26 @@ public partial class tile_map : TileMap
 	}
 
 	private void createPath() {
+		if (path.Count() == 0) {
+			path.Add(previousTileCoords);
+		}
 
-		GD.Print("Current Tile coords", currentTileCoords);
-		GD.Print("Previous Tile Coordinates", previousTileCoords);
 		if (path.Count() != 0) {
 			Vector2I removedElement = path.Last();
 			path.RemoveAt(path.IndexOf(path.Last()));
 
 			if (path.Count() != 0) {
 				if (path.Last() == currentTileCoords) {
-					GD.Print("Removed something");
 					this.EraseCell(
 						3,
 						previousTileCoords
+					);
+
+					this.SetCell(
+							3,
+							currentTileCoords,
+							7,
+							new Vector2I(0, 0)
 					);
 
 					return;
@@ -185,22 +214,38 @@ public partial class tile_map : TileMap
 			}
 
 			path.Add(removedElement);
-			printQueue();
+		
 			
 		} 
-			
+
 		if (path.Contains(currentTileCoords)) { 
 			currentTileCoords = previousTileCoords;
 			return;
 		}
 
+		setTiles();
+		path.Add(currentTileCoords);
+
+		GD.Print(path.ElementAt(0));
+		// printQueue();
+	}
+
+	private void setTiles() {
+
+		this.SetCell(
+				3,
+				previousTileCoords,
+				7,
+				new Vector2I(1, 0)
+		);
+
 		this.SetCell(
 				3,
 				currentTileCoords,
 				7,
-				new Vector2I(1, 0)
-			);
-		path.Add(currentTileCoords);
+				new Vector2I(0, 0)
+		);
+
 	}
 
 	private Character instantiateCharacter(Vector2I tileCoords, string path) {
@@ -212,7 +257,7 @@ public partial class tile_map : TileMap
 	
 		loadedCharacters.Add(instance);
 
-		GD.Print("character loaded", instance);
+		// GD.Print("character loaded", instance);
 		return instance;
 	}
 	
@@ -224,7 +269,7 @@ public partial class tile_map : TileMap
 			);
 		}
 
-		GD.Print(loadedCharacters);
+		// GD.Print(loadedCharacters);
 	}
 
 }
