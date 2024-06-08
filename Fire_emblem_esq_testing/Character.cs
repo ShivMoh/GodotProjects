@@ -1,11 +1,9 @@
 using Godot;
-using System;
-using System.Numerics;
 
 using Vector2 = Godot.Vector2;
 public partial class Character : CharacterBody2D
 {
-	public const float Speed = 100.0f;
+	public const float Speed = 200.0f;
 
 	public Vector2 targetPosition;
 	public bool move = false;
@@ -25,6 +23,10 @@ public partial class Character : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+
+	public bool isMoving() {
+		return move;
 	}
 
 	private Vector2 moveTo(Vector2 velocity) {
