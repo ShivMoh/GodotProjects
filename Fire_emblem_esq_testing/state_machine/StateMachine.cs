@@ -35,7 +35,7 @@ public partial class StateMachine : Node2D {
 		if (currentState is not null) currentState.physicsUpdate(delta);
 	}
 
-	public void onChildTransition(State state, int stateID) {
+	public void onChildTransition(State state, int stateID, List<Node> args) {
 
 		if (state != currentState) return;
 

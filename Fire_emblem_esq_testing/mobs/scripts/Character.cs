@@ -8,7 +8,7 @@ public partial class Character : CharacterBody2D
 	public Vector2 targetPosition;
 	public bool move = false;
 	
-	private AnimatedSprite2D animatedSprite;
+	protected AnimatedSprite2D animatedSprite;
 	public override void _Ready()
 	{
 		targetPosition = this.GlobalPosition;
@@ -30,7 +30,7 @@ public partial class Character : CharacterBody2D
 		return move;
 	}
 
-	private Vector2 moveTo(Vector2 velocity) {
+	protected Vector2 moveTo(Vector2 velocity) {
 		
 		if (!move) {
 			playAnimation(Vector2.Zero);
@@ -49,7 +49,7 @@ public partial class Character : CharacterBody2D
 		return v;
 	}
 
-	private Vector2 calculateDirection() {
+	protected Vector2 calculateDirection() {
 		float directionX =  Mathf.Round(targetPosition.X - this.GlobalPosition.X);
 		float directionY = Mathf.Round(targetPosition.Y - this.GlobalPosition.Y);
 
@@ -57,7 +57,7 @@ public partial class Character : CharacterBody2D
 		return direction;
 	}
  
-	private void playAnimation(Vector2 direction) {
+	protected void playAnimation(Vector2 direction) {
 		if (direction.X > 0) {
 			animatedSprite.Play("right");
 		}
