@@ -31,7 +31,6 @@ public partial class PlayableCharacterUtil {
 
 		bool reachLast = 	Math.Abs(selectedCharacter.GlobalPosition.X - lastCoordinates.X) < 2.0f
 									&& Math.Abs(selectedCharacter.GlobalPosition.Y - lastCoordinates.Y) < 2.0f;
-        GD.Print(reachLast);
 		if (reachLast) {
 			selectedCharacter.move = false;
 			characterMoveIndex = 0;

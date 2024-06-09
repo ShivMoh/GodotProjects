@@ -34,7 +34,27 @@ public partial class PlayableCharacterMoverUtil : TileMap
 		),
 	};
 
+	CharacterMeta[] enemyCharacters = {
+		new CharacterMeta(
+			tileCoord: new Vector2I(7, 2),
+			characterPath : "res://enemy.tscn"
+		),
+		new CharacterMeta(
+			tileCoord: new Vector2I(6, 3),
+			characterPath : "res://enemy.tscn"
+		),
+		new CharacterMeta(
+			tileCoord: new Vector2I(3, 7),
+			characterPath : "res://enemy.tscn"
+		),
+		new CharacterMeta(
+			tileCoord: new Vector2I(3, 9),
+			characterPath : "res://enemy.tscn"
+		),
+	};
+
 	List<PlayableCharacter> loadedCharacters = new List<PlayableCharacter>();
+	List<EnemyCharacter> loadedEnemyCharacters = new List<EnemyCharacter>();
 
 	private Vector2I lastTile;
 
@@ -45,10 +65,13 @@ public partial class PlayableCharacterMoverUtil : TileMap
 	{
 		currentTileCoords = new Vector2I(0, 0);
 		selectedCharacter = null;
-		combatUtil = new CombatUtil();
 		playableUtil = new PlayableCharacterUtil();
 		loadCharacters();
+		loadEnemies();
 		placeCursor();
+
+		combatUtil = new CombatUtil(this, loadedEnemyCharacters, selectedCharacter);
+		
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -83,13 +106,27 @@ public partial class PlayableCharacterMoverUtil : TileMap
 
 		if (Input.IsActionJustPressed("select")) {
 			selectedCharacter = playableUtil.selectCharacter(this, loadedCharacters, selectedCharacter, currentTileCoords, ref path);
+			combatUtil.setSelectedCharacter(selectedCharacter);
 		}
 
 		if (selectedCharacter != null) {
 			if (selectedCharacter.move) {
 				bool finished = playableUtil.moveCharacter(this, selectedCharacter, ref path, currentTileCoords, ref characterMoveIndex, lastTile);
+
+				if (finished) {
+					List<EnemyCharacter> detectedEnemies = combatUtil.detectEnemy();
+
+					foreach (EnemyCharacter enemy in detectedEnemies)
+					{
+						GD.Print(enemy);
+					}
+				}
 			}
 		}
+
+
+
+		
 	}
 
 
@@ -150,6 +187,18 @@ public partial class PlayableCharacterMoverUtil : TileMap
 			) as PlayableCharacter;
 			container.AddChild(character);
 			loadedCharacters.Add(character);
+		}
+	}
+
+	private void loadEnemies() {
+		for (int i = 0; i < enemyCharacters.Length; i++) {
+			GD.Print("Enemeies are loading");
+			EnemyCharacter character = Character.instantiate(
+				this.MapToLocal(enemyCharacters[i].tileCoord),
+				enemyCharacters[i].characterPath
+			) as EnemyCharacter;
+			container.AddChild(character);
+			loadedEnemyCharacters.Add(character);
 		}
 	}
 

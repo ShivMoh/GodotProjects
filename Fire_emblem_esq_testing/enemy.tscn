@@ -1,15 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://ch2awf1kssggs"]
+[gd_scene load_steps=4 format=3 uid="uid://ch2awf1kssggs"]
 
 [ext_resource type="Texture2D" uid="uid://dy54j4odw8ha5" path="res://assets/characters/knight..png" id="1_65xcl"]
-[ext_resource type="PackedScene" uid="uid://d0yjjdtkiif13" path="res://stateMachine/stateMachine.tscn" id="2_v5eol"]
+[ext_resource type="Script" path="res://Mob/scripts/EnemyCharacter.cs" id="1_b43wf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dvab0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_65xcl")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [node name="enemy" type="CharacterBody2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 10
+script = ExtResource("1_b43wf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="Knight_" type="Sprite2D" parent="."]
 texture = ExtResource("1_65xcl")
 
-[node name="StateMachine" parent="." instance=ExtResource("2_v5eol")]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dvab0")
+animation = &"idle"
