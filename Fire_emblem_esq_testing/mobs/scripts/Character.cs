@@ -13,6 +13,7 @@ public partial class Character : CharacterBody2D
 	{
 		targetPosition = this.GlobalPosition;
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		this.ZIndex = 10;
 	}
 
 	public override void _PhysicsProcess(double delta)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Vector2 = Godot.Vector2;
 
-public partial class Main : TileMap
+public partial class Main : Node2D
 {
 	PlayableCharacter selectedCharacter;
 
@@ -25,34 +25,34 @@ public partial class Main : TileMap
 	CharacterMeta[] characters = {
 		new CharacterMeta(
 			tileCoord: new Vector2I(5, 5),
-			characterPath : "res://player_test.tscn"
+			characterPath : "res://mobs/scenes/playable_character.tscn"
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(0, 7),
-			characterPath : "res://player_test.tscn"
+			characterPath : "res://mobs/scenes/playable_character.tscn"
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(5, 0),
-			characterPath : "res://player_test.tscn"
+			characterPath : "res://mobs/scenes/playable_character.tscn"
 		),
 	};
 
 	CharacterMeta[] enemyCharacters = {
 		new CharacterMeta(
 			tileCoord: new Vector2I(7, 2),
-			characterPath : "res://enemy.tscn"
+			characterPath : "res://mobs/scenes/enemy_character.tscn"
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(6, 3),
-			characterPath : "res://enemy.tscn"
+			characterPath : "res://mobs/scenes/enemy_character.tscn"
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(3, 7),
-			characterPath : "res://enemy.tscn"
+			characterPath : "res://mobs/scenes/enemy_character.tscn"
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(3, 9),
-			characterPath : "res://enemy.tscn"
+			characterPath : "res://mobs/scenes/enemy_character.tscn"
 		),
 	};
 
@@ -114,6 +114,7 @@ public partial class Main : TileMap
 		if (Input.IsActionJustPressed("select")) {
 			selectedCharacter = characterUtility.selectCharacter(currentTileCoords, ref path);
 			combatUtility.setSelectedCharacter(selectedCharacter);
+			tileUtility.drawCursor(currentTileCoords);
 		}
 
 		if (selectedCharacter != null) {

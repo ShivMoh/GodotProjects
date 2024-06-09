@@ -1,3 +1,14 @@
-[gd_scene format=3 uid="uid://dq4abym36lodt"]
+[gd_scene load_steps=3 format=3 uid="uid://dq4abym36lodt"]
 
-[node name="main" type="Node2D"]
+[ext_resource type="Script" path="res://utils/Main.cs" id="1_8nveo"]
+[ext_resource type="PackedScene" uid="uid://bsqe08kmksteh" path="res://maps/test.tscn" id="1_71jx6"]
+
+[node name="main" type="Node2D" node_paths=PackedStringArray("container", "tilemap")]
+script = ExtResource("1_8nveo")
+container = NodePath("container")
+tilemap = NodePath("test")
+
+[node name="test" parent="." instance=ExtResource("1_71jx6")]
+script = null
+
+[node name="container" type="Node2D" parent="."]

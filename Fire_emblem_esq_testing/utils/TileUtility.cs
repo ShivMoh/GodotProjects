@@ -12,14 +12,14 @@ public partial class TileUtility {
 		tilemap.SetCell(
 				1,
 				previous,
-				7,
+				0,
 				new Vector2I(1, 0)
 		);
 
 		tilemap.SetCell(
 				1,
 				current,
-				7,
+				0,
 				new Vector2I(0, 0)
 		);
 
@@ -29,7 +29,7 @@ public partial class TileUtility {
 		tilemap.SetCell(
 			1,
 			coords,
-			7,
+			0,
 			new Vector2I(0, 0)
 		);
 	}
