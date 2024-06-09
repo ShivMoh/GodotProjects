@@ -19,7 +19,11 @@ public partial class CombatUtility {
 		this.selectedCharacter = selectedCharacter;
 	}
 
-	public List<EnemyCharacter> detectEnemy() {
+	public void highLightEnemy(TileUtility tileUtility, Vector2I coords) {
+		tileUtility.highLight(coords, new Vector2I(0, 0));
+	}
+
+	public List<EnemyCharacter> detectEnemy(TileUtility tileUtility) {
 
 		List<EnemyCharacter> characters = new List<EnemyCharacter>();
 
@@ -30,7 +34,9 @@ public partial class CombatUtility {
 			Vector2I enemyCoord = tilemap.LocalToMap(character.GlobalPosition);
 			if (this.checkAdjacent(currentCoord, enemyCoord)) {
 				characters.Add(character);
+				this.highLightEnemy(tileUtility, enemyCoord);
 			}
+
 		}
 
 		return characters;

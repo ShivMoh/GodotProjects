@@ -25,6 +25,15 @@ public partial class TileUtility {
 
 	}
 
+	public void highLight(Vector2I coords, Vector2I tile) {
+		tilemap.SetCell(
+			1,
+			coords,
+			0, 
+			tile
+		);
+	}
+
 	public void drawCursor(Vector2I coords) {
 		tilemap.SetCell(
 			1,

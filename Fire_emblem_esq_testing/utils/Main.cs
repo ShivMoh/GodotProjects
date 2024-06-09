@@ -122,7 +122,7 @@ public partial class Main : Node2D
 				bool finished = characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);
 
 				if (finished) {
-					List<EnemyCharacter> detectedEnemies = combatUtility.detectEnemy();
+					List<EnemyCharacter> detectedEnemies = combatUtility.detectEnemy(tileUtility);
 					tileUtility.drawCursor(currentTileCoords);
 					foreach (EnemyCharacter enemy in detectedEnemies)
 					{
