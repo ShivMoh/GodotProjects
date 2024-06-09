@@ -1,14 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://dq4abym36lodt"]
 
-[ext_resource type="Script" path="res://utils/Main.cs" id="1_8nveo"]
 [ext_resource type="PackedScene" uid="uid://bsqe08kmksteh" path="res://maps/test.tscn" id="1_71jx6"]
+[ext_resource type="PackedScene" uid="uid://b0egj88ftwkh8" path="res://state_machine/state_machines/main_state_machine.tscn" id="2_liiaq"]
 
-[node name="main" type="Node2D" node_paths=PackedStringArray("container", "tilemap")]
-script = ExtResource("1_8nveo")
-container = NodePath("container")
-tilemap = NodePath("test")
+[node name="main" type="Node2D"]
 
 [node name="test" parent="." instance=ExtResource("1_71jx6")]
-script = null
 
 [node name="container" type="Node2D" parent="."]
+
+[node name="MainStateMachine" parent="." instance=ExtResource("2_liiaq")]
+
+[node name="ExploreState" parent="MainStateMachine" index="0" node_paths=PackedStringArray("tilemap")]
+tilemap = NodePath("../../test")
+
+[editable path="MainStateMachine"]

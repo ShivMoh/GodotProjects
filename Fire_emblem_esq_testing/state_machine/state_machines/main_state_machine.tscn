@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0egj88ftwkh8"]
+
+[ext_resource type="Script" path="res://state_machine/StateMachine.cs" id="1_pe6fr"]
+[ext_resource type="Script" path="res://state_machine/ExploreState.cs" id="2_0ew6p"]
+[ext_resource type="Script" path="res://state_machine/CombatState.cs" id="3_3ux34"]
+
+[node name="MainStateMachine" type="Node2D" node_paths=PackedStringArray("initialState")]
+script = ExtResource("1_pe6fr")
+initialState = NodePath("ExploreState")
+
+[node name="ExploreState" type="Node2D" parent="."]
+script = ExtResource("2_0ew6p")
+
+[node name="CombatState" type="Node2D" parent="."]
+script = ExtResource("3_3ux34")

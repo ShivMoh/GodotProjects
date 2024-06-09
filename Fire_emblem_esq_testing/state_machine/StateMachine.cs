@@ -17,11 +17,11 @@ public partial class StateMachine : Node2D {
 
 				(child as State).StateChange += onChildTransition;
 			}
+		}
 
-			if (initialState is not null) {
-				initialState.enter();
-				currentState = initialState;
-			}
+		if (initialState is not null) {
+			initialState.enter();
+			currentState = initialState;
 		}
 	}
 

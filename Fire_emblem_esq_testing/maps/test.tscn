@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bsqe08kmksteh"]
+[gd_scene load_steps=6 format=3 uid="uid://bsqe08kmksteh"]
 
 [ext_resource type="Texture2D" uid="uid://yultwnph6fhk" path="res://assets/tiles/tiless.png" id="1_bicfh"]
 [ext_resource type="Texture2D" uid="uid://das4ooj7q8bni" path="res://assets/objects/objects.png" id="2_e4rxn"]
-[ext_resource type="Script" path="res://utils/Main.cs" id="3_dp65p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pbeqp"]
 texture = ExtResource("1_bicfh")
@@ -48,4 +47,7 @@ layer_2/tile_data = PackedInt32Array(131088, 1, 0, 131080, 1, 0, 393226, 1, 0, 4
 layer_3/name = "some"
 layer_3/z_index = 3
 layer_3/tile_data = PackedInt32Array(524302, 131073, 1, 458767, 196609, 0, 524303, 196609, 1, 589839, 196609, 2, 458768, 262145, 0, 524304, 262145, 1, 524298, 131073, 0, 589834, 131073, 1, 524299, 196609, 0, 589835, 196609, 1, 655371, 196609, 2, 524300, 262145, 0, 589836, 262145, 1, 327688, 131073, 0, 393224, 131073, 1, 327689, 196609, 0, 393225, 196609, 1, 458761, 196609, 2, 327690, 262145, 0, 393226, 262145, 1, 262148, 131073, 0, 327684, 131073, 1, 262149, 196609, 0, 327685, 196609, 1, 393221, 196609, 2, 262150, 262145, 0, 327686, 262145, 1, 589828, 1, 0, 458762, 1, 0, 524291, 1, 0, 196621, 1, 0, 262156, 1, 0, 262157, 1, 0, 196622, 1, 0, 262158, 1, 0, 196616, 65537, 2, 327687, 65537, 2, 458760, 65537, 2, 458753, 65537, 2, 131073, 65537, 2, 13, 65537, 2, 655372, 65537, 2, 589832, 131073, 2, 655368, 131073, 2, 655369, 131073, 2, 589833, 131073, 2, 589831, 131073, 2, 524296, 131073, 2, 524297, 131073, 2, 524295, 131073, 2, 327691, 131073, 0, 393227, 131073, 1, 327692, 196609, 0, 393228, 196609, 1, 458764, 196609, 2, 327693, 262145, 0, 393229, 262145, 1)
-script = ExtResource("3_dp65p")
+
+[node name="playableCharacters" type="Node2D" parent="."]
+
+[node name="enemyCharacters" type="Node2D" parent="."]

@@ -1,15 +1,11 @@
-using Godot;
-using System;
-using System.Linq;
 using System.Collections.Generic;
-using Vector2 = Godot.Vector2;
+using System.Linq;
+using Godot;
 
-public partial class Main : Node2D
+
+public partial class ExploreState : State
 {
 	PlayableCharacter selectedCharacter;
-
-	[Export]
-	Node2D container;
 
 	[Export]
 	TileMap tilemap;
@@ -65,7 +61,8 @@ public partial class Main : Node2D
 	private CharacterUtility characterUtility;
 	
 	private TileUtility tileUtility;
-	public override void _Ready()
+	
+	public override void enter()
 	{
 		currentTileCoords = new Vector2I(0, 0);
 		previousTileCoords = currentTileCoords;
@@ -81,7 +78,7 @@ public partial class Main : Node2D
 
 	}
 
-	public override void _PhysicsProcess(double delta)
+	public override void physicsUpdate(double delta)
 	{	
 		previousTileCoords = currentTileCoords;
 
@@ -124,9 +121,9 @@ public partial class Main : Node2D
 				if (finished) {
 					List<EnemyCharacter> detectedEnemies = combatUtility.detectEnemy(tileUtility);
 					tileUtility.drawCursor(currentTileCoords);
-					foreach (EnemyCharacter enemy in detectedEnemies)
-					{
-						GD.Print(enemy);
+					
+					if (detectedEnemies.Count() != 0) {
+						EmitSignal(SignalName.StateChange, this, 1);
 					}
 				}
 			}
@@ -190,19 +187,19 @@ public partial class Main : Node2D
 				tilemap.MapToLocal(characters[i].tileCoord),
 				characters[i].characterPath
 			) as PlayableCharacter;
-			container.AddChild(character);
+			tilemap.GetNode("playableCharacters").AddChild(character);
 			loadedCharacters.Add(character);
 		}
 	}
 
 	private void loadEnemies() {
 		for (int i = 0; i < enemyCharacters.Length; i++) {
-			GD.Print("Enemeies are loading");
 			EnemyCharacter character = Character.instantiate(
 				tilemap.MapToLocal(enemyCharacters[i].tileCoord),
 				enemyCharacters[i].characterPath
 			) as EnemyCharacter;
-			container.AddChild(character);
+
+			tilemap.GetNode("enemyCharacters").AddChild(character);
 			loadedEnemyCharacters.Add(character);
 		}
 	}
