@@ -11,9 +11,8 @@ func _ready():
 	# print(global_position)
 
 func _physics_process(delta):
-	if not is_on_floor():
+	if not is_on_floor():  
 		velocity.y += gravity * delta
-
 	direction = if_distance()
 	# print(direction)
 	# print(global_position)
