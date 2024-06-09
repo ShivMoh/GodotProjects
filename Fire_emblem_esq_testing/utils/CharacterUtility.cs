@@ -4,18 +4,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Vector2 = Godot.Vector2;
-public partial class PlayableCharacterUtil {
+public partial class CharacterUtility {
 
-    // private Vector2I lastTile;
+	// private Vector2I lastTile;
 
-    public bool moveCharacter(
-                                TileMap tilemap, 
-                                PlayableCharacter selectedCharacter, 
-                                ref List<Vector2I> path, 
-                                Vector2I current, 
-                                ref int characterMoveIndex,
-                                Vector2I lastTile
-                            ) {
+	private TileMap tilemap;
+	private PlayableCharacter selectedCharacter;
+
+	private int characterMoveIndex;
+	List<PlayableCharacter> playableCharacters; 
+
+	public CharacterUtility(TileMap tilemap, PlayableCharacter selectedCharacter, List<PlayableCharacter> playableCharacters) {
+		this.tilemap = tilemap;
+		this.selectedCharacter = selectedCharacter;
+		this.playableCharacters = playableCharacters;
+		this.characterMoveIndex = 0;
+	}
+
+	public void setSelectedCharacter(PlayableCharacter selectedCharacter) {
+		this.selectedCharacter = selectedCharacter;
+	}
+
+	public bool moveCharacter( 
+								ref List<Vector2I> path, 
+								Vector2I current, 
+								Vector2I lastTile
+							) {
 
 		bool reachDestination = 	Math.Abs(selectedCharacter.GlobalPosition.X - selectedCharacter.targetPosition.X) < 2.0f
 									&& Math.Abs(selectedCharacter.GlobalPosition.Y - selectedCharacter.targetPosition.Y) < 2.0f;
@@ -35,16 +49,16 @@ public partial class PlayableCharacterUtil {
 			selectedCharacter.move = false;
 			characterMoveIndex = 0;
 			this.clearPath(tilemap, ref path, current);
-            return true;
+			return true;
 		}
 
-        return false;
+		return false;
 	}
 
-    public void clearPath(TileMap tilemap, ref List<Vector2I> path, Vector2I current) {	
+	public void clearPath(TileMap tilemap, ref List<Vector2I> path, Vector2I current) {	
 		tilemap.ClearLayer(3);
 		path.Clear();
-		TileUtil.drawCursor(tilemap, current);
+		// TileUtil.drawCursor(tilemap, current);
 	}
 
 
@@ -55,26 +69,21 @@ public partial class PlayableCharacterUtil {
 	}
 
 
-    public PlayableCharacter selectCharacter(   TileMap tilemap, 
-                                    List<PlayableCharacter> playableCharacters, 
-                                    PlayableCharacter selectedCharacter, 
-                                    Vector2I current,
-                                    ref List<Vector2I> path
-                                ) {
+	public PlayableCharacter selectCharacter( Vector2I current, ref List<Vector2I> path) {
 		var character = playableCharacters.FirstOrDefault<PlayableCharacter>(character => this.compareValues(character.GlobalPosition, tilemap.MapToLocal(current), 2.0f), null);
 		if (character is not null) {
 			if (selectedCharacter == null) {
 				selectedCharacter = character;
-                return character;
+				return character;
 			} else {
 				selectedCharacter = null;
 				this.clearPath(tilemap, ref path, current);
-                return null;
+				return null;
 			}
 		} 
 
-        return selectedCharacter;
-        
+		return selectedCharacter;
+		
 	}
 
 

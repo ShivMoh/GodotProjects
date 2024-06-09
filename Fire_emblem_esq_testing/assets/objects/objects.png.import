@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yultwnph6fhk"
-path="res://.godot/imported/tiless.png-84d98efea80fbe6a57bb1d39227cdd36.ctex"
+uid="uid://das4ooj7q8bni"
+path="res://.godot/imported/objects.png-fa1ceb89840fd9345bc36f64b4f4a353.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tiless.png"
-dest_files=["res://.godot/imported/tiless.png-84d98efea80fbe6a57bb1d39227cdd36.ctex"]
+source_file="res://assets/objects/objects.png"
+dest_files=["res://.godot/imported/objects.png-fa1ceb89840fd9345bc36f64b4f4a353.ctex"]
 
 [params]
 

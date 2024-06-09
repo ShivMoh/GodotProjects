@@ -4,12 +4,15 @@ using System.Linq;
 using System.Collections.Generic;
 using Vector2 = Godot.Vector2;
 
-public partial class PlayableCharacterMoverUtil : TileMap
+public partial class Main : TileMap
 {
 	PlayableCharacter selectedCharacter;
 
 	[Export]
 	Node2D container;
+
+	[Export]
+	TileMap tilemap;
 
 	Vector2I currentTileCoords;
 	Vector2I previousTileCoords;
@@ -58,20 +61,24 @@ public partial class PlayableCharacterMoverUtil : TileMap
 
 	private Vector2I lastTile;
 
-	private CombatUtil combatUtil;
-	private PlayableCharacterUtil playableUtil;
+	private CombatUtility combatUtility;
+	private CharacterUtility characterUtility;
 	
+	private TileUtility tileUtility;
 	public override void _Ready()
 	{
 		currentTileCoords = new Vector2I(0, 0);
+		previousTileCoords = currentTileCoords;
 		selectedCharacter = null;
-		playableUtil = new PlayableCharacterUtil();
 		loadCharacters();
 		loadEnemies();
+
+		combatUtility = new CombatUtility(tilemap, loadedEnemyCharacters, selectedCharacter);
+		characterUtility = new CharacterUtility(tilemap, selectedCharacter, loadedCharacters);
+		tileUtility = new TileUtility(tilemap);
+		
 		placeCursor();
 
-		combatUtil = new CombatUtil(this, loadedEnemyCharacters, selectedCharacter);
-		
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -101,21 +108,21 @@ public partial class PlayableCharacterMoverUtil : TileMap
 		if (Input.IsActionJustPressed("ui_text_delete")) {
 			selectedCharacter.move = true;
 			lastTile = path.Last();
-			playableUtil.moveCharacter(this, selectedCharacter, ref path, currentTileCoords, ref characterMoveIndex, lastTile);
+			characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);
 		}
 
 		if (Input.IsActionJustPressed("select")) {
-			selectedCharacter = playableUtil.selectCharacter(this, loadedCharacters, selectedCharacter, currentTileCoords, ref path);
-			combatUtil.setSelectedCharacter(selectedCharacter);
+			selectedCharacter = characterUtility.selectCharacter(currentTileCoords, ref path);
+			combatUtility.setSelectedCharacter(selectedCharacter);
 		}
 
 		if (selectedCharacter != null) {
 			if (selectedCharacter.move) {
-				bool finished = playableUtil.moveCharacter(this, selectedCharacter, ref path, currentTileCoords, ref characterMoveIndex, lastTile);
+				bool finished = characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);
 
 				if (finished) {
-					List<EnemyCharacter> detectedEnemies = combatUtil.detectEnemy();
-
+					List<EnemyCharacter> detectedEnemies = combatUtility.detectEnemy();
+					tileUtility.drawCursor(currentTileCoords);
 					foreach (EnemyCharacter enemy in detectedEnemies)
 					{
 						GD.Print(enemy);
@@ -123,9 +130,6 @@ public partial class PlayableCharacterMoverUtil : TileMap
 				}
 			}
 		}
-
-
-
 		
 	}
 
@@ -133,8 +137,8 @@ public partial class PlayableCharacterMoverUtil : TileMap
 
 	private void placeCursor() {
 		if (selectedCharacter == null) {
-			TileUtil.eraseCursor(this, previousTileCoords);
-			TileUtil.drawCursor(this, currentTileCoords);
+			tileUtility.eraseCursor(previousTileCoords);
+			tileUtility.drawCursor(currentTileCoords);
 		} else {
 					
 			if (selectedCharacter.isMoving()) {
@@ -158,8 +162,8 @@ public partial class PlayableCharacterMoverUtil : TileMap
 
 			if (path.Count() != 0) {
 				if (path.Last() == currentTileCoords) {
-					TileUtil.eraseCursor(this, previousTileCoords);
-					TileUtil.drawCursor(this, currentTileCoords);
+					tileUtility.eraseCursor(previousTileCoords);
+					tileUtility.drawCursor(currentTileCoords);
 					return;
 				}
 			}
@@ -173,7 +177,7 @@ public partial class PlayableCharacterMoverUtil : TileMap
 			return;
 		}
 
-		TileUtil.setTiles(this, previousTileCoords, currentTileCoords);
+		tileUtility.setTiles(previousTileCoords, currentTileCoords);
 		path.Add(currentTileCoords);
 
 	}
@@ -182,7 +186,7 @@ public partial class PlayableCharacterMoverUtil : TileMap
 	private void loadCharacters() {
 		for (int i = 0; i < characters.Length; i++) {
 			PlayableCharacter character = Character.instantiate(
-				this.MapToLocal(characters[i].tileCoord),
+				tilemap.MapToLocal(characters[i].tileCoord),
 				characters[i].characterPath
 			) as PlayableCharacter;
 			container.AddChild(character);
@@ -194,7 +198,7 @@ public partial class PlayableCharacterMoverUtil : TileMap
 		for (int i = 0; i < enemyCharacters.Length; i++) {
 			GD.Print("Enemeies are loading");
 			EnemyCharacter character = Character.instantiate(
-				this.MapToLocal(enemyCharacters[i].tileCoord),
+				tilemap.MapToLocal(enemyCharacters[i].tileCoord),
 				enemyCharacters[i].characterPath
 			) as EnemyCharacter;
 			container.AddChild(character);
