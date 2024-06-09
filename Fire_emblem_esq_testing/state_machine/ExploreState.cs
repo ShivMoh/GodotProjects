@@ -122,7 +122,7 @@ public partial class ExploreState : State
 					List<EnemyCharacter> detectedEnemies = combatUtility.detectEnemy(tileUtility);
 					tileUtility.drawCursor(currentTileCoords);
                     
-                    EmitSignal(SignalName.ShareCharacter, selectedCharacter);
+                    // EmitSignal(SignalName.ShareCharacter, selectedCharacter);
                     EmitSignal(SignalName.StateChange, this, 2);
 					// if (detectedEnemies.Count() != 0) {
 					// 	EmitSignal(SignalName.StateChange, this, 1);
