@@ -35,7 +35,7 @@ public partial class PlayableCharacterUtil {
 		if (reachLast) {
 			selectedCharacter.move = false;
 			characterMoveIndex = 0;
-			// this.clearPath(tilemap, ref path, current);
+			this.clearPath(tilemap, ref path, current);
             return true;
 		}
 
@@ -53,6 +53,29 @@ public partial class PlayableCharacterUtil {
 		float distanceX = Math.Abs(one.X - two.X);
 		float distanceY = Math.Abs(one.Y - two.Y);
 		return distanceX < maxAllowedDistance && distanceY < maxAllowedDistance;
+	}
+
+
+    public PlayableCharacter selectCharacter(   TileMap tilemap, 
+                                    List<PlayableCharacter> playableCharacters, 
+                                    PlayableCharacter selectedCharacter, 
+                                    Vector2I current,
+                                    ref List<Vector2I> path
+                                ) {
+		var character = playableCharacters.FirstOrDefault<PlayableCharacter>(character => this.compareValues(character.GlobalPosition, tilemap.MapToLocal(current), 2.0f), null);
+		if (character is not null) {
+			if (selectedCharacter == null) {
+				selectedCharacter = character;
+                return character;
+			} else {
+				selectedCharacter = null;
+				this.clearPath(tilemap, ref path, current);
+                return null;
+			}
+		} 
+
+        return selectedCharacter;
+        
 	}
 
 

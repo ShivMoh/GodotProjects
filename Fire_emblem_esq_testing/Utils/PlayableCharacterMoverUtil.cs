@@ -82,33 +82,17 @@ public partial class PlayableCharacterMoverUtil : TileMap
 		}
 
 		if (Input.IsActionJustPressed("select")) {
-			selectCharacter();
+			selectedCharacter = playableUtil.selectCharacter(this, loadedCharacters, selectedCharacter, currentTileCoords, ref path);
 		}
 
 		if (selectedCharacter != null) {
-			GD.Print("helllooo");
 			if (selectedCharacter.move) {
 				bool finished = playableUtil.moveCharacter(this, selectedCharacter, ref path, currentTileCoords, ref characterMoveIndex, lastTile);
-				if (finished) {
-					playableUtil.clearPath(this, ref path, currentTileCoords);
-					path.Clear();	
-					GD.Print("FINISHED");
-				} 
 			}
 		}
 	}
 
-	private void selectCharacter() {
-		var character = loadedCharacters.FirstOrDefault<PlayableCharacter>(character => playableUtil.compareValues(character.GlobalPosition, MapToLocal(currentTileCoords), 2.0f), null);
-		if (character is not null) {
-			if (selectedCharacter == null) {
-				selectedCharacter = character;
-			} else {
-				selectedCharacter = null;
-				playableUtil.clearPath(this, ref path, currentTileCoords);
-			}
-		} 
-	}
+
 
 	private void placeCursor() {
 		if (selectedCharacter == null) {
