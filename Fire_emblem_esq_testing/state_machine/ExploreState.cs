@@ -17,37 +17,63 @@ public partial class ExploreState : State
 	bool  move = false;
 	int characterMoveIndex = 0;
 
+	static List<AttackMeta> attacksMeta = new List<AttackMeta>() {
+		new AttackMeta(
+			name: "Fire ball",
+			power: 5,
+			attackType: AttackType.CLOSE
+		),
+		new AttackMeta(
+			name: "Ice ball",
+			power: 3,
+			attackType: AttackType.CLOSE
+		)
+	};
+
 	CharacterMeta[] playableCharactersMeta = {
 		new CharacterMeta(
 			tileCoord: new Vector2I(5, 5),
-			characterPath : "res://mobs/scenes/playable_character.tscn"
+			characterPath : "res://mobs/scenes/playable_character.tscn",
+			attacks : attacksMeta
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(0, 7),
-			characterPath : "res://mobs/scenes/playable_character.tscn"
+			characterPath : "res://mobs/scenes/playable_character.tscn",
+			attacks : attacksMeta
+
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(5, 0),
-			characterPath : "res://mobs/scenes/playable_character.tscn"
+			characterPath : "res://mobs/scenes/playable_character.tscn",
+			attacks : attacksMeta			
 		),
 	};
 
 	CharacterMeta[] enemyCharactersMeta = {
 		new CharacterMeta(
 			tileCoord: new Vector2I(7, 2),
-			characterPath : "res://mobs/scenes/enemy_character.tscn"
+			characterPath : "res://mobs/scenes/enemy_character.tscn",
+			attacks : attacksMeta
+		),
+		new CharacterMeta(
+			tileCoord: new Vector2I(6, 1),
+			characterPath : "res://mobs/scenes/enemy_character.tscn",
+			attacks : attacksMeta
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(6, 3),
-			characterPath : "res://mobs/scenes/enemy_character.tscn"
+			characterPath : "res://mobs/scenes/enemy_character.tscn",
+			attacks : attacksMeta
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(3, 7),
-			characterPath : "res://mobs/scenes/enemy_character.tscn"
+			characterPath : "res://mobs/scenes/enemy_character.tscn",
+			attacks : attacksMeta
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(3, 9),
-			characterPath : "res://mobs/scenes/enemy_character.tscn"
+			characterPath : "res://mobs/scenes/enemy_character.tscn",
+			attacks : attacksMeta
 		),
 	};
 
@@ -117,11 +143,11 @@ public partial class ExploreState : State
 				bool finished = characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);
 
 				if (finished) {
-					MapEntities.detectedEnemies = combatUtility.detectEnemy(tileUtility);
+					// MapEntities.detectedEnemies = combatUtility.detectEnemy(tileUtility);
 					tileUtility.drawCursor(currentTileCoords);
 					
 					// EmitSignal(SignalName.ShareCharacter, MapEntities.selectedCharacter);
-					EmitSignal(SignalName.StateChange, this, 2);
+					EmitSignal(SignalName.StateChange, this, 1);
 					// if (detectedEnemies.Count() != 0) {
 					// 	EmitSignal(SignalName.StateChange, this, 1);
 					// }
@@ -187,6 +213,8 @@ public partial class ExploreState : State
 				MapEntities.map.MapToLocal(playableCharactersMeta[i].tileCoord),
 				playableCharactersMeta[i].characterPath
 			) as PlayableCharacter;
+
+			character.setAttacks(playableCharactersMeta[i].attacks);
 			MapEntities.map.GetNode("playableCharacters").AddChild(character);
 			MapEntities.playableCharacters.Add(character);
 		}

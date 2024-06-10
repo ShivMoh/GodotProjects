@@ -6,6 +6,7 @@ public partial class StateMachine : Node2D {
 	public State currentState;
 	public List<State> states = new List<State>();
 
+
 	[Export]
 	public State initialState;
 	
@@ -17,10 +18,12 @@ public partial class StateMachine : Node2D {
 				states.Add(child as State);
 
 				(child as State).StateChange += onChildTransition;
+				GD.Print(child.GetType().Name);
+				// (child as State).ShareAttack += setAttack;
+				// (child as State).ShareAttack += setAttacks;
 			}
 		}
 
-		
 
 		if (initialState is not null) {
 			initialState.enter();

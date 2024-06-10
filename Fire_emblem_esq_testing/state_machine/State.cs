@@ -6,7 +6,11 @@ public partial class State : Node2D {
     public delegate void StateChangeEventHandler(State state, int stateID);
 
     // [Signal]
-    // public delegate void ShareCharacterEventHandler(PlayableCharacter selectedCharacter);
+    // public delegate void ShareAttacksEventHandler(Godot.Collections.Array<AttackMeta> attacks);
+
+    // [Signal]
+    // public delegate void ShareAttackEventHandler(AttackMeta attacks);
+
     public virtual void enter() {}
 
     public virtual void exit() {}

@@ -1,16 +1,24 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
-public partial class DecisionState : State {
+public partial class AttackSelectionState : State {
 
 
 	private int currentCheckedItem = 0;
+	private List<string> popupMenuOptions = new List<string>();
 
 	public override void enter()
 	{
-		GD.Print("I am on decision state");
+		GD.Print("I am on attack selection state");
+		foreach (AttackMeta attack in MapEntities.attackMetas)
+		{
+			GD.Print(attack.name);
+			popupMenuOptions.Add(attack.name);
+		}
+		
 		MapEntities.selectedCharacter.actionsMenu.Clear();
-		MapEntities.selectedCharacter.addPopupMenuItem(new List<string>() {"Attack", "Ability", "Use"});
+		MapEntities.selectedCharacter.addPopupMenuItem(popupMenuOptions);
 	}
 	public override void physicsUpdate(double _delta)
 	{
@@ -25,8 +33,16 @@ public partial class DecisionState : State {
 
 			currentCheckedItem = focusedItem;
 			string choice = MapEntities.selectedCharacter.actionsMenu.GetItemText(currentCheckedItem);
-			this.processSelectedChoice(choice);
+			AttackMeta chosenAttack = MapEntities.attackMetas.ElementAt(popupMenuOptions.IndexOf(choice));
+			MapEntities.chosenAttack = chosenAttack;
+
 			MapEntities.selectedCharacter.actionsMenu.Hide();
+			MapEntities.selectedCharacter.actionsMenu.Clear();
+
+			EmitSignal(SignalName.StateChange, this, 3);
+
+			// this.processSelectedChoice(choice);
+
 		}
 	}
 
@@ -35,8 +51,7 @@ public partial class DecisionState : State {
 		switch (option)
 		{
 			case "Attack":
-				MapEntities.attackMetas = MapEntities.selectedCharacter.attacks;
-				EmitSignal(SignalName.StateChange, this, 2);
+				EmitSignal(SignalName.StateChange, this, 3);
 			break;
 			default:
 				return;

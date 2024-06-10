@@ -34,13 +34,23 @@ public partial class CombatUtility {
 			Vector2I enemyCoord = tilemap.LocalToMap(character.GlobalPosition);
 			if (this.checkAdjacent(currentCoord, enemyCoord)) {
 				characters.Add(character);
-				this.highLightEnemy(tileUtility, enemyCoord);
+				// this.highLightEnemy(tileUtility, enemyCoord);
 			}
 
 		}
 
 		return characters;
 	}   
+
+	public void attackCharacter(PlayableCharacter selectedCharacter, Character target, AttackMeta chosenAttack) {
+		int damage = selectedCharacter.power + chosenAttack.power;
+
+		target.health -= damage;
+
+		if (target.health <= 0) {
+			target.QueueFree();
+		}
+	}
 
 	private bool checkAdjacent(Vector2I one, Vector2I two) {
 		bool checkPositiveY = (one.Y + 1) == two.Y && one.X == two.X;

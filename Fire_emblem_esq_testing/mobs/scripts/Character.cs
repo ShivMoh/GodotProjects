@@ -7,7 +7,9 @@ public partial class Character : CharacterBody2D
 
 	public Vector2 targetPosition;
 	public bool move = false;
-	
+
+	public int health = 10;
+	public int power = 5;	
 	protected AnimatedSprite2D animatedSprite;
 	public override void _Ready()
 	{
