@@ -2,32 +2,40 @@ using Godot;
 
 public partial class DecisionState : State {
 
-	private PlayableCharacter selectedCharacter;
 
 	private int currentCheckedItem = 0;
 
 	public override void enter()
 	{
-		// this.ShareCharacter += setSelectedCharacter;
 		GD.Print("I am deciding things");
 	}
 	public override void physicsUpdate(double _delta)
 	{
-		selectedCharacter.actionsMenu.Popup();
+		MapEntities.selectedCharacter.actionsMenu.Popup();
 
 		if (Input.IsActionJustPressed("select")) {
-			int focusedItem = selectedCharacter.actionsMenu.GetFocusedItem();
-			selectedCharacter.actionsMenu.SetItemChecked(focusedItem, true);
-			if (selectedCharacter.actionsMenu.IsItemChecked(currentCheckedItem)) {
-				selectedCharacter.actionsMenu.SetItemChecked(currentCheckedItem, false);
+			int focusedItem = MapEntities.selectedCharacter.actionsMenu.GetFocusedItem();
+			MapEntities.selectedCharacter.actionsMenu.SetItemChecked(focusedItem, true);
+			if (MapEntities.selectedCharacter.actionsMenu.IsItemChecked(currentCheckedItem)) {
+				MapEntities.selectedCharacter.actionsMenu.SetItemChecked(currentCheckedItem, false);
 			}
 
 			currentCheckedItem = focusedItem;
+			string choice = MapEntities.selectedCharacter.actionsMenu.GetItemText(currentCheckedItem);
+			this.processSelectedChoice(choice);
+			MapEntities.selectedCharacter.actionsMenu.Hide();
 		}
 	}
 
-	public void setSelectedCharacter(PlayableCharacter selectedCharacter) {
-		this.selectedCharacter = selectedCharacter;
-		GD.Print("Selected character is being set");
+
+	private void processSelectedChoice(string option) {
+		switch (option)
+		{
+			case "Attack":
+				EmitSignal(SignalName.StateChange, this, 1);
+			break;
+			default:
+				return;
+		}
 	}
 }

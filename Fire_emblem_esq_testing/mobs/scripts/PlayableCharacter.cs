@@ -8,11 +8,8 @@ public partial class PlayableCharacter : Character{
 		actionsMenu = this.GetNode<PopupMenu>("PopupMenu");
 		// actionsMenu.Show();
 		actionsMenu.Position = new Vector2I(20, 20);
-		GD.Print(actionsMenu.ItemCount);
 
-		GD.Print(actionsMenu.GetItemId(0));
-		GD.Print(actionsMenu.IsItemChecked(0));
-		actionsMenu.Popup();
+		// actionsMenu.Popup();
 
 		targetPosition = this.GlobalPosition;
 

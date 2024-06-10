@@ -5,7 +5,6 @@ using Godot;
 
 public partial class ExploreState : State
 {
-	PlayableCharacter selectedCharacter;
 
 	[Export]
 	TileMap tilemap;
@@ -18,7 +17,7 @@ public partial class ExploreState : State
 	bool  move = false;
 	int characterMoveIndex = 0;
 
-	CharacterMeta[] characters = {
+	CharacterMeta[] playableCharactersMeta = {
 		new CharacterMeta(
 			tileCoord: new Vector2I(5, 5),
 			characterPath : "res://mobs/scenes/playable_character.tscn"
@@ -33,7 +32,7 @@ public partial class ExploreState : State
 		),
 	};
 
-	CharacterMeta[] enemyCharacters = {
+	CharacterMeta[] enemyCharactersMeta = {
 		new CharacterMeta(
 			tileCoord: new Vector2I(7, 2),
 			characterPath : "res://mobs/scenes/enemy_character.tscn"
@@ -52,9 +51,6 @@ public partial class ExploreState : State
 		),
 	};
 
-	List<PlayableCharacter> loadedCharacters = new List<PlayableCharacter>();
-	List<EnemyCharacter> loadedEnemyCharacters = new List<EnemyCharacter>();
-
 	private Vector2I lastTile;
 
 	private CombatUtility combatUtility;
@@ -64,16 +60,18 @@ public partial class ExploreState : State
 	
 	public override void enter()
 	{
+		MapEntities.map = tilemap;
+
 		currentTileCoords = new Vector2I(0, 0);
 		previousTileCoords = currentTileCoords;
-		selectedCharacter = null;
+		MapEntities.selectedCharacter = null;
 		loadCharacters();
 		loadEnemies();
 
-		combatUtility = new CombatUtility(tilemap, loadedEnemyCharacters, selectedCharacter);
-		characterUtility = new CharacterUtility(tilemap, selectedCharacter, loadedCharacters);
-		tileUtility = new TileUtility(tilemap);
-		
+		combatUtility = new CombatUtility(MapEntities.map, MapEntities.enemyCharacters, MapEntities.selectedCharacter);
+		characterUtility = new CharacterUtility(MapEntities.map, MapEntities.selectedCharacter, MapEntities.playableCharacters);
+		tileUtility = new TileUtility(MapEntities.map);
+
 		placeCursor();
 
 	}
@@ -103,27 +101,27 @@ public partial class ExploreState : State
 		}
 
 		if (Input.IsActionJustPressed("ui_text_delete")) {
-			selectedCharacter.move = true;
+			MapEntities.selectedCharacter.move = true;
 			lastTile = path.Last();
 			characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);
 		}
 
 		if (Input.IsActionJustPressed("select")) {
-			selectedCharacter = characterUtility.selectCharacter(currentTileCoords, ref path);
-			combatUtility.setSelectedCharacter(selectedCharacter);
+			MapEntities.selectedCharacter = characterUtility.selectCharacter(currentTileCoords, ref path);
+			combatUtility.setSelectedCharacter(MapEntities.selectedCharacter);
 			tileUtility.drawCursor(currentTileCoords);
 		}
 
-		if (selectedCharacter != null) {
-			if (selectedCharacter.move) {
+		if (MapEntities.selectedCharacter != null) {
+			if (MapEntities.selectedCharacter.move) {
 				bool finished = characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);
 
 				if (finished) {
-					List<EnemyCharacter> detectedEnemies = combatUtility.detectEnemy(tileUtility);
+					MapEntities.detectedEnemies = combatUtility.detectEnemy(tileUtility);
 					tileUtility.drawCursor(currentTileCoords);
-                    
-                    // EmitSignal(SignalName.ShareCharacter, selectedCharacter);
-                    EmitSignal(SignalName.StateChange, this, 2);
+					
+					// EmitSignal(SignalName.ShareCharacter, MapEntities.selectedCharacter);
+					EmitSignal(SignalName.StateChange, this, 2);
 					// if (detectedEnemies.Count() != 0) {
 					// 	EmitSignal(SignalName.StateChange, this, 1);
 					// }
@@ -136,12 +134,12 @@ public partial class ExploreState : State
 
 
 	private void placeCursor() {
-		if (selectedCharacter == null) {
+		if (MapEntities.selectedCharacter == null) {
 			tileUtility.eraseCursor(previousTileCoords);
 			tileUtility.drawCursor(currentTileCoords);
 		} else {
 					
-			if (selectedCharacter.isMoving()) {
+			if (MapEntities.selectedCharacter.isMoving()) {
 				currentTileCoords = previousTileCoords;
 				return;
 			}
@@ -184,25 +182,25 @@ public partial class ExploreState : State
 
 	
 	private void loadCharacters() {
-		for (int i = 0; i < characters.Length; i++) {
+		for (int i = 0; i < playableCharactersMeta.Length; i++) {
 			PlayableCharacter character = Character.instantiate(
-				tilemap.MapToLocal(characters[i].tileCoord),
-				characters[i].characterPath
+				MapEntities.map.MapToLocal(playableCharactersMeta[i].tileCoord),
+				playableCharactersMeta[i].characterPath
 			) as PlayableCharacter;
-			tilemap.GetNode("playableCharacters").AddChild(character);
-			loadedCharacters.Add(character);
+			MapEntities.map.GetNode("playableCharacters").AddChild(character);
+			MapEntities.playableCharacters.Add(character);
 		}
 	}
 
 	private void loadEnemies() {
-		for (int i = 0; i < enemyCharacters.Length; i++) {
+		for (int i = 0; i < enemyCharactersMeta.Length; i++) {
 			EnemyCharacter character = Character.instantiate(
-				tilemap.MapToLocal(enemyCharacters[i].tileCoord),
-				enemyCharacters[i].characterPath
+				MapEntities.map.MapToLocal(enemyCharactersMeta[i].tileCoord),
+				enemyCharactersMeta[i].characterPath
 			) as EnemyCharacter;
 
-			tilemap.GetNode("enemyCharacters").AddChild(character);
-			loadedEnemyCharacters.Add(character);
+			MapEntities.map.GetNode("enemyCharacters").AddChild(character);
+			MapEntities.enemyCharacters.Add(character);
 		}
 	}
 

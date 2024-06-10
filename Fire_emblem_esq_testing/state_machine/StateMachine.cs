@@ -8,6 +8,7 @@ public partial class StateMachine : Node2D {
 
 	[Export]
 	public State initialState;
+	
 	public override void _Ready()
 	{
 		foreach (var child in this.GetChildren())
@@ -18,6 +19,8 @@ public partial class StateMachine : Node2D {
 				(child as State).StateChange += onChildTransition;
 			}
 		}
+
+		
 
 		if (initialState is not null) {
 			initialState.enter();
@@ -45,8 +48,28 @@ public partial class StateMachine : Node2D {
 
 		if (currentState is not null) currentState.exit();
 
+		// this.processStateDecisions(newState);
 		newState.enter();
 
 		currentState = newState;
 	}
+
+	// public void setSelectedCharacter(PlayableCharacter selectedCharacter) {
+	// 	this.selectedCharacter = selectedCharacter;
+	// }
+
+	// private void processStateDecisions(State state) {
+	// 	switch (state.GetType().Name)
+	// 	{
+	// 		case "DecisionState":
+	// 			if (selectedCharacter is not null) {
+	// 				(state as DecisionState).setSelectedCharacter(selectedCharacter);
+	// 			}
+	// 			GD.Print("selected character", selectedCharacter);
+	// 			break;
+	// 		default:
+	// 			GD.Print("Nothing to do here");
+	// 			break;
+	// 	}
+	// }
 }
