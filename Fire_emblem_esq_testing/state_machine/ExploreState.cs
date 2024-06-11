@@ -68,6 +68,9 @@ public partial class ExploreState : State
 
 		if (Input.IsActionJustPressed("select")) {
 			MapEntities.selectedCharacter = characterUtility.selectCharacter(currentTileCoords, ref path);
+			if (MapEntities.selectedCharacter.usedTurn == true) {
+				MapEntities.selectedCharacter = null;
+			} 
 			combatUtility.setSelectedCharacter(MapEntities.selectedCharacter);
 			tileUtility.drawCursor(currentTileCoords);
 		}
@@ -84,10 +87,14 @@ public partial class ExploreState : State
 					// if (detectedEnemies.Count() != 0) {
 					// 	EmitSignal(SignalName.StateChange, this, 1);
 					// }
-					if (MapEntities.selectedCharacter.moveSteps <= 0) {
-						MapEntities.selectedCharacter = null;
-					} else {
+					// if (MapEntities.selectedCharacter.moveSteps <= 0) {
+					// 	MapEntities.selectedCharacter = null;
+					// } 
+					
+					if (MapEntities.selectedCharacter.usedTurn == false) {
 						EmitSignal(SignalName.StateChange, this, "DecisionState");
+					} else {
+						MapEntities.selectedCharacter = null;
 					}
 				}
 			}

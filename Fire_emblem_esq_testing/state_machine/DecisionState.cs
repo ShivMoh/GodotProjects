@@ -27,6 +27,7 @@ public partial class DecisionState : State {
 			string choice = MapEntities.selectedCharacter.actionsMenu.GetItemText(currentCheckedItem);
 			this.processSelectedChoice(choice);
 			MapEntities.selectedCharacter.actionsMenu.Hide();
+			MapEntities.selectedCharacter.usedTurn = true;
 		}
 	}
 

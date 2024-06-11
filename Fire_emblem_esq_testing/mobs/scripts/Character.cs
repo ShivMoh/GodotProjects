@@ -11,6 +11,8 @@ public partial class Character : CharacterBody2D
 
 	public int moveSteps;
 	public bool move = false;
+
+	public bool usedTurn = false;
 	protected AnimatedSprite2D animatedSprite;
 
 	public List<AttackMeta> attacks;
