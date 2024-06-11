@@ -10,7 +10,7 @@ public partial class DecisionState : State {
 	{
 		GD.Print("I am on decision state");
 		MapEntities.selectedCharacter.actionsMenu.Clear();
-		MapEntities.selectedCharacter.addPopupMenuItem(new List<string>() {"Attack", "Ability", "Use"});
+		MapEntities.selectedCharacter.addPopupMenuItem(new List<string>() {"Attack", "Ability", "Use", "End Turn"});
 	}
 	public override void physicsUpdate(double _delta)
 	{

@@ -4,13 +4,13 @@ using Godot;
 
 public partial class AttackSelectionState : State {
 
-
 	private int currentCheckedItem = 0;
 	private List<string> popupMenuOptions = new List<string>();
 
 	public override void enter()
 	{
 		GD.Print("I am on attack selection state");
+		popupMenuOptions.Clear();
 		foreach (AttackMeta attack in MapEntities.attackMetas)
 		{
 			GD.Print(attack.name);
@@ -20,6 +20,7 @@ public partial class AttackSelectionState : State {
 		MapEntities.selectedCharacter.actionsMenu.Clear();
 		MapEntities.selectedCharacter.addPopupMenuItem(popupMenuOptions);
 	}
+
 	public override void physicsUpdate(double _delta)
 	{
 		MapEntities.selectedCharacter.actionsMenu.Popup();

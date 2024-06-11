@@ -16,6 +16,15 @@ public partial class InitialState : State {
 		)
 	};
 
+	static CharacterStat characterStat= new CharacterStat(
+		name: "John",
+		health: 20,
+		strenth: 20,
+		intelligence: 15,
+		skill: 10,
+		constition: 20
+	);
+
 	CharacterMeta[] playableCharactersMeta = {
 		new CharacterMeta(
 			tileCoord: new Vector2I(5, 5),
@@ -58,7 +67,9 @@ public partial class InitialState : State {
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(3, 9),
-			characterPath : "res://mobs/scenes/enemy_character.tscn",
+			characterPath : 
+			
+			"res://mobs/scenes/enemy_character.tscn",
 			attacks : attacksMeta
 		),
 	};
@@ -82,8 +93,8 @@ public partial class InitialState : State {
 	public override void physicsUpdate(double _delta)
 	{
 		EmitSignal(SignalName.StateChange, this, "ExploreState");
-
 	}
+
 	private void loadCharacters() {
 		for (int i = 0; i < playableCharactersMeta.Length; i++) {
 			PlayableCharacter character = Character.instantiate(
@@ -92,6 +103,7 @@ public partial class InitialState : State {
 			) as PlayableCharacter;
 
 			character.setAttacks(playableCharactersMeta[i].attacks);
+			character.setCharacterStats(characterStat);
 			MapEntities.map.GetNode("playableCharacters").AddChild(character);
 			MapEntities.playableCharacters.Add(character);
 		}
@@ -103,7 +115,7 @@ public partial class InitialState : State {
 				MapEntities.map.MapToLocal(enemyCharactersMeta[i].tileCoord),
 				enemyCharactersMeta[i].characterPath
 			) as EnemyCharacter;
-
+			character.setCharacterStats(characterStat);
 			MapEntities.map.GetNode("enemyCharacters").AddChild(character);
 			MapEntities.enemyCharacters.Add(character);
 		}

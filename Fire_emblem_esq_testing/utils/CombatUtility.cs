@@ -43,11 +43,13 @@ public partial class CombatUtility {
 	}   
 
 	public void attackCharacter(PlayableCharacter selectedCharacter, Character target, AttackMeta chosenAttack) {
-		int damage = selectedCharacter.power + chosenAttack.power;
+		int damage = selectedCharacter.getCharacterStats().strenth + chosenAttack.power;
 
-		target.health -= damage;
+		target.getCharacterStats().health -= damage;
 
-		if (target.health <= 0) {
+		// GD.Print("Health", target.getCharacterStats().health);
+
+		if (target.getCharacterStats().health <= 0) {
 			target.QueueFree();
 		}
 	}

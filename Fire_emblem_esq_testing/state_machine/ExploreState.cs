@@ -15,7 +15,6 @@ public partial class ExploreState : State
 	bool  move = false;
 	int characterMoveIndex = 0;
 
-
 	private Vector2I lastTile;
 
 	private CombatUtility combatUtility;
@@ -28,9 +27,6 @@ public partial class ExploreState : State
 	
 		currentTileCoords = MapEntities.cursorCoords;
 		previousTileCoords = currentTileCoords;
-
-		GD.Print("hello");
-		GD.Print("Selected character", MapEntities.selectedCharacter);
 		
 		combatUtility = new CombatUtility(MapEntities.map, MapEntities.enemyCharacters, MapEntities.selectedCharacter);
 		characterUtility = new CharacterUtility(MapEntities.map, MapEntities.selectedCharacter, MapEntities.playableCharacters);
