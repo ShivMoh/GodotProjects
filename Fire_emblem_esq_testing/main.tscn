@@ -9,9 +9,10 @@
 
 [node name="container" type="Node2D" parent="."]
 
-[node name="MainStateMachine" parent="." instance=ExtResource("2_liiaq")]
+[node name="MainStateMachine" parent="." node_paths=PackedStringArray("initialState") instance=ExtResource("2_liiaq")]
+initialState = NodePath("InitialState")
 
-[node name="ExploreState" parent="MainStateMachine" index="0" node_paths=PackedStringArray("tilemap")]
+[node name="InitialState" parent="MainStateMachine" index="5" node_paths=PackedStringArray("tilemap")]
 tilemap = NodePath("../../test")
 
 [editable path="MainStateMachine"]

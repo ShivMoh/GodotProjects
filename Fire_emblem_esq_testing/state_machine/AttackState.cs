@@ -17,6 +17,6 @@ public partial class AttackState : State {
 			combatUtility.attackCharacter(MapEntities.selectedCharacter, MapEntities.targetedCharacters.First(), MapEntities.chosenAttack);
 		}
 
-		EmitSignal(SignalName.StateChange, this, 0);
+		EmitSignal(SignalName.StateChange, this, "ExploreState");
 	}
 }   

@@ -19,4 +19,6 @@ public partial class MapEntities : Node
 	public static List<AttackMeta> attackMetas = new List<AttackMeta>();
 
 	public static AttackMeta chosenAttack = null;
+
+	public static Vector2I cursorCoords;
 }

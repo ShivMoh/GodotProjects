@@ -41,11 +41,11 @@ public partial class StateMachine : Node2D {
 		if (currentState is not null) currentState.physicsUpdate(delta);
 	}
 
-	public void onChildTransition(State state, int stateID) {
+	public void onChildTransition(State state, string stateName) {
 
 		if (state != currentState) return;
 
-		State newState = states.FirstOrDefault(state => states.IndexOf(state) == stateID, null);
+		State newState = states.FirstOrDefault(state => state.GetType().Name == stateName, null);
 
 		if (newState is null) return;
 

@@ -39,7 +39,7 @@ public partial class AttackSelectionState : State {
 			MapEntities.selectedCharacter.actionsMenu.Hide();
 			MapEntities.selectedCharacter.actionsMenu.Clear();
 
-			EmitSignal(SignalName.StateChange, this, 3);
+			EmitSignal(SignalName.StateChange, this, "TargetSelectionState");
 
 			// this.processSelectedChoice(choice);
 
