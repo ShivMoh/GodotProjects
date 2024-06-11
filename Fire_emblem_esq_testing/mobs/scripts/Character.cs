@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 using Vector2 = Godot.Vector2;
@@ -7,8 +8,13 @@ public partial class Character : CharacterBody2D
 	public const float Speed = 200.0f;
 
 	public Vector2 targetPosition;
+
+	public int moveSteps;
 	public bool move = false;
 	protected AnimatedSprite2D animatedSprite;
+
+	public List<AttackMeta> attacks;
+
 	public override void _Ready()
 	{
 		targetPosition = this.GlobalPosition;
@@ -44,6 +50,11 @@ public partial class Character : CharacterBody2D
 	public CharacterStat getCharacterStats() {
 		return characterStat;
 	}
+
+	public void setAttacks(List<AttackMeta> attacks) {
+		this.attacks = attacks;
+	}
+
 
 	protected Vector2 moveTo(Vector2 velocity) {
 		
@@ -83,6 +94,8 @@ public partial class Character : CharacterBody2D
 		
 		if (direction == Vector2.Zero) animatedSprite.Play("idle");
 	}
+
+	
 
 
 }

@@ -9,6 +9,8 @@ public partial class CharacterStat {
 
     public int strenth {get; set;} = 0;
 
+    public int speed {get; set; } = 0;
+    
     public int intelligence {get; set;} = 0;
 
     public int skill {get; set;} = 0;
@@ -19,6 +21,7 @@ public partial class CharacterStat {
         string name,
         int health,
         int strenth,
+        int speed,
         int intelligence,
         int skill,
         int constition
@@ -26,6 +29,7 @@ public partial class CharacterStat {
         this.name = name;
         this.health = health;
         this.strenth = strenth;
+        this.speed = speed;
         this.intelligence = intelligence;
         this.skill = skill;
         this.constition = constition;

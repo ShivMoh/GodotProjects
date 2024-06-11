@@ -81,10 +81,14 @@ public partial class ExploreState : State
 					tileUtility.drawCursor(currentTileCoords);
 					
 					// EmitSignal(SignalName.ShareCharacter, MapEntities.selectedCharacter);
-					EmitSignal(SignalName.StateChange, this, "DecisionState");
 					// if (detectedEnemies.Count() != 0) {
 					// 	EmitSignal(SignalName.StateChange, this, 1);
 					// }
+					if (MapEntities.selectedCharacter.moveSteps <= 0) {
+						MapEntities.selectedCharacter = null;
+					} else {
+						EmitSignal(SignalName.StateChange, this, "DecisionState");
+					}
 				}
 			}
 		}
@@ -112,6 +116,7 @@ public partial class ExploreState : State
 	}
 
 	private void createPath() {
+
 		if (path.Count() == 0) {
 			path.Add(previousTileCoords);
 		}
@@ -124,6 +129,7 @@ public partial class ExploreState : State
 				if (path.Last() == currentTileCoords) {
 					tileUtility.eraseCursor(previousTileCoords);
 					tileUtility.drawCursor(currentTileCoords);
+					MapEntities.selectedCharacter.moveSteps = Mathf.Min(MapEntities.selectedCharacter.moveSteps + 1, MapEntities.selectedCharacter.getCharacterStats().speed);
 					return;
 				}
 			}
@@ -139,6 +145,15 @@ public partial class ExploreState : State
 
 		tileUtility.setTiles(previousTileCoords, currentTileCoords);
 		path.Add(currentTileCoords);
+		MapEntities.selectedCharacter.moveSteps -= 1;
+
+		if (MapEntities.selectedCharacter.moveSteps < 0) {
+			path.Remove(currentTileCoords);
+			MapEntities.selectedCharacter.moveSteps += 1;
+			tileUtility.eraseCursor(currentTileCoords);
+			tileUtility.drawCursor(previousTileCoords);
+			currentTileCoords = previousTileCoords;
+		}
 
 	}
 

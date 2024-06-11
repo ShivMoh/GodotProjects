@@ -6,7 +6,6 @@ public partial class PlayableCharacter : Character{
 
 	public PopupMenu actionsMenu;
 
-	public List<AttackMeta> attacks;
 	
 	public override void _Ready()
 	{
@@ -28,8 +27,5 @@ public partial class PlayableCharacter : Character{
 		}
 	}
 
-	public void setAttacks(List<AttackMeta> attacks) {
-		this.attacks = attacks;
-	}
 
 }

@@ -20,6 +20,7 @@ public partial class InitialState : State {
 		name: "John",
 		health: 20,
 		strenth: 20,
+		speed: 20,
 		intelligence: 15,
 		skill: 10,
 		constition: 20
@@ -104,6 +105,7 @@ public partial class InitialState : State {
 
 			character.setAttacks(playableCharactersMeta[i].attacks);
 			character.setCharacterStats(characterStat);
+			character.moveSteps = character.getCharacterStats().speed;
 			MapEntities.map.GetNode("playableCharacters").AddChild(character);
 			MapEntities.playableCharacters.Add(character);
 		}
@@ -115,7 +117,10 @@ public partial class InitialState : State {
 				MapEntities.map.MapToLocal(enemyCharactersMeta[i].tileCoord),
 				enemyCharactersMeta[i].characterPath
 			) as EnemyCharacter;
+
+			character.setAttacks(enemyCharactersMeta[i].attacks);
 			character.setCharacterStats(characterStat);
+			character.moveSteps = character.getCharacterStats().speed;
 			MapEntities.map.GetNode("enemyCharacters").AddChild(character);
 			MapEntities.enemyCharacters.Add(character);
 		}
