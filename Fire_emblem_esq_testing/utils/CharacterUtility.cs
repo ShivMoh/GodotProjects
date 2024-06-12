@@ -9,19 +9,19 @@ public partial class CharacterUtility {
 	// private Vector2I lastTile;
 
 	private TileMap tilemap;
-	private PlayableCharacter selectedCharacter;
+	private Character selectedCharacter;
 
 	private int characterMoveIndex;
 	List<PlayableCharacter> playableCharacters; 
 
-	public CharacterUtility(TileMap tilemap, PlayableCharacter selectedCharacter, List<PlayableCharacter> playableCharacters) {
+	public CharacterUtility(TileMap tilemap, Character selectedCharacter, List<PlayableCharacter> playableCharacters) {
 		this.tilemap = tilemap;
 		this.selectedCharacter = selectedCharacter;
 		this.playableCharacters = playableCharacters;
 		this.characterMoveIndex = 0;
 	}
 
-	public void setSelectedCharacter(PlayableCharacter selectedCharacter) {
+	public void setSelectedCharacter(Character selectedCharacter) {
 		this.selectedCharacter = selectedCharacter;
 	}
 
@@ -74,15 +74,19 @@ public partial class CharacterUtility {
 		if (character is not null) {
 			if (selectedCharacter == null) {
 				selectedCharacter = character;
-				return character;
+
+				if (selectedCharacter.usedTurn == true) {
+					selectedCharacter = null;
+				}
+			
+				return selectedCharacter as PlayableCharacter;
 			} else {
 				selectedCharacter = null;
 				this.clearPath(tilemap, ref path, current);
 				return null;
 			}
 		} 
-
-		return selectedCharacter;
+		return selectedCharacter as PlayableCharacter;
 		
 	}
 

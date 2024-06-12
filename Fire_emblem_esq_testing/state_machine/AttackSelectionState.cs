@@ -33,6 +33,7 @@ public partial class AttackSelectionState : State {
 			}
 
 			currentCheckedItem = focusedItem;
+			
 			string choice = MapEntities.selectedCharacter.actionsMenu.GetItemText(currentCheckedItem);
 			AttackMeta chosenAttack = MapEntities.attackMetas.ElementAt(popupMenuOptions.IndexOf(choice));
 			MapEntities.chosenAttack = chosenAttack;
@@ -41,8 +42,6 @@ public partial class AttackSelectionState : State {
 			MapEntities.selectedCharacter.actionsMenu.Clear();
 
 			EmitSignal(SignalName.StateChange, this, "TargetSelectionState");
-
-			// this.processSelectedChoice(choice);
 
 		}
 	}

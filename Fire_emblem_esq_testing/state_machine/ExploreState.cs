@@ -21,7 +21,10 @@ public partial class ExploreState : State
 	private CharacterUtility characterUtility;
 	
 	private TileUtility tileUtility;
+
+	private string currentTurn;
 	
+	private int turnIndex = 0;
 	public override void enter()
 	{
 	
@@ -32,12 +35,41 @@ public partial class ExploreState : State
 		characterUtility = new CharacterUtility(MapEntities.map, MapEntities.selectedCharacter, MapEntities.playableCharacters);
 		tileUtility = new TileUtility(MapEntities.map);
 
+		MapEntities.map.ClearLayer(1);
+		this.handleTurn();
+		GD.Print("IT IS ", currentTurn, " turn");
 		placeCursor();
 
 	}
 
+	private void handleTurn() {
+		if (MapEntities.entities.Count <= 0) {
+			MapEntities.entities.Add("PLAYER");
+			MapEntities.entities.Add("ENEMY");
+			currentTurn = MapEntities.entities.First();
+		}
+
+		if (currentTurn == MapEntities.entities.ElementAt(0)) {
+			if (MapEntities.count == MapEntities.playableCharacterCount) {
+				switchTurns();
+			}
+		}
+
+	
+	}
+
+	private void switchTurns() {
+		turnIndex = turnIndex + 1 == MapEntities.entities.Count ? 0 : turnIndex + 1;
+		currentTurn = MapEntities.entities.ElementAt(turnIndex);
+	}
+
 	public override void physicsUpdate(double delta)
 	{	
+
+		if (currentTurn == MapEntities.entities.ElementAt(1)) {
+			EmitSignal(SignalName.StateChange, this, "EnemyMoveState");
+			
+		}
 		previousTileCoords = currentTileCoords;
 
 		if (Input.IsActionJustPressed("right")) {
@@ -67,10 +99,7 @@ public partial class ExploreState : State
 		}
 
 		if (Input.IsActionJustPressed("select")) {
-			MapEntities.selectedCharacter = characterUtility.selectCharacter(currentTileCoords, ref path);
-			if (MapEntities.selectedCharacter.usedTurn == true) {
-				MapEntities.selectedCharacter = null;
-			} 
+			MapEntities.selectedCharacter = characterUtility.selectCharacter(currentTileCoords, ref path) as PlayableCharacter;
 			combatUtility.setSelectedCharacter(MapEntities.selectedCharacter);
 			tileUtility.drawCursor(currentTileCoords);
 		}
@@ -81,15 +110,7 @@ public partial class ExploreState : State
 
 				if (finished) {
 					// MapEntities.detectedEnemies = combatUtility.detectEnemy(tileUtility);
-					tileUtility.drawCursor(currentTileCoords);
-					
-					// EmitSignal(SignalName.ShareCharacter, MapEntities.selectedCharacter);
-					// if (detectedEnemies.Count() != 0) {
-					// 	EmitSignal(SignalName.StateChange, this, 1);
-					// }
-					// if (MapEntities.selectedCharacter.moveSteps <= 0) {
-					// 	MapEntities.selectedCharacter = null;
-					// } 
+					tileUtility.drawCursor(currentTileCoords); 
 					
 					if (MapEntities.selectedCharacter.usedTurn == false) {
 						EmitSignal(SignalName.StateChange, this, "DecisionState");
@@ -123,6 +144,11 @@ public partial class ExploreState : State
 	}
 
 	private void createPath() {
+		
+		if (MapEntities.selectedCharacter.usedTurn == true) {
+			MapEntities.selectedCharacter = null;
+			return;
+		}
 
 		if (path.Count() == 0) {
 			path.Add(previousTileCoords);

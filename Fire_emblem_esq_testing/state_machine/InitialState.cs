@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public partial class InitialState : State {
@@ -85,10 +86,13 @@ public partial class InitialState : State {
 		MapEntities.map = tilemap;
 		MapEntities.selectedCharacter = null;
 		MapEntities.cursorCoords = new Vector2I(0, 0);
-
+		
 		loadCharacters();
 		loadEnemies();
 
+		MapEntities.playableCharacterCount = MapEntities.playableCharacters.Count();
+		MapEntities.enemyCharacterCount = MapEntities.enemyCharacters.Count();
+		
 	}
 
 	public override void physicsUpdate(double _delta)

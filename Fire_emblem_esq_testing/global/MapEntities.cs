@@ -18,7 +18,16 @@ public partial class MapEntities : Node
 
 	public static List<AttackMeta> attackMetas = new List<AttackMeta>();
 
+	public static List<string> entities = new List<string>();
+
 	public static AttackMeta chosenAttack = null;
 
 	public static Vector2I cursorCoords;
+
+	public static int playableCharacterCount = 0;
+
+	public static int enemyCharacterCount = 0;
+
+	public static int count;
+
 }

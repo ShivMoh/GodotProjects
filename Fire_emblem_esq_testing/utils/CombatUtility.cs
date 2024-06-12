@@ -47,9 +47,8 @@ public partial class CombatUtility {
 
 		target.getCharacterStats().health -= damage;
 
-		// GD.Print("Health", target.getCharacterStats().health);
-
 		if (target.getCharacterStats().health <= 0) {
+			MapEntities.enemyCharacters.Remove(target as EnemyCharacter);
 			target.QueueFree();
 		}
 	}
