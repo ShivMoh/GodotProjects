@@ -17,7 +17,7 @@ public partial class StateMachine : Node2D {
 			if (child.GetChildCount() != 0) {
 				foreach (var subChild in child.GetChildren()) {
 					if (subChild is State) {
-						states.Add(child as State);
+						states.Add(subChild as State);
 
 						(subChild as State).StateChange += onChildTransition;
 						GD.Print(subChild.GetType().Name);
