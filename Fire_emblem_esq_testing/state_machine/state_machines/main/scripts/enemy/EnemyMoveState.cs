@@ -39,11 +39,19 @@ public partial class EnemyMoveState : State {
 	public override void physicsUpdate(double _delta)
 	{
 		GD.Print(this.currentActingEnemey.GlobalPosition == this.target.GlobalPosition);
-		this.characterUtility.moveCharacter(ref this.path, currentTileCoords, this.path.Last());
+		bool result = this.characterUtility.moveCharacter(ref this.path, currentTileCoords, this.path.Last());
+
+		if (result == true) {
+			EmitSignal(SignalName.StateChange, this, "EnemyAttackState");
+			MapEntities.targetedCharacters.Add(target);
+		}
 	}
 	
 	private void findTarget() {
 		// for now we're going to find the closest target
+		// in the future should incoorporate something perhaps based on character's intelligence
+		// if a character is really smart, he might aim for weaker targets, if he's really strong,
+		// he'll attack anyone regardless...hmmm, maybe i should have personality trait for this...
 		float closestDistance = 10000;
 		PlayableCharacter targetCandidate = null;
 		foreach (PlayableCharacter playableCharacter in MapEntities.playableCharacters)
@@ -59,9 +67,8 @@ public partial class EnemyMoveState : State {
 			}
 		}
 
-		GD.Print(targetCandidate);
 		this.target = targetCandidate;
-		
+
 	}
 
 	private void calculatePathTowardsTarget() {

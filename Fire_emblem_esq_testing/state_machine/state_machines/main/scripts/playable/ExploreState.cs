@@ -55,7 +55,9 @@ public partial class ExploreState : State
 			}
 		}
 
-	
+		if (currentTurn == MapEntities.entities.ElementAt(0)) {
+			EmitSignal(SignalName.StateChange, this, "EnemyAttackState");
+		}	
 	}
 
 	private void switchTurns() {
@@ -66,7 +68,7 @@ public partial class ExploreState : State
 	public override void physicsUpdate(double delta)
 	{	
 
-		EmitSignal(SignalName.StateChange, this, "EnemyMoveState");
+		// EmitSignal(SignalName.StateChange, this, "EnemyMoveState");
 			
 		
 		previousTileCoords = currentTileCoords;

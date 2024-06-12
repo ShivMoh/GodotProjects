@@ -14,14 +14,28 @@ public partial class StateMachine : Node2D {
 	{
 		foreach (var child in this.GetChildren())
 		{   
-			if (child is State) {
-				states.Add(child as State);
+			if (child.GetChildCount() != 0) {
+				foreach (var subChild in child.GetChildren()) {
+					if (subChild is State) {
+						states.Add(child as State);
 
-				(child as State).StateChange += onChildTransition;
-				GD.Print(child.GetType().Name);
-				// (child as State).ShareAttack += setAttack;
-				// (child as State).ShareAttack += setAttacks;
+						(subChild as State).StateChange += onChildTransition;
+						GD.Print(subChild.GetType().Name);
+						// (child as State).ShareAttack += setAttack;
+						// (child as State).ShareAttack += setAttacks;
+					}
+				}
+			} else {
+				if (child is State) {
+					states.Add(child as State);
+
+					(child as State).StateChange += onChildTransition;
+					GD.Print(child.GetType().Name);
+					// (child as State).ShareAttack += setAttack;
+					// (child as State).ShareAttack += setAttacks;
+				}
 			}
+		
 		}
 
 

@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0egj88ftwkh8"]
+
+[ext_resource type="Script" path="res://state_machine/StateMachine.cs" id="1_pe6fr"]
+
+[node name="MainStateMachine" type="Node2D" node_paths=PackedStringArray("initialState")]
+script = ExtResource("1_pe6fr")
+initialState = NodePath("playableCharacter/ExploreState")
+
+[node name="InitialState" type="Node2D" parent="."]
+
+[node name="FinalState" type="Node2D" parent="."]
+
+[node name="playableCharacter" type="Node2D" parent="."]
+
+[node name="ExploreState" type="Node2D" parent="playableCharacter"]
+
+[node name="DecisionState" type="Node2D" parent="playableCharacter"]
+
+[node name="AttackSelectionState" type="Node2D" parent="playableCharacter"]
+
+[node name="TargetSelectionState" type="Node2D" parent="playableCharacter"]
+
+[node name="AttackState" type="Node2D" parent="playableCharacter"]
+
+[node name="enemyCharacter" type="Node2D" parent="."]
+
+[node name="EnemyTargetSelectionState" type="Node2D" parent="enemyCharacter"]
+
+[node name="EnemyAttackSelectionState" type="Node2D" parent="enemyCharacter"]
+
+[node name="EnemyMoveState" type="Node2D" parent="enemyCharacter"]
+
+[node name="EnemyAttackState" type="Node2D" parent="enemyCharacter"]

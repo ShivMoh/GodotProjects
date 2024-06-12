@@ -14,7 +14,7 @@ public partial class MapEntities : Node
 
 	public static List<EnemyCharacter> detectedEnemies = new List<EnemyCharacter>();
 
-	public static List<EnemyCharacter> targetedCharacters = new List<EnemyCharacter>();
+	public static List<Character> targetedCharacters = new List<Character>();
 
 	public static List<AttackMeta> attackMetas = new List<AttackMeta>();
 
