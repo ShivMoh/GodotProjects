@@ -66,10 +66,9 @@ public partial class ExploreState : State
 	public override void physicsUpdate(double delta)
 	{	
 
-		if (currentTurn == MapEntities.entities.ElementAt(1)) {
-			EmitSignal(SignalName.StateChange, this, "EnemyMoveState");
+		EmitSignal(SignalName.StateChange, this, "EnemyMoveState");
 			
-		}
+		
 		previousTileCoords = currentTileCoords;
 
 		if (Input.IsActionJustPressed("right")) {
@@ -96,12 +95,19 @@ public partial class ExploreState : State
 			MapEntities.selectedCharacter.move = true;
 			lastTile = path.Last();
 			characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);
+
+			// foreach (Vector2I item in path)
+			// {
+			// 	GD.Print("Character path", item);
+			// }
 		}
+
 
 		if (Input.IsActionJustPressed("select")) {
 			MapEntities.selectedCharacter = characterUtility.selectCharacter(currentTileCoords, ref path) as PlayableCharacter;
 			combatUtility.setSelectedCharacter(MapEntities.selectedCharacter);
 			tileUtility.drawCursor(currentTileCoords);
+
 		}
 
 		if (MapEntities.selectedCharacter != null) {

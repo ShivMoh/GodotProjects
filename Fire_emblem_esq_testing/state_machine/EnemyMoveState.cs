@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -11,23 +12,33 @@ public partial class EnemyMoveState : State {
 
 	private Vector2I currentTileCoords;
 
+	private TileUtility tileUtility;
 
 	List<Vector2I> path = new List<Vector2I>();
 	public override void enter()
 	{
 		
 		currentActingEnemey = MapEntities.enemyCharacters.MaxBy(enemy => enemy.getCharacterStats().speed);
-		this.characterUtility = new CharacterUtility(MapEntities.map, currentActingEnemey, MapEntities.playableCharacters);
 
-		GD.Print("I am on enemy move state");
+		this.characterUtility = new CharacterUtility(MapEntities.map, currentActingEnemey, MapEntities.playableCharacters);
+		this.tileUtility = new TileUtility(MapEntities.map);
+
+		this.tileUtility.highLight(MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition), new Vector2I(0, 1));
+		GD.Print("I am on enemy move state", MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition));
 		findTarget();
 		calculatePathTowardsTarget();
+		foreach (Vector2I pat in path)
+		{
+			GD.Print("PATH", pat);
+		}
+		this.currentActingEnemey.move = true;
 
 
 	}
 
 	public override void physicsUpdate(double _delta)
 	{
+		GD.Print(this.currentActingEnemey.GlobalPosition == this.target.GlobalPosition);
 		this.characterUtility.moveCharacter(ref this.path, currentTileCoords, this.path.Last());
 	}
 	
@@ -48,6 +59,7 @@ public partial class EnemyMoveState : State {
 			}
 		}
 
+		GD.Print(targetCandidate);
 		this.target = targetCandidate;
 		
 	}
@@ -57,18 +69,24 @@ public partial class EnemyMoveState : State {
 		Vector2I actingEnemyTileCoords = MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition);
 		this.currentTileCoords = actingEnemyTileCoords;
 
+		path.Add(this.currentTileCoords);
+
 		int distanceX = targetTileCoords.X - actingEnemyTileCoords.X; 
 		int distanceY = targetTileCoords.Y - actingEnemyTileCoords.Y;
 
+		int directionX = distanceX > 0 ? 1 : -1;	
+		int directionY = distanceY > 0 ? 1 : -1;
+
+		distanceX = Mathf.Abs(distanceX);
+		distanceY = Mathf.Abs(distanceY);
+
 		for (int y = 1; y < distanceY + 1; y++)
 		{
-			this.path.Add( new Vector2I(actingEnemyTileCoords.X, actingEnemyTileCoords.Y + y));
+			this.path.Add( new Vector2I(actingEnemyTileCoords.X, actingEnemyTileCoords.Y + (y * directionY)));
 		}
-		for (int x = 1; x < distanceX + 1; x++)
+		for (int x = 1; x < distanceX; x++)
 		{
-			this.path.Add( new Vector2I(actingEnemyTileCoords.X + x, targetTileCoords.Y));
+			this.path.Add( new Vector2I(actingEnemyTileCoords.X + (x * directionX), targetTileCoords.Y));
 		}
-
-
 	}
 }

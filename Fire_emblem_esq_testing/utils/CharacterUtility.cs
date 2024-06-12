@@ -38,6 +38,7 @@ public partial class CharacterUtility {
 			Vector2I next_tile = path.ElementAt(characterMoveIndex); 
 			
 			selectedCharacter.targetPosition = tilemap.MapToLocal(next_tile);			
+			GD.Print("Updated position", selectedCharacter.targetPosition);
 			characterMoveIndex++;
 		} 
 
