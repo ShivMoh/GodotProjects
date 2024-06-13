@@ -8,12 +8,18 @@ public partial class InitialState : State {
 		new AttackMeta(
 			name: "Fire ball",
 			power: 5,
-			attackType: AttackType.CLOSE
+			timesUsableUntilReset: 20,
+			attackTargetMeta: new AttackTargetMeta(2, 1),
+			attackAttribute: AttackAttribute.FIRE,
+			effect: AttackEffect.BURN
 		),
 		new AttackMeta(
 			name: "Ice ball",
 			power: 3,
-			attackType: AttackType.CLOSE
+			timesUsableUntilReset: 20,
+			attackTargetMeta: new AttackTargetMeta(2, 1),
+			attackAttribute: AttackAttribute.WATER,
+			effect: AttackEffect.FREEZE
 		)
 	};
 
@@ -22,9 +28,11 @@ public partial class InitialState : State {
 		health: 20,
 		strenth: 20,
 		speed: 20,
+		defence: 20,
 		intelligence: 15,
 		skill: 10,
-		constition: 20
+		constition: 20,
+		trait: Trait.NONE
 	);
 
 	CharacterMeta[] playableCharactersMeta = {
@@ -69,9 +77,7 @@ public partial class InitialState : State {
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(3, 9),
-			characterPath : 
-			
-			"res://mobs/scenes/enemy_character.tscn",
+			characterPath : "res://mobs/scenes/enemy_character.tscn",
 			attacks : attacksMeta
 		),
 	};

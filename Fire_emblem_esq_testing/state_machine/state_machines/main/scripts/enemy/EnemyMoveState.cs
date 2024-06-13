@@ -24,7 +24,7 @@ public partial class EnemyMoveState : State {
 		this.tileUtility = new TileUtility(MapEntities.map);
 
 		this.tileUtility.highLight(MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition), new Vector2I(0, 1));
-		GD.Print("I am on enemy move state", MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition));
+	
 		findTarget();
 		calculatePathTowardsTarget();
 		foreach (Vector2I pat in path)

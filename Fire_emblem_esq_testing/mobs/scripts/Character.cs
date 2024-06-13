@@ -4,7 +4,7 @@ using Godot;
 using Vector2 = Godot.Vector2;
 public partial class Character : CharacterBody2D
 {
-	CharacterStat characterStat;
+	public CharacterStat characterStat;
 	public const float Speed = 200.0f;
 
 	public Vector2 targetPosition;
@@ -16,6 +16,7 @@ public partial class Character : CharacterBody2D
 	protected AnimatedSprite2D animatedSprite;
 
 	public List<AttackMeta> attacks;
+
 
 	public override void _Ready()
 	{

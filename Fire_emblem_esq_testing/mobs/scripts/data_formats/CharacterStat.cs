@@ -1,6 +1,26 @@
 using System;
 using Godot;
 
+public enum Trait
+{
+    CUNNING,
+    // 1. will always attack prefer a distance, unless its a killing blow (and distance doesn't deal the killing blow)
+    // 2. targets the weakest or most injured character
+
+    BRAZEN, 
+    // 1. will likely fight upfront, if possible
+    // 2. targets the strongest character on the board 
+    // 3. will likely prefer to use the most damaging attack they possess
+
+    COWARD,
+    // 1. will attack from a distance (prefer attacks where they don't get hurt back) or not attack at all unless its a killing blow
+    // 2. will run if certain conditions are met such as low health, number of allies < x, etc.
+
+    NONE
+    // 1. Basic soldier, will just blindly attack whomever is closest that will deal the most damage
+}
+
+
 public partial class CharacterStat {
 
     public string name {get; set;} = String.Empty;
@@ -10,29 +30,35 @@ public partial class CharacterStat {
     public int strenth {get; set;} = 0;
 
     public int speed {get; set; } = 0;
+
+    public int defence {get; set; } = 0;
     
     public int intelligence {get; set;} = 0;
 
     public int skill {get; set;} = 0;
 
     public int constition {get; set;} = 0;
-
+    public Trait trait {get; set;} = Trait.NONE;
     public CharacterStat(
         string name,
         int health,
         int strenth,
         int speed,
+        int defence,
         int intelligence,
         int skill,
-        int constition
+        int constition,
+        Trait trait
     ) {
         this.name = name;
         this.health = health;
         this.strenth = strenth;
         this.speed = speed;
+        this.defence = defence;
         this.intelligence = intelligence;
         this.skill = skill;
         this.constition = constition;
+        this.trait = trait;
     }   
 
 }

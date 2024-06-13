@@ -34,7 +34,6 @@ public partial class CombatUtility {
 			Vector2I enemyCoord = tilemap.LocalToMap(character.GlobalPosition);
 			if (this.checkAdjacent(currentCoord, enemyCoord)) {
 				characters.Add(character);
-				// this.highLightEnemy(tileUtility, enemyCoord);
 			}
 
 		}

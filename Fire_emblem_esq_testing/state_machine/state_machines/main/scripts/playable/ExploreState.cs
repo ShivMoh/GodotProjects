@@ -37,7 +37,6 @@ public partial class ExploreState : State
 
 		MapEntities.map.ClearLayer(1);
 		this.handleTurn();
-		GD.Print("IT IS ", currentTurn, " turn");
 		placeCursor();
 
 	}
