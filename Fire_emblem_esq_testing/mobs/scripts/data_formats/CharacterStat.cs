@@ -29,9 +29,13 @@ public partial class CharacterStat {
 
     public int strenth {get; set;} = 0;
 
+    public int magic {get; set;} = 0;
+
     public int speed {get; set; } = 0;
 
-    public int defence {get; set; } = 0;
+    public int physicalDefence {get; set; } = 0;
+
+    public int magicalDefence {get; set; } = 0;
     
     public int intelligence {get; set;} = 0;
 
@@ -43,8 +47,10 @@ public partial class CharacterStat {
         string name,
         int health,
         int strenth,
+        int magic,
         int speed,
-        int defence,
+        int physicalDefence,
+        int magicalDefence,
         int intelligence,
         int skill,
         int constition,
@@ -53,8 +59,10 @@ public partial class CharacterStat {
         this.name = name;
         this.health = health;
         this.strenth = strenth;
+        this.magic = magic;
         this.speed = speed;
-        this.defence = defence;
+        this.physicalDefence = physicalDefence;
+        this.magicalDefence = magicalDefence;
         this.intelligence = intelligence;
         this.skill = skill;
         this.constition = constition;

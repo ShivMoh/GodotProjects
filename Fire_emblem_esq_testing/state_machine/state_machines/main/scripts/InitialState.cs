@@ -27,8 +27,10 @@ public partial class InitialState : State {
 		name: "John",
 		health: 20,
 		strenth: 20,
+		magic : 18,
 		speed: 20,
-		defence: 20,
+		magicalDefence: 20,
+		physicalDefence: 20,
 		intelligence: 15,
 		skill: 10,
 		constition: 20,
@@ -45,7 +47,6 @@ public partial class InitialState : State {
 			tileCoord: new Vector2I(0, 7),
 			characterPath : "res://mobs/scenes/playable_character.tscn",
 			attacks : attacksMeta
-
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(5, 0),
@@ -85,7 +86,6 @@ public partial class InitialState : State {
 
 	[Export]
 	TileMap tilemap;
-
 
 	public override void enter()
 	{
