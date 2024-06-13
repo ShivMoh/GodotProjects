@@ -6,7 +6,7 @@ public partial class MapEntities : Node
 {
 
 	public static TileMap map = null;
-	public static PlayableCharacter selectedCharacter = null;
+	public static Character selectedCharacter = null;
 
 	public static List<PlayableCharacter> playableCharacters = new List<PlayableCharacter>();
 	

@@ -61,6 +61,7 @@ public partial class AttackMeta : Node {
     public string name;
     public int power;
 
+    public bool physical;
     public int timesUsableUntilReset = 0;
 
     public AttackTargetMeta attackTargetMeta;
@@ -75,6 +76,7 @@ public partial class AttackMeta : Node {
     public AttackMeta(
         string name, 
         int power, 
+        bool physical,
         int timesUsableUntilReset,
         AttackTargetMeta attackTargetMeta,
         AttackAttribute attackAttribute,
@@ -82,6 +84,7 @@ public partial class AttackMeta : Node {
     ) {
         this.name = name;
         this.power = power;
+        this.physical = physical;
         this.timesUsableUntilReset = timesUsableUntilReset;
         this.attackTargetMeta = attackTargetMeta;
         this.attackAttribute = attackAttribute;

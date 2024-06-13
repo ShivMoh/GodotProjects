@@ -36,7 +36,6 @@ public partial class ExploreState : State
 		tileUtility = new TileUtility(MapEntities.map);
 
 		MapEntities.map.ClearLayer(1);
-		this.handleTurn();
 		placeCursor();
 
 	}
@@ -54,8 +53,9 @@ public partial class ExploreState : State
 			}
 		}
 
-		if (currentTurn == MapEntities.entities.ElementAt(0)) {
-			EmitSignal(SignalName.StateChange, this, "EnemyAttackState");
+		if (currentTurn == MapEntities.entities.ElementAt(1)) {
+			GD.Print("Should be moving states now");
+			EmitSignal(SignalName.StateChange, this, "EnemyTargetSelectionState");
 		}	
 	}
 
@@ -66,6 +66,8 @@ public partial class ExploreState : State
 
 	public override void physicsUpdate(double delta)
 	{	
+		this.handleTurn();
+
 
 		// EmitSignal(SignalName.StateChange, this, "EnemyMoveState");
 			

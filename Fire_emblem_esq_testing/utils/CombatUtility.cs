@@ -9,14 +9,21 @@ public partial class CombatUtility {
 	private List<EnemyCharacter> enemies;
 	private PlayableCharacter selectedCharacter;
 
-	public CombatUtility(TileMap tilemap, List<EnemyCharacter> enemies, PlayableCharacter selectedCharacter) {
+	public CombatUtility(TileMap tilemap, List<EnemyCharacter> enemies, Character selectedCharacter) {
 		this.tilemap = tilemap;
 		this.enemies = enemies;
-		this.selectedCharacter = selectedCharacter;
+
+		if (selectedCharacter is PlayableCharacter) {
+			this.selectedCharacter = selectedCharacter as PlayableCharacter;
+		}
 	}
 
-	public void setSelectedCharacter(PlayableCharacter selectedCharacter) {
-		this.selectedCharacter = selectedCharacter;
+	public void setSelectedCharacter(Character selectedCharacter) {
+		if (selectedCharacter is PlayableCharacter) {
+			this.selectedCharacter = selectedCharacter as PlayableCharacter;
+		} else {
+			this.selectedCharacter = null;
+		}
 	}
 
 	public void highLightEnemy(TileUtility tileUtility, Vector2I coords) {
@@ -41,7 +48,7 @@ public partial class CombatUtility {
 		return characters;
 	}   
 
-	public void attackCharacter(PlayableCharacter selectedCharacter, Character target, AttackMeta chosenAttack) {
+	public void attackCharacter(Character selectedCharacter, Character target, AttackMeta chosenAttack) {
 		int damage = selectedCharacter.getCharacterStats().strenth + chosenAttack.power;
 
 		target.getCharacterStats().health -= damage;

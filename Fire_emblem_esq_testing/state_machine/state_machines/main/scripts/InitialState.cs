@@ -8,6 +8,7 @@ public partial class InitialState : State {
 		new AttackMeta(
 			name: "Fire ball",
 			power: 5,
+			physical : false,
 			timesUsableUntilReset: 20,
 			attackTargetMeta: new AttackTargetMeta(2, 1),
 			attackAttribute: AttackAttribute.FIRE,
@@ -16,6 +17,7 @@ public partial class InitialState : State {
 		new AttackMeta(
 			name: "Ice ball",
 			power: 3,
+			physical: false,
 			timesUsableUntilReset: 20,
 			attackTargetMeta: new AttackTargetMeta(2, 1),
 			attackAttribute: AttackAttribute.WATER,
@@ -34,7 +36,7 @@ public partial class InitialState : State {
 		intelligence: 15,
 		skill: 10,
 		constition: 20,
-		trait: Trait.NONE
+		trait: Trait.CUNNING
 	);
 
 	CharacterMeta[] playableCharactersMeta = {

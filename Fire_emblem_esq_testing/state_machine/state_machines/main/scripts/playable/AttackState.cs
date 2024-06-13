@@ -13,7 +13,7 @@ public partial class AttackState : State {
 
 	public override void physicsUpdate(double _delta)
 	{
-		if (MapEntities.chosenAttack.attackType == AttackType.CLOSE) {
+		if (MapEntities.chosenAttack.attackTargetMeta.range >= 1) {
 			combatUtility.attackCharacter(MapEntities.selectedCharacter, MapEntities.targetedCharacters.First(), MapEntities.chosenAttack);
 		}
 

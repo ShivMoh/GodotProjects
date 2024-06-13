@@ -7,9 +7,13 @@ public partial class AttackSelectionState : State {
 	private int currentCheckedItem = 0;
 	private List<string> popupMenuOptions = new List<string>();
 
+	private PlayableCharacter selectedCharacter;
 	public override void enter()
 	{
 		GD.Print("I am on attack selection state");
+
+		this.selectedCharacter = MapEntities.selectedCharacter as PlayableCharacter;
+		
 		popupMenuOptions.Clear();
 		foreach (AttackMeta attack in MapEntities.attackMetas)
 		{
@@ -17,29 +21,29 @@ public partial class AttackSelectionState : State {
 			popupMenuOptions.Add(attack.name);
 		}
 		
-		MapEntities.selectedCharacter.actionsMenu.Clear();
-		MapEntities.selectedCharacter.addPopupMenuItem(popupMenuOptions);
+		this.selectedCharacter.actionsMenu.Clear();
+		this.selectedCharacter.addPopupMenuItem(popupMenuOptions);
 	}
 
 	public override void physicsUpdate(double _delta)
 	{
-		MapEntities.selectedCharacter.actionsMenu.Popup();
+		this.selectedCharacter.actionsMenu.Popup();
 
 		if (Input.IsActionJustPressed("select")) {
-			int focusedItem = MapEntities.selectedCharacter.actionsMenu.GetFocusedItem();
-			MapEntities.selectedCharacter.actionsMenu.SetItemChecked(focusedItem, true);
-			if (MapEntities.selectedCharacter.actionsMenu.IsItemChecked(currentCheckedItem)) {
-				MapEntities.selectedCharacter.actionsMenu.SetItemChecked(currentCheckedItem, false);
+			int focusedItem = this.selectedCharacter.actionsMenu.GetFocusedItem();
+			this.selectedCharacter.actionsMenu.SetItemChecked(focusedItem, true);
+			if (this.selectedCharacter.actionsMenu.IsItemChecked(currentCheckedItem)) {
+				this.selectedCharacter.actionsMenu.SetItemChecked(currentCheckedItem, false);
 			}
 
 			currentCheckedItem = focusedItem;
 			
-			string choice = MapEntities.selectedCharacter.actionsMenu.GetItemText(currentCheckedItem);
+			string choice = this.selectedCharacter.actionsMenu.GetItemText(currentCheckedItem);
 			AttackMeta chosenAttack = MapEntities.attackMetas.ElementAt(popupMenuOptions.IndexOf(choice));
 			MapEntities.chosenAttack = chosenAttack;
 
-			MapEntities.selectedCharacter.actionsMenu.Hide();
-			MapEntities.selectedCharacter.actionsMenu.Clear();
+			this.selectedCharacter.actionsMenu.Hide();
+			this.selectedCharacter.actionsMenu.Clear();
 
 			EmitSignal(SignalName.StateChange, this, "TargetSelectionState");
 

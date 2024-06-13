@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public partial class EnemySelectionUtility {
@@ -11,50 +13,61 @@ public partial class EnemySelectionUtility {
     private List<AttackMeta> availableAttacks;
 
     public EnemySelectionUtility(
-        List<PlayableCharacter> playableCharacters,
         EnemyCharacter enemyCharacter,
         TileMap tileMap
     ) {
-        this.playableCharacters = playableCharacters;
         this.enemyCharacter = enemyCharacter;
         this.tileMap = tileMap;
     }
 
-	public Character findTargetWithinRange() {
+    /*
+        ["Fire ball", "Ice ball"]
+        [
+            ["this guy", "that guy"],
+            ["this guy", "that guy"]
+        ]
+
+        // get all targetable for fireball
+
+        fireballindex = indexof(fireball)
+        list[fireballindex]
+            */
+	public List<List<Character>> findTargetsWithinRange(List<PlayableCharacter> characters) {
 
         Vector2I enemyTileLocation = tileMap.LocalToMap(enemyCharacter.GlobalPosition);
+        List<AttackMeta> availableAttacks = this.getAvailableAttacks(enemyCharacter);
+        List<List<Character>> targetCandidates = new List<List<Character>>();
 
-		PlayableCharacter targetCandidate = null;
-		foreach (PlayableCharacter playableCharacter in MapEntities.playableCharacters)
+        if (availableAttacks.Count() == 0) return targetCandidates; 
+
+		foreach (PlayableCharacter playableCharacter in characters)
 		{
-            int greatestRange = this.getGreatestRange(playableCharacter);
             Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.GlobalPosition);
 
-            int numberOfStepsTo = Mathf.Abs(playableTileLocation.Y - enemyTileLocation.Y) + 
-            Mathf.Abs(playableTileLocation.X - enemyTileLocation.X) - (greatestRange + 1);
+            List<Character> targetableCandidatesForAttack = new List<Character>();
 
-            if (numberOfStepsTo <= enemyCharacter.moveSteps) {
-                if (targetCandidate != null) {
-                    if (enemyCharacter.characterStat.strenth > enemyCharacter.characterStat.magic) {
-                        if (targetCandidate.characterStat.physicalDefence > playableCharacter.characterStat.physicalDefence) {
-                            targetCandidate = playableCharacter;
-                        }
-                    } else {
-                        if (targetCandidate.characterStat.magic > playableCharacter.characterStat.magic) {
-                            targetCandidate = playableCharacter;
-                        }
-                    }
-                       
-                }
-            }    
-			// float distanceBetween = Mathf.Sqrt(
-			// 	Mathf.Pow(playableCharacter.GlobalPosition.X - enemyCharacter.GlobalPosition.X, 2) +                 
-			// 	Mathf.Pow(playableCharacter.GlobalPosition.Y - enemyCharacter.GlobalPosition.Y, 2) 
-			// );
+            foreach (AttackMeta attack in availableAttacks)
+            {
 
+                int numberOfStepsTo = Mathf.Abs(playableTileLocation.Y - enemyTileLocation.Y) + 
+                Mathf.Abs(playableTileLocation.X - enemyTileLocation.X) - (attack.attackTargetMeta.range + 1);
+
+                if (numberOfStepsTo <= enemyCharacter.moveSteps) {
+                    targetableCandidatesForAttack.Add(playableCharacter);
+                }           
+            }
+
+            targetCandidates.Add(targetableCandidatesForAttack);
+            targetableCandidatesForAttack.Clear();
 		}
-        return targetCandidate;
+
+        return targetCandidates;
 	}
+
+    private List<AttackMeta> getAvailableAttacks(Character character) {
+        if (character.attacks.Count() == 0) return new List<AttackMeta>();
+        return character.attacks.FindAll(attack => attack.timesUsableUntilReset > 0);
+    }
 
     private int getGreatestRange(PlayableCharacter playableCharacter) {
         int greatestRange = 0;
@@ -66,7 +79,13 @@ public partial class EnemySelectionUtility {
         }
         return greatestRange;
     }
-    public void findWeakestTarget() {}
+    public Character findWeakestDefenceTarget(List<Character> characters) {
+        if (enemyCharacter.characterStat.strenth > enemyCharacter.characterStat.magic) {
+            return characters.MinBy(character => character.characterStat.physicalDefence);
+        } else {
+            return characters.MinBy(character => character.characterStat.magicalDefence);
+        }
+    }
 
     public void findStrongestTarget() {}
     public void findLowestHealthTarget() {}
@@ -78,3 +97,10 @@ public partial class EnemySelectionUtility {
     // or without getting hurt back
     public void findSafestToAttackTarget() {}
 }
+
+
+
+// float distanceBetween = Mathf.Sqrt(
+// 	Mathf.Pow(playableCharacter.GlobalPosition.X - enemyCharacter.GlobalPosition.X, 2) +                 
+// 	Mathf.Pow(playableCharacter.GlobalPosition.Y - enemyCharacter.GlobalPosition.Y, 2) 
+// );

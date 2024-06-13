@@ -39,7 +39,7 @@ public partial class TargetSelectionState : State {
 		if (Input.IsActionJustPressed("select")) {
 			MapEntities.targetedCharacters.Add(this.selectedEnemy);
 
-			if (MapEntities.chosenAttack.attackType == AttackType.CLOSE) {
+			if (MapEntities.chosenAttack.attackTargetMeta.range >= 1) {
 				EmitSignal(SignalName.StateChange, this, "AttackState");
 			}
 		}
