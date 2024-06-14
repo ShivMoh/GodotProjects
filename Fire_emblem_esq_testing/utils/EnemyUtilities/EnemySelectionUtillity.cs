@@ -35,50 +35,53 @@ public partial class EnemySelectionUtility {
 	public List<List<Character>> findTargetsWithinRange(List<PlayableCharacter> characters) {
 
         Vector2I enemyTileLocation = tileMap.LocalToMap(enemyCharacter.GlobalPosition);
-        List<AttackMeta> availableAttacks = this.getAvailableAttacks(enemyCharacter);
+        List<AttackMeta> availableAttacks = (List<AttackMeta>) AttackSelectionUtility.getAvailableAttacks(enemyCharacter).OrderByDescending(attack => attack.attackTargetMeta.range);
         List<List<Character>> targetCandidates = new List<List<Character>>();
 
         if (availableAttacks.Count() == 0) return targetCandidates; 
-
-		foreach (PlayableCharacter playableCharacter in characters)
-		{
-            Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.GlobalPosition);
-
+        foreach (AttackMeta attack in availableAttacks) {
             List<Character> targetableCandidatesForAttack = new List<Character>();
 
-            foreach (AttackMeta attack in availableAttacks)
-            {
+		    foreach (PlayableCharacter playableCharacter in characters) {
+                Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.GlobalPosition);
 
                 int numberOfStepsTo = Mathf.Abs(playableTileLocation.Y - enemyTileLocation.Y) + 
                 Mathf.Abs(playableTileLocation.X - enemyTileLocation.X) - (attack.attackTargetMeta.range + 1);
 
                 if (numberOfStepsTo <= enemyCharacter.moveSteps) {
                     targetableCandidatesForAttack.Add(playableCharacter);
-                }           
-            }
+                }          
 
+                
+            }          
+            
             targetCandidates.Add(targetableCandidatesForAttack);
-            targetableCandidatesForAttack.Clear();
+
 		}
 
         return targetCandidates;
 	}
 
-    private List<AttackMeta> getAvailableAttacks(Character character) {
-        if (character.attacks.Count() == 0) return new List<AttackMeta>();
-        return character.attacks.FindAll(attack => attack.timesUsableUntilReset > 0);
-    }
+    public List<Character> findTargetsWithinCloseRange(List<Character> characters) {
+        List<Character> targetCandidates = new List<Character>();
+        Vector2I enemyTileLocation = tileMap.LocalToMap(enemyCharacter.GlobalPosition);
 
-    private int getGreatestRange(PlayableCharacter playableCharacter) {
-        int greatestRange = 0;
-        foreach (AttackMeta attack in playableCharacter.attacks)
-        {
-            if (attack.attackTargetMeta.range > greatestRange && !attack.attackTargetMeta.areaOfEffect) {
-                greatestRange = attack.attackTargetMeta.range;
-            }
-        }
-        return greatestRange;
-    }
+        foreach (PlayableCharacter playableCharacter in characters) {
+            Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.GlobalPosition);
+
+            int numberOfStepsTo = Mathf.Abs(playableTileLocation.Y - enemyTileLocation.Y) + 
+            Mathf.Abs(playableTileLocation.X - enemyTileLocation.X) - 1;
+
+            if (numberOfStepsTo <= enemyCharacter.moveSteps) {
+                targetCandidates.Add(playableCharacter);
+            }        
+        }  
+
+        return targetCandidates;
+    } 
+
+ 
+
     public Character findWeakestDefenceTarget(List<Character> characters) {
         if (enemyCharacter.characterStat.strenth > enemyCharacter.characterStat.magic) {
             return characters.MinBy(character => character.characterStat.physicalDefence);
