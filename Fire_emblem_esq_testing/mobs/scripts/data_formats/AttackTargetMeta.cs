@@ -5,6 +5,7 @@ public partial class AttackTargetMeta {
 
     public int targetableCount = 0;
 
+    public bool closeRange = true;
     public bool areaOfEffect = false;
 
     public int? radius = 0;
@@ -12,12 +13,14 @@ public partial class AttackTargetMeta {
     public AttackTargetMeta(
         int range, 
         int targetableCount, 
+        bool closeRange = true,
         bool areaOfEffect = false, 
         int radius = 0
     )
     {
         this.range = range;
         this.targetableCount = targetableCount;
+        this.closeRange = closeRange;
         this.areaOfEffect = areaOfEffect;
         this.radius = radius;    
     }

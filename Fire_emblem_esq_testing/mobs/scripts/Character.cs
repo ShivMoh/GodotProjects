@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 using Vector2 = Godot.Vector2;
@@ -17,6 +18,7 @@ public partial class Character : CharacterBody2D
 
 	public List<AttackMeta> attacks;
 
+	public AttackMeta equipedAttack;
 
 	public override void _Ready()
 	{
@@ -56,6 +58,7 @@ public partial class Character : CharacterBody2D
 
 	public void setAttacks(List<AttackMeta> attacks) {
 		this.attacks = attacks;
+		this.equipedAttack = attacks.First();
 	}
 
 

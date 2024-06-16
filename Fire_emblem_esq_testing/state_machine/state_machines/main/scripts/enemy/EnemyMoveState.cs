@@ -6,7 +6,7 @@ using Godot;
 public partial class EnemyMoveState : State {
 	
 	private EnemyCharacter currentActingEnemey;
-	private PlayableCharacter target;
+	private Character target;
 
 	private CharacterUtility characterUtility;
 
@@ -25,7 +25,7 @@ public partial class EnemyMoveState : State {
 
 		this.tileUtility.highLight(MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition), new Vector2I(0, 1));
 	
-		findTarget();
+		this.target = MapEntities.targetedCharacters.First();
 		calculatePathTowardsTarget();
 		foreach (Vector2I pat in path)
 		{
@@ -38,7 +38,7 @@ public partial class EnemyMoveState : State {
 
 	public override void physicsUpdate(double _delta)
 	{
-		GD.Print(this.currentActingEnemey.GlobalPosition == this.target.GlobalPosition);
+		
 		bool result = this.characterUtility.moveCharacter(ref this.path, currentTileCoords, this.path.Last());
 
 		if (result == true) {

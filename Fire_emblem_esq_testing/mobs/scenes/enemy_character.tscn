@@ -10,7 +10,39 @@ animations = [{
 "texture": ExtResource("1_oq3ux")
 }],
 "loop": true,
+"name": &"back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_oq3ux")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_oq3ux")
+}],
+"loop": true,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_oq3ux")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_oq3ux")
+}],
+"loop": true,
+"name": &"right",
 "speed": 5.0
 }]
 
@@ -21,4 +53,4 @@ script = ExtResource("1_5hirs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0056k")
-animation = &"idle"
+animation = &"front"

@@ -1,17 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://dq4abym36lodt"]
+[gd_scene load_steps=3 format=3 uid="uid://dq4abym36lodt"]
 
 [ext_resource type="PackedScene" uid="uid://bsqe08kmksteh" path="res://maps/test.tscn" id="1_71jx6"]
 [ext_resource type="PackedScene" uid="uid://b0egj88ftwkh8" path="res://state_machine/state_machines/main/main_state_machine.tscn" id="2_liiaq"]
-[ext_resource type="Script" path="res://state_machine/state_machines/main/scripts/InitialState.cs" id="3_ndf6l"]
-[ext_resource type="Script" path="res://state_machine/state_machines/main/scripts/playable/ExploreState.cs" id="3_ntx7g"]
-[ext_resource type="Script" path="res://state_machine/state_machines/main/scripts/playable/DecisionState.cs" id="4_3n17r"]
-[ext_resource type="Script" path="res://state_machine/state_machines/main/scripts/FinalState.cs" id="4_lidbr"]
-[ext_resource type="Script" path="res://state_machine/state_machines/main/scripts/playable/TargetSelectionState.cs" id="5_w8bal"]
-[ext_resource type="Script" path="res://state_machine/state_machines/main/scripts/playable/AttackState.cs" id="6_l2p5g"]
-[ext_resource type="Script" path="res://state_machine/state_machines/main/scripts/playable/AttackSelectionState.cs" id="7_h53kl"]
-[ext_resource type="Script" path="res://state_machine/state_machines/main/scripts/enemy/EnemyTargetSelectionState.cs" id="7_x0hlk"]
-[ext_resource type="Script" path="res://state_machine/state_machines/main/scripts/enemy/EnemyAttackSelectionState.cs" id="8_tobje"]
-[ext_resource type="Script" path="res://state_machine/state_machines/main/scripts/enemy/EnemyMoveState.cs" id="9_dvgct"]
 
 [node name="main" type="Node2D"]
 
@@ -23,37 +13,6 @@
 initialState = NodePath("InitialState")
 
 [node name="InitialState" parent="MainStateMachine" index="0" node_paths=PackedStringArray("tilemap")]
-script = ExtResource("3_ndf6l")
 tilemap = NodePath("../../test")
-
-[node name="FinalState" parent="MainStateMachine" index="1"]
-script = ExtResource("4_lidbr")
-
-[node name="ExploreState" parent="MainStateMachine/playableCharacter" index="0"]
-script = ExtResource("3_ntx7g")
-
-[node name="DecisionState" parent="MainStateMachine/playableCharacter" index="1"]
-script = ExtResource("4_3n17r")
-
-[node name="AttackSelectionState" parent="MainStateMachine/playableCharacter" index="2"]
-script = ExtResource("7_h53kl")
-
-[node name="TargetSelectionState" parent="MainStateMachine/playableCharacter" index="3"]
-script = ExtResource("5_w8bal")
-
-[node name="AttackState" parent="MainStateMachine/playableCharacter" index="4"]
-script = ExtResource("6_l2p5g")
-
-[node name="EnemyTargetSelectionState" parent="MainStateMachine/enemyCharacter" index="0"]
-script = ExtResource("7_x0hlk")
-
-[node name="EnemyAttackSelectionState" parent="MainStateMachine/enemyCharacter" index="1"]
-script = ExtResource("8_tobje")
-
-[node name="EnemyMoveState" parent="MainStateMachine/enemyCharacter" index="2"]
-script = ExtResource("9_dvgct")
-
-[node name="EnemyAttackState" parent="MainStateMachine/enemyCharacter" index="3"]
-script = ExtResource("9_dvgct")
 
 [editable path="MainStateMachine"]

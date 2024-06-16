@@ -7,10 +7,15 @@ public partial class EnemyTargetSelectionState : State {
 	private Trait trait;
 
 	private EnemySelectionUtility enemySelectionUtility;
+
+	private TileUtility tileUtility;
 	public override void enter()
 	{
 		GD.Print("I am on enemy target selection state");
 		MapEntities.selectedCharacter = MapEntities.enemyCharacters.MaxBy(character => character.characterStat.speed);
+		this.tileUtility = new TileUtility(MapEntities.map);
+
+		this.tileUtility.highLight(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.GlobalPosition), new Vector2I(0, 1));
 		this.trait = MapEntities.selectedCharacter.characterStat.trait;
 		this.enemySelectionUtility = new EnemySelectionUtility(MapEntities.selectedCharacter as EnemyCharacter, MapEntities.map);
 	}
@@ -29,17 +34,11 @@ public partial class EnemyTargetSelectionState : State {
 				GD.Print("COWARD");
 				break;    
 			case Trait.CUNNING:
-				GD.Print("CUNNING");
-				List<List<Character>> targets = enemySelectionUtility.findTargetsWithinRange(MapEntities.playableCharacters);
-				foreach (List<Character> characterList in targets)
-				{
-					foreach (Character character in characterList)
-					{
-						GD.Print(character);
-					}
-				}
-
-				// Character weakestCharacter = enemySelectionUtility.findWeakestDefenceTarget()
+				MapEntities.targetCandidates = enemySelectionUtility.findTargetsWithinRange(MapEntities.playableCharacters);
+				MapEntities.closeRangeTargets = enemySelectionUtility.findTargetsWithinCloseRange(MapEntities.playableCharacters);
+				MapEntities.attackMetas = enemySelectionUtility.getAvailableAttacks();
+				EmitSignal(SignalName.StateChange, this, "EnemyAttackSelectionState");
+				
 				break;    
 			default:
 				break;
