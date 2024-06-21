@@ -13,6 +13,7 @@
 initialState = NodePath("InitialState")
 
 [node name="InitialState" parent="MainStateMachine" index="0" node_paths=PackedStringArray("tilemap")]
+position = Vector2(1, 6)
 tilemap = NodePath("../../test")
 
 [editable path="MainStateMachine"]

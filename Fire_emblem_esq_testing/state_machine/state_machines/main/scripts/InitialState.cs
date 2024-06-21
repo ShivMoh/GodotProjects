@@ -10,7 +10,7 @@ public partial class InitialState : State {
 			power: 5,
 			physical : false,
 			timesUsableUntilReset: 20,
-			attackTargetMeta: new AttackTargetMeta(2, 1),
+			attackTargetMeta: new AttackTargetMeta(20, 2, radius: 5),
 			attackAttribute: AttackAttribute.FIRE,
 			effect: AttackEffect.BURN
 		),
@@ -19,7 +19,7 @@ public partial class InitialState : State {
 			power: 3,
 			physical: false,
 			timesUsableUntilReset: 20,
-			attackTargetMeta: new AttackTargetMeta(2, 1),
+			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
 			attackAttribute: AttackAttribute.WATER,
 			effect: AttackEffect.FREEZE
 		)

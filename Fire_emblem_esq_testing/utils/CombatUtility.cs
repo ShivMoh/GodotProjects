@@ -30,7 +30,7 @@ public partial class CombatUtility {
 		tileUtility.highLight(coords, new Vector2I(0, 0));
 	}
 
-	public List<EnemyCharacter> detectEnemy(TileUtility tileUtility) {
+	public List<EnemyCharacter> detectEnemiesForAttack(TileUtility tileUtility, AttackMeta attack) {
 
 		List<EnemyCharacter> characters = new List<EnemyCharacter>();
 
@@ -39,14 +39,26 @@ public partial class CombatUtility {
 		foreach (EnemyCharacter character in enemies)
 		{
 			Vector2I enemyCoord = tilemap.LocalToMap(character.GlobalPosition);
-			if (this.checkAdjacent(currentCoord, enemyCoord)) {
-				characters.Add(character);
+
+			if (attack.attackTargetMeta.closeRange) {
+				if (this.checkAdjacent(currentCoord, enemyCoord)) {
+					characters.Add(character);
+				}
 			}
 
+			if (this.isEnemyInRange(currentCoord, tilemap.LocalToMap(character.GlobalPosition), attack.attackTargetMeta.range)) {
+				characters.Add(character);
+			}
 		}
 
 		return characters;
 	}   
+
+	private bool isEnemyInRange(Vector2I currentCoord, Vector2I enemyCoord, int attackRange) {
+		float distanceTo  = Mathf.Sqrt(Mathf.Pow(currentCoord.X - enemyCoord.X, 2) + Mathf.Pow(currentCoord.Y - enemyCoord.Y, 2));
+		if (Mathf.Floor(distanceTo) <= attackRange ) return true;
+		return false;
+	}
 
 	public void attackCharacter(Character selectedCharacter, Character target, AttackMeta chosenAttack) {
 		int damage = selectedCharacter.getCharacterStats().strenth + chosenAttack.power;

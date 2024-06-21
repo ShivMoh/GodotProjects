@@ -13,9 +13,10 @@ public partial class AttackState : State {
 
 	public override void physicsUpdate(double _delta)
 	{
-		if (MapEntities.chosenAttack.attackTargetMeta.range >= 1) {
-			combatUtility.attackCharacter(MapEntities.selectedCharacter, MapEntities.targetedCharacters.First(), MapEntities.chosenAttack);
-			GD.Print("HELLOOOO");
+
+		foreach (Character character in MapEntities.targetedCharacters)
+		{
+			combatUtility.attackCharacter(MapEntities.selectedCharacter, character, MapEntities.chosenAttack);			
 		}
 
 		EmitSignal(SignalName.StateChange, this, "FinalState");

@@ -76,8 +76,7 @@ public partial class AttackSelectionUtility {
 				refinedTargetCandidates = this.targetCandidates.ElementAt(0);
 				targetRange = this.availableAttacks.Max(attack => attack.attackTargetMeta.range);; 
 			}
-
-
+ 
 		} 
 		
 		this.chosenAttack = this.choseRandomAttack(attackCandidates);

@@ -10,6 +10,7 @@ public partial class FinalState : State {
 		MapEntities.count++;
 		MapEntities.detectedEnemies.Clear();
 		MapEntities.targetedCharacters.Clear();
+		MapEntities.chosenAttack = null;
 	}
 
 	public override void physicsUpdate(double _delta)

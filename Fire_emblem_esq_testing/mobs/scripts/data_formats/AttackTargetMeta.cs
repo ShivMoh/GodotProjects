@@ -8,14 +8,14 @@ public partial class AttackTargetMeta {
     public bool closeRange = true;
     public bool areaOfEffect = false;
 
-    public int? radius = 0;
+    public int? radius = 1;
 
     public AttackTargetMeta(
         int range, 
         int targetableCount, 
         bool closeRange = true,
         bool areaOfEffect = false, 
-        int radius = 0
+        int radius = 1
     )
     {
         this.range = range;

@@ -29,33 +29,15 @@ public partial class EnemyMoveState : State {
 
 		// we need the distance from that target (number of tiles away)
 		this.target = MapEntities.targetedCharacters.First();
-		this.targetPosition = this.calculateTileFromMatchingDistance();
 
+		this.targetPosition = this.characterUtility.calculateTileFromMatchingDistance(this.target);
+		
 		calculatePathTowardsTarget();
 	
 		this.currentActingEnemey.move = true;
 
 	}
 
-	private Vector2 calculateTileFromMatchingDistance() {
-		int numberOfTiles = MapEntities.attackRange + 1;
-		GD.Print(numberOfTiles);
-		Vector2I tilePosition = MapEntities.map.LocalToMap(this.target.GlobalPosition);
-
-		Vector2I calculatedPosition = tilePosition - new Vector2I(numberOfTiles, 0);
-		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
-
-		calculatedPosition = tilePosition - new Vector2I(-numberOfTiles, 0);
-		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
-
-		calculatedPosition = tilePosition - new Vector2I(0, -numberOfTiles);
-		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
-
-		calculatedPosition = tilePosition - new Vector2I(0, numberOfTiles);
-		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
-
-		return Vector2.Zero;
-	}
 
 	public override void physicsUpdate(double _delta)
 	{

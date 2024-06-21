@@ -92,6 +92,27 @@ public partial class CharacterUtility {
 	}
 
 
+	public Vector2 calculateTileFromMatchingDistance(Character target) {
+		int numberOfTiles = MapEntities.attackRange + 1;
+		
+		Vector2I tilePosition = MapEntities.map.LocalToMap(target.GlobalPosition);
+
+		Vector2I calculatedPosition = tilePosition - new Vector2I(numberOfTiles, 0);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+
+		calculatedPosition = tilePosition - new Vector2I(-numberOfTiles, 0);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+
+		calculatedPosition = tilePosition - new Vector2I(0, -numberOfTiles);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+
+		calculatedPosition = tilePosition - new Vector2I(0, numberOfTiles);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+
+		return Vector2.Zero;
+	}
+
+
 
 	
 }
