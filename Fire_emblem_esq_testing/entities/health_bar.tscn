@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dggl60itto42a"]
+
+[ext_resource type="Script" path="res://entities/scripts/HealthBar.cs" id="1_8i4ic"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_tpbxb"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_i7hnc"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_6btui"]
+
+[node name="HealthBar" type="TextureProgressBar"]
+offset_right = 100.0
+offset_bottom = 20.0
+value = 100.0
+nine_patch_stretch = true
+texture_under = SubResource("CanvasTexture_tpbxb")
+texture_over = SubResource("CanvasTexture_i7hnc")
+texture_progress = SubResource("CanvasTexture_6btui")
+tint_under = Color(1, 0, 0, 1)
+tint_over = Color(1, 1, 1, 0)
+tint_progress = Color(0, 1, 0, 1)
+script = ExtResource("1_8i4ic")

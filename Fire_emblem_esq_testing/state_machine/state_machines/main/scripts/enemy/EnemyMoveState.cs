@@ -8,6 +8,8 @@ public partial class EnemyMoveState : State {
 	private EnemyCharacter currentActingEnemey;
 	private Character target;
 
+	private Vector2 targetPosition;
+
 	private CharacterUtility characterUtility;
 
 	private Vector2I currentTileCoords;
@@ -24,16 +26,35 @@ public partial class EnemyMoveState : State {
 		this.tileUtility = new TileUtility(MapEntities.map);
 
 		this.tileUtility.highLight(MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition), new Vector2I(0, 1));
-	
+
+		// we need the distance from that target (number of tiles away)
 		this.target = MapEntities.targetedCharacters.First();
+		this.targetPosition = this.calculateTileFromMatchingDistance();
+
 		calculatePathTowardsTarget();
-		foreach (Vector2I pat in path)
-		{
-			GD.Print("PATH", pat);
-		}
+	
 		this.currentActingEnemey.move = true;
 
+	}
 
+	private Vector2 calculateTileFromMatchingDistance() {
+		int numberOfTiles = MapEntities.attackRange + 1;
+		GD.Print(numberOfTiles);
+		Vector2I tilePosition = MapEntities.map.LocalToMap(this.target.GlobalPosition);
+
+		Vector2I calculatedPosition = tilePosition - new Vector2I(numberOfTiles, 0);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+
+		calculatedPosition = tilePosition - new Vector2I(-numberOfTiles, 0);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+
+		calculatedPosition = tilePosition - new Vector2I(0, -numberOfTiles);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+
+		calculatedPosition = tilePosition - new Vector2I(0, numberOfTiles);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+
+		return Vector2.Zero;
 	}
 
 	public override void physicsUpdate(double _delta)
@@ -72,7 +93,7 @@ public partial class EnemyMoveState : State {
 	}
 
 	private void calculatePathTowardsTarget() {
-		Vector2I targetTileCoords = MapEntities.map.LocalToMap(target.GlobalPosition);
+		Vector2I targetTileCoords = MapEntities.map.LocalToMap(this.targetPosition);
 		Vector2I actingEnemyTileCoords = MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition);
 		this.currentTileCoords = actingEnemyTileCoords;
 

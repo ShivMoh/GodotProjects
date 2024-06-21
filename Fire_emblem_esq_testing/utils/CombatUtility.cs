@@ -52,6 +52,7 @@ public partial class CombatUtility {
 		int damage = selectedCharacter.getCharacterStats().strenth + chosenAttack.power;
 
 		target.getCharacterStats().health -= damage;
+		target.healthBar.takeDamage(damage);
 
 		if (target.getCharacterStats().health <= 0) {
 			MapEntities.enemyCharacters.Remove(target as EnemyCharacter);

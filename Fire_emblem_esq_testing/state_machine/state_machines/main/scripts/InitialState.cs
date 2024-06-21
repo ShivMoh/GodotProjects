@@ -27,8 +27,22 @@ public partial class InitialState : State {
 
 	static CharacterStat characterStat= new CharacterStat(
 		name: "John",
-		health: 20,
-		strenth: 20,
+		health: 50,
+		strenth: 2,
+		magic : 18,
+		speed: 20,
+		magicalDefence: 20,
+		physicalDefence: 20,
+		intelligence: 15,
+		skill: 10,
+		constition: 20,
+		trait: Trait.CUNNING
+	);
+
+	static CharacterStat characterStat2 = new CharacterStat(
+		name: "John",
+		health: 100,
+		strenth: 2,
 		magic : 18,
 		speed: 20,
 		magicalDefence: 20,
@@ -117,6 +131,8 @@ public partial class InitialState : State {
 
 			character.setAttacks(playableCharactersMeta[i].attacks);
 			character.setCharacterStats(characterStat);
+
+		
 			character.moveSteps = character.getCharacterStats().speed;
 			MapEntities.map.GetNode("playableCharacters").AddChild(character);
 			MapEntities.playableCharacters.Add(character);
@@ -131,8 +147,17 @@ public partial class InitialState : State {
 			) as EnemyCharacter;
 
 			character.setAttacks(enemyCharactersMeta[i].attacks);
-			character.setCharacterStats(characterStat);
+			// character.setCharacterStats(characterStat);
+
+			if (i > 1) {
+				character.setCharacterStats(characterStat2);
+				GD.Print("greater than 1");
+			} else {
+				character.setCharacterStats(characterStat);
+			}
+
 			character.moveSteps = character.getCharacterStats().speed;
+		
 			MapEntities.map.GetNode("enemyCharacters").AddChild(character);
 			MapEntities.enemyCharacters.Add(character);
 		}

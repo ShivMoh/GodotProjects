@@ -20,6 +20,8 @@ public partial class Character : CharacterBody2D
 
 	public AttackMeta equipedAttack;
 
+	[Export]
+	public HealthBar healthBar;
 	public override void _Ready()
 	{
 		targetPosition = this.GlobalPosition;
@@ -100,8 +102,6 @@ public partial class Character : CharacterBody2D
 		
 		if (direction == Vector2.Zero) animatedSprite.Play("idle");
 	}
-
-	
 
 
 }

@@ -25,6 +25,7 @@ public partial class MapEntities : Node
 
 	public static AttackMeta chosenAttack = null;
 
+	public static int attackRange = 0;
 	public static Vector2I cursorCoords;
 
 	public static int playableCharacterCount = 0;

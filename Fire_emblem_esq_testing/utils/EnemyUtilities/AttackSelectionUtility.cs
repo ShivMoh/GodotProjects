@@ -27,11 +27,12 @@ public partial class AttackSelectionUtility {
 		this.availableAttacks = availableAttacks;
 		this.targetableCharactersInCloseRange = targetableCharactersInCloseRange;
 	}
-
+	
 	public void chooseCunningCharacterAttack() {
 	  
 		List<AttackMeta> attackCandidates = new List<AttackMeta>();
 		List<Character> refinedTargetCandidates = new List<Character>();        
+		int targetRange = 0;
 
 		if (canAttackFromDistance()) {
 			attackCandidates = chooseAttacksWithGreatestRange();
@@ -47,10 +48,13 @@ public partial class AttackSelectionUtility {
 					}
 				}
 			}
+
+			targetRange = attackCandidates.First().attackTargetMeta.range;			
 		}
 
 
 		if (refinedTargetCandidates.Count() == 0) {
+
 			List<AttackMeta> closeRangeAttacks = this.getCloseRangeAttacks();
 			List<Character> closeRangeTargetable = new List<Character>();
 
@@ -66,15 +70,19 @@ public partial class AttackSelectionUtility {
 			if (closeRangeTargetable.Count() > 0) {
 				refinedTargetCandidates = closeRangeTargetable;
 				attackCandidates = closeRangeAttacks;
+				targetRange = 1;			
+
 			} else {
 				refinedTargetCandidates = this.targetCandidates.ElementAt(0);
+				targetRange = this.availableAttacks.Max(attack => attack.attackTargetMeta.range);; 
 			}
-		} else {
-			// do nothing ig
-		}
+
+
+		} 
 		
 		this.chosenAttack = this.choseRandomAttack(attackCandidates);
 		this.target = this.chooseRandomCharacter(refinedTargetCandidates);
+		MapEntities.attackRange = targetRange;
 	}
 
 	public Character getTarget() {
@@ -85,6 +93,7 @@ public partial class AttackSelectionUtility {
 		return this.chosenAttack;
 	}
 
+
 	private AttackMeta choseRandomAttack(List<AttackMeta> attacks) {
 		var rand = new Random();
 
@@ -92,6 +101,7 @@ public partial class AttackSelectionUtility {
 
 		return attacks.ElementAt(randomIndex);
 	}
+
 
 	private Character chooseRandomCharacter(List<Character> characters) {
 		var rand = new Random();
@@ -118,6 +128,7 @@ public partial class AttackSelectionUtility {
 									.OrderByDescending(attack => attack.attackTargetMeta.range)
 									.ToList();
 	}
+
 
 	private bool willAttackingHurtCharacter(Character target, AttackMeta attackCandidate) {
 		return target.equipedAttack.attackTargetMeta.range >= attackCandidate.attackTargetMeta.range;

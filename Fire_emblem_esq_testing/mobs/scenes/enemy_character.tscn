@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddwlr1lmi6gjr"]
+[gd_scene load_steps=5 format=3 uid="uid://ddwlr1lmi6gjr"]
 
 [ext_resource type="Script" path="res://mobs/scripts/EnemyCharacter.cs" id="1_5hirs"]
 [ext_resource type="Texture2D" uid="uid://dy54j4odw8ha5" path="res://assets/characters/knight..png" id="1_oq3ux"]
+[ext_resource type="PackedScene" uid="uid://dggl60itto42a" path="res://entities/health_bar.tscn" id="3_xjmlg"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0056k"]
 animations = [{
@@ -46,11 +47,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="EnemyCharacter" type="CharacterBody2D"]
+[node name="EnemyCharacter" type="CharacterBody2D" node_paths=PackedStringArray("healthBar")]
 script = ExtResource("1_5hirs")
+healthBar = NodePath("HealthBar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0056k")
 animation = &"front"
+
+[node name="HealthBar" parent="." instance=ExtResource("3_xjmlg")]
+offset_left = -58.0
+offset_top = -65.0
+offset_right = 58.0
+offset_bottom = -46.0

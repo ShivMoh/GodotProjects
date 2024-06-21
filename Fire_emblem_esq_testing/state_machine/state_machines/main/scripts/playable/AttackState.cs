@@ -15,6 +15,7 @@ public partial class AttackState : State {
 	{
 		if (MapEntities.chosenAttack.attackTargetMeta.range >= 1) {
 			combatUtility.attackCharacter(MapEntities.selectedCharacter, MapEntities.targetedCharacters.First(), MapEntities.chosenAttack);
+			GD.Print("HELLOOOO");
 		}
 
 		EmitSignal(SignalName.StateChange, this, "FinalState");
