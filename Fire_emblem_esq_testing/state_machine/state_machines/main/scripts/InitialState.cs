@@ -114,7 +114,9 @@ public partial class InitialState : State {
 
 		MapEntities.playableCharacterCount = MapEntities.playableCharacters.Count();
 		MapEntities.enemyCharacterCount = MapEntities.enemyCharacters.Count();
-		
+
+		MapEntities.characters.AddRange(MapEntities.enemyCharacters);
+		MapEntities.characters.AddRange(MapEntities.playableCharacters);
 	}
 
 	public override void physicsUpdate(double _delta)

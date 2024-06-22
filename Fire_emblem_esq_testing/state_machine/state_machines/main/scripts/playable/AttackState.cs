@@ -8,7 +8,7 @@ public partial class AttackState : State {
 	{
 		GD.Print("I am on attacking state");
 		// this.tileUtility = new TileUtility(MapEntities.map);
-		this.combatUtility = new CombatUtility(MapEntities.map, MapEntities.enemyCharacters, MapEntities.selectedCharacter);
+		this.combatUtility = new CombatUtility(MapEntities.map, MapEntities.characters, MapEntities.selectedCharacter);
 	}
 
 	public override void physicsUpdate(double _delta)

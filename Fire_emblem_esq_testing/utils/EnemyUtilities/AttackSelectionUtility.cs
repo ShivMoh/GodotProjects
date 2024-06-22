@@ -14,7 +14,7 @@ public partial class AttackSelectionUtility {
 
 	private AttackMeta chosenAttack;
 
-	private Character target;
+	private List<Character> targets;
 
 	public AttackSelectionUtility(
 		EnemyCharacter enemyCharacter, 
@@ -80,12 +80,53 @@ public partial class AttackSelectionUtility {
 		} 
 		
 		this.chosenAttack = this.choseRandomAttack(attackCandidates);
-		this.target = this.chooseRandomCharacter(refinedTargetCandidates);
+
+		if (this.chosenAttack.attackTargetMeta.targetableCount == 1) {
+			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
+		} else if (this.chosenAttack.attackTargetMeta.areaOfEffect) {
+			// lets deal with this later i suppose
+			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
+		} else {
+			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
+
+			// I'll have to like calculate the optimal position to target the most enemies...
+			// so yh lets deal with this later
+			// if(this.chosenAttack.attackTargetMeta.targetableCount == refinedTargetCandidates.Count()) {
+			// 	this.targets = refinedTargetCandidates;
+			// } else if (this.chosenAttack.attackTargetMeta.targetableCount < refinedTargetCandidates.Count()) {
+			// 	for(int i = 0; i < refinedTargetCandidates.Count(); i++) {
+			// 		Character candidate = this.chooseRandomCharacter(refinedTargetCandidates);
+			// 		this.targets.Add(candidate);
+			// 		refinedTargetCandidates.Remove(candidate);				
+			// 	}
+			// } else {
+			// 	this.targets.AddRange(refinedTargetCandidates);
+			// 	List<Character> targetableCharacters = this.targetCandidates.ElementAt(
+			// 		this.enemyCharacter.attacks.IndexOf(this.chosenAttack)
+			// 	);
+
+			// 	for(int i = 0; i < (this.chosenAttack.attackTargetMeta.targetableCount - this.targets.Count()); i++) {
+
+			// 		while (true)
+			// 		{
+			// 			Character candidate = this.chooseRandomCharacter(targetableCharacters);
+
+			// 			if(!this.targets.Contains(candidate)) {
+			// 				this.targets.Add(candidate);				
+			// 				break;
+			// 			} 
+
+			// 			targetableCharacters.Remove(candidate);
+						
+			// 		}
+			// 	}
+			// }
+		}
 		MapEntities.attackRange = targetRange;
 	}
 
-	public Character getTarget() {
-		return this.target;
+	public List<Character> getTargets() {
+		return this.targets;
 	}
 
 	public AttackMeta getAttack() {

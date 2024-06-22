@@ -6,10 +6,10 @@ using Vector2 = Godot.Vector2;
 public partial class CombatUtility {
 	
 	private TileMap tilemap;
-	private List<EnemyCharacter> enemies;
+	private List<Character> enemies;
 	private PlayableCharacter selectedCharacter;
 
-	public CombatUtility(TileMap tilemap, List<EnemyCharacter> enemies, Character selectedCharacter) {
+	public CombatUtility(TileMap tilemap, List<Character> enemies, Character selectedCharacter) {
 		this.tilemap = tilemap;
 		this.enemies = enemies;
 
@@ -30,13 +30,13 @@ public partial class CombatUtility {
 		tileUtility.highLight(coords, new Vector2I(0, 0));
 	}
 
-	public List<EnemyCharacter> detectEnemiesForAttack(TileUtility tileUtility, AttackMeta attack) {
+	public List<Character> detectEnemiesForAttack(TileUtility tileUtility, AttackMeta attack) {
 
-		List<EnemyCharacter> characters = new List<EnemyCharacter>();
+		List<Character> characters = new List<Character>();
 
 		Vector2I currentCoord = tilemap.LocalToMap(selectedCharacter.GlobalPosition);
 
-		foreach (EnemyCharacter character in enemies)
+		foreach (Character character in enemies)
 		{
 			Vector2I enemyCoord = tilemap.LocalToMap(character.GlobalPosition);
 
@@ -50,6 +50,7 @@ public partial class CombatUtility {
 				characters.Add(character);
 			}
 		}
+
 
 		return characters;
 	}   
@@ -67,7 +68,16 @@ public partial class CombatUtility {
 		target.healthBar.takeDamage(damage);
 
 		if (target.getCharacterStats().health <= 0) {
-			MapEntities.enemyCharacters.Remove(target as EnemyCharacter);
+
+			if (target.GetType().Name is nameof(EnemyCharacter)) {
+				MapEntities.enemyCharacters.Remove(target as EnemyCharacter);
+			}
+
+			if (target.GetType().Name is nameof(PlayableCharacter)) {
+				MapEntities.playableCharacters.Remove(target as PlayableCharacter);
+			}
+
+			MapEntities.characters.Remove(target);
 			target.QueueFree();
 		}
 	}

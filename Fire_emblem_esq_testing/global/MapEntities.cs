@@ -12,7 +12,9 @@ public partial class MapEntities : Node
 	
 	public static List<EnemyCharacter> enemyCharacters = new List<EnemyCharacter>();
 
-	public static List<EnemyCharacter> detectedEnemies = new List<EnemyCharacter>();
+	public static List<Character> detectedEnemies = new List<Character>();
+
+	public static List<Character> characters = new List<Character>();
 
 	public static List<Character> targetedCharacters = new List<Character>();
 

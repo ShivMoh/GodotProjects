@@ -31,7 +31,7 @@ public partial class ExploreState : State
 		currentTileCoords = MapEntities.cursorCoords;
 		previousTileCoords = currentTileCoords;
 		
-		combatUtility = new CombatUtility(MapEntities.map, MapEntities.enemyCharacters, MapEntities.selectedCharacter);
+		combatUtility = new CombatUtility(MapEntities.map, MapEntities.characters, MapEntities.selectedCharacter);
 		characterUtility = new CharacterUtility(MapEntities.map, MapEntities.selectedCharacter, MapEntities.playableCharacters);
 		tileUtility = new TileUtility(MapEntities.map);
 

@@ -22,7 +22,8 @@ public partial class EnemyAttackSelectionState : State {
 	{
 		this.attackSelectionUtility.chooseCunningCharacterAttack();
 		MapEntities.chosenAttack = this.attackSelectionUtility.getAttack();
-		MapEntities.targetedCharacters.Add(this.attackSelectionUtility.getTarget());
+
+		MapEntities.targetedCharacters.AddRange(this.attackSelectionUtility.getTargets());
 
 		EmitSignal(SignalName.StateChange, this, "EnemyMoveState");
 	}

@@ -38,7 +38,7 @@ public partial class CharacterUtility {
 			Vector2I next_tile = path.ElementAt(characterMoveIndex); 
 			
 			selectedCharacter.targetPosition = tilemap.MapToLocal(next_tile);			
-			GD.Print("Updated position", selectedCharacter.targetPosition);
+			// GD.Print("Updated position", selectedCharacter.targetPosition);
 			characterMoveIndex++;
 		} 
 
@@ -66,6 +66,7 @@ public partial class CharacterUtility {
 	public bool compareValues(Vector2 one, Vector2 two, float maxAllowedDistance) {
 		float distanceX = Math.Abs(one.X - two.X);
 		float distanceY = Math.Abs(one.Y - two.Y);
+
 		return distanceX < maxAllowedDistance && distanceY < maxAllowedDistance;
 	}
 

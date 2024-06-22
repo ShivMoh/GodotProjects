@@ -8,7 +8,7 @@ public partial class TargetSelectionState : State {
 	private TileUtility tileUtilitiy;
 
 	private CombatUtility combatUtility;
-	private EnemyCharacter selectedEnemy;
+	private Character selectedEnemy;
 
 	int numberOfSelectedEnemies;
 	
@@ -27,7 +27,7 @@ public partial class TargetSelectionState : State {
 		this.tileUtilitiy = new TileUtility(MapEntities.map);
 		this.combatUtility = new CombatUtility(
 			MapEntities.map,
-			MapEntities.enemyCharacters,
+			MapEntities.characters,
 			MapEntities.selectedCharacter
 		);
 		MapEntities.detectedEnemies = combatUtility.detectEnemiesForAttack(tileUtilitiy, MapEntities.chosenAttack);
@@ -112,7 +112,10 @@ public partial class TargetSelectionState : State {
 	private void detectEnemyPresence() {
 
 		if (cursorRadius == 1) {
-			this.selectedEnemy = MapEntities.detectedEnemies.FirstOrDefault(enemy => MapEntities.map.LocalToMap(enemy.GlobalPosition) == this.currentTileCoords, null);
+			this.selectedEnemy = MapEntities.detectedEnemies.FirstOrDefault(
+									enemy => MapEntities.map.LocalToMap(enemy.GlobalPosition) == this.currentTileCoords, 
+									null
+								);
 		} else {
 
 		}
@@ -144,7 +147,7 @@ public partial class TargetSelectionState : State {
 					currentCoord.X++;
 					previousCoord.X++;
 
-					
+
 					this.tileUtilitiy.eraseCursor(previousCoord);
 				}
 
@@ -286,7 +289,7 @@ public partial class TargetSelectionState : State {
 	}	
 
 	private void highLightEnemies() {
-		foreach (EnemyCharacter enemy in MapEntities.detectedEnemies) 
+		foreach (Character enemy in MapEntities.detectedEnemies) 
 		{
 			tileUtilitiy.highLight(MapEntities.map.LocalToMap(enemy.GlobalPosition), new Vector2I(2, 1));
 		}
