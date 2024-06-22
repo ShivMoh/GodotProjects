@@ -19,7 +19,7 @@ public partial class InitialState : State {
 			power: 3,
 			physical: false,
 			timesUsableUntilReset: 20,
-			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
+			attackTargetMeta: new AttackTargetMeta(2, 2, radius: 1),
 			attackAttribute: AttackAttribute.WATER,
 			effect: AttackEffect.FREEZE
 		)

@@ -76,10 +76,15 @@ public partial class TargetSelectionState : State {
 
 				this.detectEnemyPresence();
 
-				if (!MapEntities.targetedCharacters.Contains(this.selectedEnemy) && this.selectedEnemy != null) { 
-					MapEntities.targetedCharacters.Add(this.selectedEnemy);
+				if (this.selectedEnemy != null) {
+						if (!MapEntities.targetedCharacters.Contains(this.selectedEnemy) && this.selectedEnemy != null) { 
+						MapEntities.targetedCharacters.Add(this.selectedEnemy);
 					
-					this.numberOfSelectedEnemies += 1;
+						this.numberOfSelectedEnemies += 1;
+					}
+
+				} else {
+					GD.Print("null return");
 				}
 
 				if (this.numberOfSelectedEnemies == MapEntities.chosenAttack.attackTargetMeta.targetableCount ||
@@ -125,7 +130,6 @@ public partial class TargetSelectionState : State {
 		if (cursorRadius == 1) {
 			this.tileUtilitiy.eraseCursor(previousTileCoords);
 			this.tileUtilitiy.drawCursor(currentTileCoords);
-			GD.Print("This shouldn't be running but uh....");
 		} else {
 
 			int k = (cursorRadius - 1) / 2;
