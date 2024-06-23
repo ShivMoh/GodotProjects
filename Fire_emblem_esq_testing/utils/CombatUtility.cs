@@ -61,11 +61,10 @@ public partial class CombatUtility {
 		return false;
 	}
 
-	public void attackCharacter(Character selectedCharacter, Character target, AttackMeta chosenAttack) {
+	public  bool attackCharacter(Character selectedCharacter, Character target, AttackMeta chosenAttack) {
 		int damage = selectedCharacter.getCharacterStats().strenth + chosenAttack.power;
 
 		target.getCharacterStats().health -= damage;
-		target.healthBar.takeDamage(damage);
 
 		if (target.getCharacterStats().health <= 0) {
 
@@ -78,8 +77,14 @@ public partial class CombatUtility {
 			}
 
 			MapEntities.characters.Remove(target);
-			target.QueueFree();
+			// MapEntities.targetedCharacters.Remove(target);
+
+			return true;
+
+		} else {
+			target.healthBar.takeDamage(damage);
 		}
+		return false;
 	}
 
 	private bool checkAdjacent(Vector2I one, Vector2I two) {

@@ -125,7 +125,7 @@ public partial class TargetSelectionState : State {
 		if (cursorRadius == 1) {
 			this.tileUtilitiy.eraseCursor(previousTileCoords);
 			this.tileUtilitiy.drawCursor(currentTileCoords);
-			GD.Print("This shouldn't be running but uh....");
+
 		} else {
 
 			int k = (cursorRadius - 1) / 2;

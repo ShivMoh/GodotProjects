@@ -12,7 +12,16 @@ public partial class EnemyTargetSelectionState : State {
 	public override void enter()
 	{
 		GD.Print("I am on enemy target selection state");
-		MapEntities.selectedCharacter = MapEntities.enemyCharacters.MaxBy(character => character.characterStat.speed);
+		List<EnemyCharacter> choosableCharacters = MapEntities.enemyCharacters;
+		while (true)
+		{
+			MapEntities.selectedCharacter = choosableCharacters.MaxBy(character => character.characterStat.speed);
+			
+			if (!MapEntities.selectedCharacter.usedTurn) {
+				choosableCharacters.Remove(MapEntities.selectedCharacter as EnemyCharacter);
+				break;
+			}
+		}
 		this.tileUtility = new TileUtility(MapEntities.map);
 
 		this.tileUtility.highLight(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.GlobalPosition), new Vector2I(0, 1));

@@ -26,6 +26,7 @@ public partial class AttackSelectionUtility {
 		this.targetCandidates = targetCandidates;
 		this.availableAttacks = availableAttacks;
 		this.targetableCharactersInCloseRange = targetableCharactersInCloseRange;
+		this.targets = new List<Character>();
 	}
 	
 	public void chooseCunningCharacterAttack() {
