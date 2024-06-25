@@ -46,7 +46,7 @@ public partial class EnemyTargetSelectionState : State {
 				MapEntities.targetCandidates = enemySelectionUtility.findTargetsWithinRange(MapEntities.playableCharacters);
 				MapEntities.closeRangeTargets = enemySelectionUtility.findTargetsWithinCloseRange(MapEntities.playableCharacters);
 				MapEntities.attackMetas = enemySelectionUtility.getAvailableAttacks();
-				EmitSignal(SignalName.StateChange, this, "EnemyAttackSelectionState");
+				EmitSignal(SignalName.StateChange, this, typeof(EnemyAttackSelectionState).ToString());
 				
 				break;    
 			default:

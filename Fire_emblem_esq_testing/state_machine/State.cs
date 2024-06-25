@@ -17,5 +17,5 @@ public partial class State : Node2D {
     public virtual void update(double _delta) {}
 
     public virtual void physicsUpdate(double _delta) {}
-
+    
 }

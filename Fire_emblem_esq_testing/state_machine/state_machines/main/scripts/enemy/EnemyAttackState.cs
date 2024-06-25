@@ -43,7 +43,7 @@ public partial class EnemyAttackState : State {
 		}
 		
 		// MapEntities.count = 0;
-		EmitSignal(SignalName.StateChange, this, "EnemyTargetSelectionState");
+		EmitSignal(SignalName.StateChange, this, typeof(EnemyTargetSelectionState).ToString());
 
 		// removalList.Clear();
 

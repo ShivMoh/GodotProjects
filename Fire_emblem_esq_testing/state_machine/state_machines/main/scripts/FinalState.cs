@@ -15,6 +15,6 @@ public partial class FinalState : State {
 
 	public override void physicsUpdate(double _delta)
 	{
-		EmitSignal(SignalName.StateChange, this, "ExploreState");
+		EmitSignal(SignalName.StateChange, this, typeof(ExploreState).ToString());
 	}
 }

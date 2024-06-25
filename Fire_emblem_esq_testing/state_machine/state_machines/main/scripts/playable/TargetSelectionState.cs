@@ -85,12 +85,12 @@ public partial class TargetSelectionState : State {
 				if (this.numberOfSelectedEnemies == MapEntities.chosenAttack.attackTargetMeta.targetableCount ||
 					this.numberOfSelectedEnemies == MapEntities.detectedEnemies.Count()
 				) {
-					EmitSignal(SignalName.StateChange, this, "AttackState");
+					EmitSignal(SignalName.StateChange, this, typeof(AttackState).ToString());
 				}
 
 			} else {
 				this.detectEnemiesInRadius();
-				EmitSignal(SignalName.StateChange, this, "AttackState");
+				EmitSignal(SignalName.StateChange, this, typeof(AttackState).ToString());
 
 			}
 		}

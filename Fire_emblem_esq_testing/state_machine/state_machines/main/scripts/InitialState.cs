@@ -10,10 +10,22 @@ public partial class InitialState : State {
 			power: 5,
 			physical : false,
 			timesUsableUntilReset: 20,
-			attackTargetMeta: new AttackTargetMeta(20, 1, radius: 5),
+			attackTargetMeta: new AttackTargetMeta(20, 1, radius: 5, areaOfEffect: true),
 			attackAttribute: AttackAttribute.FIRE,
 			effect: AttackEffect.BURN
 		),
+		new AttackMeta(
+			name: "Ice ball",
+			power: 3,
+			physical: false,
+			timesUsableUntilReset: 20,
+			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
+			attackAttribute: AttackAttribute.WATER,
+			effect: AttackEffect.FREEZE
+		)
+	};
+	
+	static List<AttackMeta> enemyAttacks = new List<AttackMeta>() {
 		new AttackMeta(
 			name: "Ice ball",
 			power: 3,
@@ -75,27 +87,27 @@ public partial class InitialState : State {
 		new CharacterMeta(
 			tileCoord: new Vector2I(7, 2),
 			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : attacksMeta
+			attacks : enemyAttacks
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(6, 1),
 			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : attacksMeta
+			attacks : enemyAttacks
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(6, 3),
 			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : attacksMeta
+			attacks : enemyAttacks
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(3, 7),
 			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : attacksMeta
+			attacks : enemyAttacks
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(3, 9),
 			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : attacksMeta
+			attacks : enemyAttacks
 		),
 	};
 
@@ -121,7 +133,7 @@ public partial class InitialState : State {
 
 	public override void physicsUpdate(double _delta)
 	{
-		EmitSignal(SignalName.StateChange, this, "ExploreState");
+		EmitSignal(SignalName.StateChange, this, typeof(ExploreState).ToString());
 	}
 
 	private void loadCharacters() {
@@ -153,7 +165,6 @@ public partial class InitialState : State {
 
 			if (i > 1) {
 				character.setCharacterStats(characterStat2);
-				GD.Print("greater than 1");
 			} else {
 				character.setCharacterStats(characterStat);
 			}

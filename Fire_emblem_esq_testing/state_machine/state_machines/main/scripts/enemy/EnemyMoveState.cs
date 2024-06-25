@@ -45,7 +45,7 @@ public partial class EnemyMoveState : State {
 		bool result = this.characterUtility.moveCharacter(ref this.path, currentTileCoords, this.path.Last());
 
 		if (result == true) {
-			EmitSignal(SignalName.StateChange, this, "EnemyAttackState");
+			EmitSignal(SignalName.StateChange, this, typeof(EnemyAttackState).ToString());
 			MapEntities.targetedCharacters.Add(target);
 		}
 	}

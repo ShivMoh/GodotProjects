@@ -82,12 +82,15 @@ public partial class AttackSelectionUtility {
 		
 		this.chosenAttack = this.choseRandomAttack(attackCandidates);
 
-		if (this.chosenAttack.attackTargetMeta.targetableCount == 1) {
+		if (this.chosenAttack.attackTargetMeta.targetableCount == 1 && !this.chosenAttack.attackTargetMeta.areaOfEffect) {
 			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
 		} else if (this.chosenAttack.attackTargetMeta.areaOfEffect) {
 			// lets deal with this later i suppose
 			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
+			
 		} else {
+			GD.Print("Hellooo");
+			// this for ranged attacks with more than one targets
 			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
 
 			// I'll have to like calculate the optimal position to target the most enemies...
@@ -134,6 +137,13 @@ public partial class AttackSelectionUtility {
 		return this.chosenAttack;
 	}
 
+	public void clearAttacks() {
+		this.chosenAttack = null;
+	}
+
+	public void clearTargets() {
+		this.targets.Clear();
+	}
 
 	private AttackMeta choseRandomAttack(List<AttackMeta> attacks) {
 		var rand = new Random();
@@ -147,9 +157,17 @@ public partial class AttackSelectionUtility {
 	private Character chooseRandomCharacter(List<Character> characters) {
 		var rand = new Random();
 
-		int randomIndex = rand.Next(0, characters.Count());
+		if (characters.Count() == 0) return null;
+		if (characters.Count() == 1)	return characters.First();
 
-		return characters.ElementAt(randomIndex);
+		int randomIndex = rand.Next(0, characters.Count());
+		
+		if (!characters.ElementAt(randomIndex).IsQueuedForDeletion()) {
+			GD.Print(randomIndex);
+			return characters.ElementAt(randomIndex);
+		} else {
+			return chooseRandomCharacter(characters);
+		}
 	}
 
 	private bool canAttackFromDistance() {

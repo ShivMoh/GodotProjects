@@ -122,7 +122,7 @@ public partial class ExploreState : State
 					tileUtility.drawCursor(currentTileCoords); 
 					
 					if (MapEntities.selectedCharacter.usedTurn == false) {
-						EmitSignal(SignalName.StateChange, this, "DecisionState");
+						EmitSignal(SignalName.StateChange, this, typeof(DecisionState).ToString());
 					} else {
 						MapEntities.selectedCharacter = null;
 					}

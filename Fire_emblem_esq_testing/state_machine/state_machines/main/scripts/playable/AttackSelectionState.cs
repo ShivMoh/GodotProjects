@@ -45,7 +45,7 @@ public partial class AttackSelectionState : State {
 			this.selectedCharacter.actionsMenu.Hide();
 			this.selectedCharacter.actionsMenu.Clear();
 
-			EmitSignal(SignalName.StateChange, this, "TargetSelectionState");
+			EmitSignal(SignalName.StateChange, this, typeof(TargetSelectionState).ToString());
 
 		}
 	}
