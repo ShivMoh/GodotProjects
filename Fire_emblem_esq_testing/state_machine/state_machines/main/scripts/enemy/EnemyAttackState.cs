@@ -38,11 +38,13 @@ public partial class EnemyAttackState : State {
 				MapEntities.targetedCharacters.Remove(removedCharacter);
 				removedCharacter.QueueFree();
 				// MapEntities.characters.RemoveAt(removalList.IndexOf(item));
-				
 			}
 		}
 		
-		// MapEntities.count = 0;
+		MapEntities.selectedCharacter.usedTurn = true;
+
+		MapEntities.count++;
+		
 		EmitSignal(SignalName.StateChange, this, typeof(EnemyTargetSelectionState).ToString());
 
 		// removalList.Clear();

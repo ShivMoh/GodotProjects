@@ -89,9 +89,15 @@ public partial class AttackSelectionUtility {
 			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
 			
 		} else {
-			GD.Print("Hellooo");
+			
+			Character randomCharacter = this.chooseRandomCharacter(refinedTargetCandidates);
+
+			if (randomCharacter is not null) {
+				this.targets.Add(randomCharacter);
+			} else {
+				GD.Print("Null character reference");
+			}
 			// this for ranged attacks with more than one targets
-			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
 
 			// I'll have to like calculate the optimal position to target the most enemies...
 			// so yh lets deal with this later

@@ -22,9 +22,14 @@ public partial class EnemyAttackSelectionState : State {
 	{
 		this.attackSelectionUtility.chooseCunningCharacterAttack();
 		MapEntities.chosenAttack = this.attackSelectionUtility.getAttack();
+		MapEntities.targetedCharacters.Clear();
 		MapEntities.targetedCharacters.AddRange(this.attackSelectionUtility.getTargets());
 
-		EmitSignal(SignalName.StateChange, this, typeof(EnemyMoveState).ToString());
+		if (MapEntities.targetedCharacters.Count() == 0 || MapEntities.targetedCharacters.Contains(null)) {
+			EmitSignal(SignalName.StateChange, this, typeof(EnemyTargetSelectionState).ToString());
+		} else {
+			EmitSignal(SignalName.StateChange, this, typeof(EnemyMoveState).ToString());
+		}	
 	}
 
 }

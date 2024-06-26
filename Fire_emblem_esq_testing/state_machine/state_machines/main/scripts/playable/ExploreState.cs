@@ -55,6 +55,7 @@ public partial class ExploreState : State
 
 		if (currentTurn == MapEntities.entities.ElementAt(1)) {
 			GD.Print("Should be moving states now");
+			MapEntities.count = 0;
 			EmitSignal(SignalName.StateChange, this, "EnemyTargetSelectionState");
 		}	
 	}

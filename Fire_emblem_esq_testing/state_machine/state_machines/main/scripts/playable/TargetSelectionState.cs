@@ -76,10 +76,15 @@ public partial class TargetSelectionState : State {
 
 				this.detectEnemyPresence();
 
-				if (!MapEntities.targetedCharacters.Contains(this.selectedEnemy) && this.selectedEnemy != null) { 
-					MapEntities.targetedCharacters.Add(this.selectedEnemy);
+				if (this.selectedEnemy != null) {
+						if (!MapEntities.targetedCharacters.Contains(this.selectedEnemy) && this.selectedEnemy != null) { 
+						MapEntities.targetedCharacters.Add(this.selectedEnemy);
 					
-					this.numberOfSelectedEnemies += 1;
+						this.numberOfSelectedEnemies += 1;
+					}
+
+				} else {
+					GD.Print("null return");
 				}
 
 				if (this.numberOfSelectedEnemies == MapEntities.chosenAttack.attackTargetMeta.targetableCount ||
@@ -117,7 +122,10 @@ public partial class TargetSelectionState : State {
 									null
 								);
 		} else {
-
+				this.selectedEnemy = MapEntities.detectedEnemies.FirstOrDefault(
+									enemy => MapEntities.map.LocalToMap(enemy.GlobalPosition) == this.currentTileCoords, 
+									null
+								);
 		}
 	}
 
