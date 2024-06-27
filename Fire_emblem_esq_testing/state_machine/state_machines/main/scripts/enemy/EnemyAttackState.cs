@@ -23,17 +23,21 @@ public partial class EnemyAttackState : State {
 	public override void physicsUpdate(double _delta)
 	{
 		
+		
+		removalList.Clear();
 		foreach (Character character in MapEntities.targetedCharacters)
 		{
 			bool remove = this.combatUtility.attackCharacter(MapEntities.selectedCharacter, character, MapEntities.chosenAttack);
 			removalList.Add(remove);
 		}
 
+		
 
 		// GD.Print(this.removalList.Count());
 		foreach (bool item in this.removalList)
 		{
 			if (item == true) {
+				// GD.Print(removalList.Count(), MapEntities.targetedCharacters.Count());
 				Character removedCharacter = MapEntities.targetedCharacters.ElementAt(removalList.IndexOf(item));
 				MapEntities.targetedCharacters.Remove(removedCharacter);
 				removedCharacter.QueueFree();
@@ -41,11 +45,11 @@ public partial class EnemyAttackState : State {
 			}
 		}
 		
-		MapEntities.selectedCharacter.usedTurn = true;
+		// MapEntities.selectedCharacter.usedTurn = true;
 
-		MapEntities.count++;
+		// MapEntities.count++;
 		
-		EmitSignal(SignalName.StateChange, this, typeof(EnemyTargetSelectionState).ToString());
+		EmitSignal(SignalName.StateChange, this, typeof(FinalState).ToString());
 
 		// removalList.Clear();
 

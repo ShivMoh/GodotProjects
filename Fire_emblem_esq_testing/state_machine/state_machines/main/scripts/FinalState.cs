@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Godot;
 
 public partial class FinalState : State {
@@ -15,6 +17,35 @@ public partial class FinalState : State {
 
 	public override void physicsUpdate(double _delta)
 	{
-		EmitSignal(SignalName.StateChange, this, typeof(ExploreState).ToString());
+		if (this.previousStateName == typeof(EnemyAttackState).ToString()) {
+			if (    MapEntities.count >= MapEntities.enemyCharacters.Count() || 
+					MapEntities.playableCharacters.Count() == 0
+			) {
+				MapEntities.count = 0;
+				foreach (Character character in MapEntities.enemyCharacters)
+				{	
+					character.usedTurn = false;	
+				}
+
+				EmitSignal(SignalName.StateChange, this, typeof(ExploreState).ToString());
+			} else {
+				EmitSignal(SignalName.StateChange, this, typeof(EnemyTargetSelectionState).ToString());
+			}
+		}
+
+		if (this.previousStateName == typeof(AttackState).ToString()) {
+			if ( MapEntities.count >= MapEntities.playableCharacters.Count()) {
+				MapEntities.count = 0;
+				foreach (Character character in MapEntities.playableCharacters)
+				{	
+					character.usedTurn = false;	
+				}
+
+				EmitSignal(SignalName.StateChange, this, typeof(EnemyTargetSelectionState).ToString());
+			} else {
+				EmitSignal(SignalName.StateChange, this, typeof(ExploreState).ToString());
+			}
+		}
 	}
+
 }

@@ -10,6 +10,8 @@ public partial class State : Node2D {
 
     // [Signal]
     // public delegate void ShareAttackEventHandler(AttackMeta attacks);
+    public string previousStateName;
+    
     public virtual void enter() {}
 
     public virtual void exit() {}

@@ -20,7 +20,6 @@ public partial class StateMachine : Node2D {
 						states.Add(subChild as State);
 
 						(subChild as State).StateChange += onChildTransition;
-						GD.Print(subChild.GetType().Name);
 						// (child as State).ShareAttack += setAttack;
 						// (child as State).ShareAttack += setAttacks;
 					}
@@ -28,9 +27,7 @@ public partial class StateMachine : Node2D {
 			} else {
 				if (child is State) {
 					states.Add(child as State);
-
 					(child as State).StateChange += onChildTransition;
-					GD.Print(child.GetType().Name);
 					// (child as State).ShareAttack += setAttack;
 					// (child as State).ShareAttack += setAttacks;
 				}
@@ -65,6 +62,8 @@ public partial class StateMachine : Node2D {
 
 		if (currentState is not null) currentState.exit();
 
+		newState.previousStateName = state.GetType().Name;
+		
 		// this.processStateDecisions(newState);
 		newState.enter();
 

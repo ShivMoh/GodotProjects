@@ -28,6 +28,8 @@ public partial class ExploreState : State
 	public override void enter()
 	{
 	
+		GD.Print("I am on explore state");
+
 		currentTileCoords = MapEntities.cursorCoords;
 		previousTileCoords = currentTileCoords;
 		
@@ -67,7 +69,7 @@ public partial class ExploreState : State
 
 	public override void physicsUpdate(double delta)
 	{	
-		this.handleTurn();
+		// this.handleTurn();
 
 
 		// EmitSignal(SignalName.StateChange, this, "EnemyMoveState");

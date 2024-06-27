@@ -73,6 +73,7 @@ public partial class CharacterUtility {
 
 	public PlayableCharacter selectCharacter( Vector2I current, ref List<Vector2I> path) {
 		var character = playableCharacters.FirstOrDefault<PlayableCharacter>(character => this.compareValues(character.GlobalPosition, tilemap.MapToLocal(current), 2.0f), null);
+		GD.Print(character);
 		if (character is not null) {
 			if (selectedCharacter == null) {
 				selectedCharacter = character;
@@ -88,6 +89,7 @@ public partial class CharacterUtility {
 				return null;
 			}
 		} 
+		GD.Print(selectedCharacter);
 		return selectedCharacter as PlayableCharacter;
 		
 	}

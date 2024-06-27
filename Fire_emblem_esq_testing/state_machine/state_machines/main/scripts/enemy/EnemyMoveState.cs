@@ -20,7 +20,7 @@ public partial class EnemyMoveState : State {
 	public override void enter()
 	{
 		
-		currentActingEnemey = MapEntities.enemyCharacters.MaxBy(enemy => enemy.getCharacterStats().speed);
+		currentActingEnemey = MapEntities.selectedCharacter as EnemyCharacter;
 
 		this.characterUtility = new CharacterUtility(MapEntities.map, currentActingEnemey, MapEntities.playableCharacters);
 		this.tileUtility = new TileUtility(MapEntities.map);
