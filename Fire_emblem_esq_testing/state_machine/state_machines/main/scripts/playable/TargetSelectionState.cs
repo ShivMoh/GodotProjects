@@ -42,6 +42,10 @@ public partial class TargetSelectionState : State {
 		}
 		this.placeCursor();
 
+		foreach (Character character in MapEntities.playableCharacters)
+		{
+			GD.Print("Playable character healths target selection state", character.characterStat.health);
+		}
 	}
 
 	public override void physicsUpdate(double _delta)
@@ -84,7 +88,7 @@ public partial class TargetSelectionState : State {
 					}
 
 				} else {
-					GD.Print("null return");
+					
 				}
 
 				if (this.numberOfSelectedEnemies == MapEntities.chosenAttack.attackTargetMeta.targetableCount ||
@@ -141,7 +145,7 @@ public partial class TargetSelectionState : State {
 	
 			// this.tileUtilitiy.highLight(currentTileCoords, new Vector2I(2, 1));
 			
-			GD.Print(currentTileCoords);
+		
 			this.radiusCoords.Clear();
 			while(numberOfIterations < k) {
 
@@ -149,7 +153,7 @@ public partial class TargetSelectionState : State {
 				Vector2I previousCoord = new Vector2I(previousTileCoords.X - (numberOfIterations + 1), previousTileCoords.Y - (numberOfIterations + 1));
 
 				int loopCount = 2 * (numberOfIterations + 1) + 1 - 1;
-				GD.Print(loopCount);
+				
 				// top
 				for(int i = 0; i < loopCount; i++) {
 					currentCoord.X++;
@@ -201,7 +205,7 @@ public partial class TargetSelectionState : State {
 				Vector2I previousCoord = new Vector2I(previousTileCoords.X - (numberOfIterations + 1), previousTileCoords.Y - (numberOfIterations + 1));
 
 				int loopCount = 2 * (numberOfIterations + 1) + 1 - 1;
-				GD.Print(loopCount);
+			
 				// top
 				for(int i = 0; i < loopCount; i++) {
 					currentCoord.X++;
@@ -249,7 +253,7 @@ public partial class TargetSelectionState : State {
 	private void highLightSelected() {
 		foreach (Character character in MapEntities.targetedCharacters)
 		{
-			GD.Print("hellooo....");
+		
 			Vector2I localPosition = MapEntities.map.LocalToMap(character.GlobalPosition);
 
 			if (currentTileCoords == localPosition) {

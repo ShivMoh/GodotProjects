@@ -63,7 +63,7 @@ public partial class CharacterUtility {
 	}
 
 
-	public bool compareValues(Vector2 one, Vector2 two, float maxAllowedDistance) {
+	public static bool compareValues(Vector2 one, Vector2 two, float maxAllowedDistance) {
 		float distanceX = Math.Abs(one.X - two.X);
 		float distanceY = Math.Abs(one.Y - two.Y);
 
@@ -72,8 +72,8 @@ public partial class CharacterUtility {
 
 
 	public PlayableCharacter selectCharacter( Vector2I current, ref List<Vector2I> path) {
-		var character = playableCharacters.FirstOrDefault<PlayableCharacter>(character => this.compareValues(character.GlobalPosition, tilemap.MapToLocal(current), 2.0f), null);
-		GD.Print(character);
+		var character = playableCharacters.FirstOrDefault<PlayableCharacter>(character => CharacterUtility.compareValues(character.GlobalPosition, tilemap.MapToLocal(current), 2.0f), null);
+		
 		if (character is not null) {
 			if (selectedCharacter == null) {
 				selectedCharacter = character;
@@ -89,7 +89,7 @@ public partial class CharacterUtility {
 				return null;
 			}
 		} 
-		GD.Print(selectedCharacter);
+		
 		return selectedCharacter as PlayableCharacter;
 		
 	}

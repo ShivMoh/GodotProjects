@@ -17,12 +17,12 @@ public partial class AttackSelectionState : State {
 		popupMenuOptions.Clear();
 		foreach (AttackMeta attack in MapEntities.attackMetas)
 		{
-			GD.Print(attack.name);
 			popupMenuOptions.Add(attack.name);
 		}
 		
 		this.selectedCharacter.actionsMenu.Clear();
 		this.selectedCharacter.addPopupMenuItem(popupMenuOptions);
+
 	}
 
 	public override void physicsUpdate(double _delta)

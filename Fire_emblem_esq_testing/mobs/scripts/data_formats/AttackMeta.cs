@@ -13,6 +13,13 @@ public enum AttackAttribute
     DARK,
 }
 
+public enum AttackType
+{
+    MAGICAL,
+
+    PHYSICAL
+}
+
 // for the elements, rip off naruto
 // for light and dark, dark > elements, light > dark (like really effective more than usual)
 
@@ -60,8 +67,6 @@ public partial class AttackMeta : Node {
 
     public string name;
     public int power;
-
-    public bool physical;
     public int timesUsableUntilReset = 0;
 
     public AttackTargetMeta attackTargetMeta;
@@ -70,25 +75,26 @@ public partial class AttackMeta : Node {
 
     public AttackEffect effect;
 
-
+    public AttackType attackType;
+    
     // perhaps effect in future
     // Effect effect
     public AttackMeta(
         string name, 
         int power, 
-        bool physical,
         int timesUsableUntilReset,
         AttackTargetMeta attackTargetMeta,
         AttackAttribute attackAttribute,
-        AttackEffect effect = AttackEffect.NONE
+        AttackEffect effect = AttackEffect.NONE,
+        AttackType attackType = AttackType.PHYSICAL
     ) {
         this.name = name;
         this.power = power;
-        this.physical = physical;
         this.timesUsableUntilReset = timesUsableUntilReset;
         this.attackTargetMeta = attackTargetMeta;
         this.attackAttribute = attackAttribute;
         this.effect = effect;
+        this.attackType = attackType;
     }
 
 }

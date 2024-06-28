@@ -40,6 +40,7 @@ public partial class DecisionState : State {
 			case "Attack":
 				MapEntities.attackMetas = this.selectedCharacter.attacks;
 				EmitSignal(SignalName.StateChange, this, typeof(AttackSelectionState).ToString());
+				
 			break;
 			default:
 				return;

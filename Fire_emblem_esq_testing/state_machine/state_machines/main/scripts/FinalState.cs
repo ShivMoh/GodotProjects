@@ -36,14 +36,11 @@ public partial class FinalState : State {
 		if (this.previousStateName == typeof(AttackState).ToString()) {
 			if ( MapEntities.count >= MapEntities.playableCharacters.Count()) {
 				MapEntities.count = 0;
-				foreach (Character character in MapEntities.playableCharacters)
-				{	
-					character.usedTurn = false;	
-				}
-
+				
 				EmitSignal(SignalName.StateChange, this, typeof(EnemyTargetSelectionState).ToString());
 			} else {
 				EmitSignal(SignalName.StateChange, this, typeof(ExploreState).ToString());
+			
 			}
 		}
 	}

@@ -28,7 +28,6 @@ public partial class Node2D : Godot.Node2D
 			this.lastMousePosition = GetGlobalMousePosition();
 			Rect2I rect2 = new Rect2I((int) lastMousePosition.X, (int) lastMousePosition.Y, popupMenu.Size.X, popupMenu.Size.Y);
 			popupMenu.Popup(rect2);
-			GD.Print(lastMousePosition);
 
 		
 		}

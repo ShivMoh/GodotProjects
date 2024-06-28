@@ -21,7 +21,7 @@ public enum Trait
 }
 
 
-public partial class CharacterStat {
+public partial class CharacterStat : ICloneable {
 
     public string name {get; set;} = String.Empty;
 
@@ -67,6 +67,10 @@ public partial class CharacterStat {
         this.skill = skill;
         this.constition = constition;
         this.trait = trait;
-    }   
+    }
 
+    public object Clone()
+    {
+        return this.MemberwiseClone();
+    }
 }

@@ -42,25 +42,6 @@ public partial class ExploreState : State
 
 	}
 
-	private void handleTurn() {
-		if (MapEntities.entities.Count <= 0) {
-			MapEntities.entities.Add("PLAYER");
-			MapEntities.entities.Add("ENEMY");
-			currentTurn = MapEntities.entities.First();
-		}
-
-		if (currentTurn == MapEntities.entities.ElementAt(0)) {
-			if (MapEntities.count == MapEntities.playableCharacterCount) {
-				switchTurns();
-			}
-		}
-
-		if (currentTurn == MapEntities.entities.ElementAt(1)) {
-			GD.Print("Should be moving states now");
-			MapEntities.count = 0;
-			EmitSignal(SignalName.StateChange, this, "EnemyTargetSelectionState");
-		}	
-	}
 
 	private void switchTurns() {
 		turnIndex = turnIndex + 1 == MapEntities.entities.Count ? 0 : turnIndex + 1;
@@ -69,11 +50,6 @@ public partial class ExploreState : State
 
 	public override void physicsUpdate(double delta)
 	{	
-		// this.handleTurn();
-
-
-		// EmitSignal(SignalName.StateChange, this, "EnemyMoveState");
-			
 		
 		previousTileCoords = currentTileCoords;
 
@@ -102,10 +78,7 @@ public partial class ExploreState : State
 			lastTile = path.Last();
 			characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);
 
-			// foreach (Vector2I item in path)
-			// {
-			// 	GD.Print("Character path", item);
-			// }
+		
 		}
 
 
@@ -121,7 +94,7 @@ public partial class ExploreState : State
 				bool finished = characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);
 
 				if (finished) {
-					// MapEntities.detectedEnemies = combatUtility.detectEnemy(tileUtility);
+				
 					tileUtility.drawCursor(currentTileCoords); 
 					
 					if (MapEntities.selectedCharacter.usedTurn == false) {

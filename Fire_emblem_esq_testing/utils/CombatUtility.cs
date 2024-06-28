@@ -62,11 +62,15 @@ public partial class CombatUtility {
 	}
 
 	public  bool attackCharacter(Character selectedCharacter, Character target, AttackMeta chosenAttack) {
-		int damage = selectedCharacter.getCharacterStats().strenth + chosenAttack.power;
+		int damage = 0;
+	
+		if (chosenAttack.attackType == AttackType.MAGICAL) damage = selectedCharacter.characterStat.magic + chosenAttack.power;
 
-		target.getCharacterStats().health -= damage;
+		if (chosenAttack.attackType == AttackType.PHYSICAL) damage = selectedCharacter.characterStat.strenth + chosenAttack.power;
+		
+		target.characterStat.health -= damage;
 
-		if (target.getCharacterStats().health <= 0) {
+		if (target.characterStat.health <= 0) {
 
 			if (target.GetType().Name is nameof(EnemyCharacter)) {
 				MapEntities.enemyCharacters.Remove(target as EnemyCharacter);
@@ -77,7 +81,6 @@ public partial class CombatUtility {
 			}
 
 			MapEntities.characters.Remove(target);
-			// MapEntities.targetedCharacters.Remove(target);
 
 			return true;
 

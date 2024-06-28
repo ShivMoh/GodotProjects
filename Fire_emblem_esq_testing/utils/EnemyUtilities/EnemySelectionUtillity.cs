@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Godot;
 
@@ -76,6 +77,7 @@ public partial class EnemySelectionUtility {
 
 			int numberOfStepsTo = Mathf.Abs(playableTileLocation.Y - enemyTileLocation.Y) + 
 			Mathf.Abs(playableTileLocation.X - enemyTileLocation.X) - 1;
+			
 
 			if (numberOfStepsTo <= enemyCharacter.moveSteps) {
 				targetCandidates.Add(playableCharacter);
@@ -84,6 +86,41 @@ public partial class EnemySelectionUtility {
 
 		return targetCandidates;
 	} 
+
+	
+
+	public Vector2 findAvailableSpotForTarget(Character character, List<EnemyCharacter> entities, int range) {
+
+		Vector2I centerPosition = this.tileMap.LocalToMap(character.GlobalPosition);
+
+		foreach (Character entity in entities)
+		{
+			Vector2I entityPosition = this.tileMap.LocalToMap(entity.GlobalPosition);
+		
+
+			float increment = 0.0f;
+			
+			for (int i = 0; i < 12; i++)
+			{
+				Vector2I pointPosition = new Vector2I(
+														Mathf.RoundToInt(centerPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment))),
+														Mathf.RoundToInt(centerPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)))
+													);
+				if (pointPosition != entityPosition) {
+					GD.Print(entityPosition, pointPosition);
+
+					return pointPosition;
+				} 
+
+				increment+=30;
+			}	
+		}
+		
+
+		return Vector2.Zero;
+	}	
+
+
 
  
 

@@ -8,20 +8,20 @@ public partial class InitialState : State {
 		new AttackMeta(
 			name: "Fire ball",
 			power: 5,
-			physical : false,
 			timesUsableUntilReset: 20,
 			attackTargetMeta: new AttackTargetMeta(20, 1, radius: 5, areaOfEffect: true),
 			attackAttribute: AttackAttribute.FIRE,
-			effect: AttackEffect.BURN
+			effect: AttackEffect.BURN,
+			attackType: AttackType.MAGICAL
 		),
 		new AttackMeta(
 			name: "Ice ball",
 			power: 3,
-			physical: false,
 			timesUsableUntilReset: 20,
 			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
 			attackAttribute: AttackAttribute.WATER,
-			effect: AttackEffect.FREEZE
+			effect: AttackEffect.FREEZE,
+			attackType: AttackType.MAGICAL
 		)
 	};
 	
@@ -29,7 +29,6 @@ public partial class InitialState : State {
 		new AttackMeta(
 			name: "Ice ball",
 			power: 3,
-			physical: false,
 			timesUsableUntilReset: 20,
 			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
 			attackAttribute: AttackAttribute.WATER,
@@ -144,8 +143,9 @@ public partial class InitialState : State {
 			) as PlayableCharacter;
 
 			character.setAttacks(playableCharactersMeta[i].attacks);
-			character.setCharacterStats(characterStat);
+			character.setCharacterStats(characterStat.Clone() as CharacterStat);
 
+			GD.Print("Initial character health", characterStat.health);
 		
 			character.moveSteps = character.getCharacterStats().speed;
 			MapEntities.map.GetNode("playableCharacters").AddChild(character);
@@ -164,9 +164,9 @@ public partial class InitialState : State {
 			// character.setCharacterStats(characterStat);
 
 			if (i > 1) {
-				character.setCharacterStats(characterStat2);
+				character.setCharacterStats(characterStat2.Clone() as CharacterStat);
 			} else {
-				character.setCharacterStats(characterStat);
+				character.setCharacterStats(characterStat.Clone() as CharacterStat);
 			}
 
 			character.moveSteps = character.getCharacterStats().speed;

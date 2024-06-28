@@ -9,7 +9,7 @@ public partial class EnemyAttackState : State {
 	private List<bool> removalList;
 	public override void enter()
 	{
-		GD.Print("Am on enemy attack state");
+		// GD.Print("Am on enemy attack state");
 
 		this.combatUtility = new CombatUtility(
 			MapEntities.map,
@@ -25,35 +25,24 @@ public partial class EnemyAttackState : State {
 		
 		
 		removalList.Clear();
+		
 		foreach (Character character in MapEntities.targetedCharacters)
 		{
+			GD.Print("Character health before attack", character.characterStat.health);
 			bool remove = this.combatUtility.attackCharacter(MapEntities.selectedCharacter, character, MapEntities.chosenAttack);
 			removalList.Add(remove);
 		}
 
-		
-
-		// GD.Print(this.removalList.Count());
 		foreach (bool item in this.removalList)
 		{
 			if (item == true) {
-				// GD.Print(removalList.Count(), MapEntities.targetedCharacters.Count());
 				Character removedCharacter = MapEntities.targetedCharacters.ElementAt(removalList.IndexOf(item));
 				MapEntities.targetedCharacters.Remove(removedCharacter);
 				removedCharacter.QueueFree();
-				// MapEntities.characters.RemoveAt(removalList.IndexOf(item));
 			}
 		}
-		
-		// MapEntities.selectedCharacter.usedTurn = true;
-
-		// MapEntities.count++;
-		
+				
 		EmitSignal(SignalName.StateChange, this, typeof(FinalState).ToString());
 
-		// removalList.Clear();
-
-
-		// this.targetedCopies = MapEntities.targetedCharacters;
 	}
 }
