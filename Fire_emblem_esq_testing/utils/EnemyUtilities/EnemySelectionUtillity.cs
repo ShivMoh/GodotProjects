@@ -92,32 +92,43 @@ public partial class EnemySelectionUtility {
 	public Vector2 findAvailableSpotForTarget(Character character, List<EnemyCharacter> entities, int range) {
 
 		Vector2I centerPosition = this.tileMap.LocalToMap(character.GlobalPosition);
-
-		foreach (Character entity in entities)
-		{
-			Vector2I entityPosition = this.tileMap.LocalToMap(entity.GlobalPosition);
+		Vector2I pointPosition = Vector2I.Zero;
+		bool occupied = false;
+		float increment = 0.0f;
 		
-
-			float increment = 0.0f;
+		for (int i = 0; i < 12; i++)
+		{
+			pointPosition = new Vector2I(
+											Mathf.RoundToInt(centerPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment))),
+											Mathf.RoundToInt(centerPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)))
+										);
 			
-			for (int i = 0; i < 12; i++)
+			foreach (Character entity in entities)
 			{
-				Vector2I pointPosition = new Vector2I(
-														Mathf.RoundToInt(centerPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment))),
-														Mathf.RoundToInt(centerPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)))
-													);
-				if (pointPosition != entityPosition) {
-					GD.Print(entityPosition, pointPosition);
-
-					return pointPosition;
+				// GD.Print("ENEMY POSITION", entity.GlobalPosition);
+				Vector2I entityPosition = this.tileMap.LocalToMap(entity.GlobalPosition);
+	
+				if (pointPosition == entityPosition) {
+					// GD.Print(centerPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment)));
+					// GD.Print(centerPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)));
+					// GD.Print(entityPosition, pointPosition);
+					occupied = true;
 				} 
 
-				increment+=30;
-			}	
+			}
+			
+			increment+=30;
+
+			if (occupied == false) {
+				GD.Print("Does this run");
+				return this.tileMap.MapToLocal(pointPosition); 
+			} else {
+				occupied = false;
+			}
 		}
 		
-
 		return Vector2.Zero;
+
 	}	
 
 

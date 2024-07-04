@@ -38,7 +38,7 @@ public partial class EnemyMoveState : State {
 														MapEntities.enemyCharacters, 
 														MapEntities.chosenAttack.attackTargetMeta.range
 													);
-		
+		GD.Print("TARGET LOCATION", this.targetPosition);
 		calculatePathTowardsTarget();
 	
 		this.currentActingEnemey.move = true;
