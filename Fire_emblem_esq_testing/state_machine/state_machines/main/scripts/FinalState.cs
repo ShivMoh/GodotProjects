@@ -34,7 +34,9 @@ public partial class FinalState : State {
 			}
 		}
 
-		if (this.previousStateName == typeof(AttackState).ToString()) {
+		if (this.previousStateName == nameof(AttackState) ||
+			this.previousStateName == nameof(DecisionState)
+		) {
 			if ( MapEntities.count >= MapEntities.playableCharacters.Count()) {
 				MapEntities.count = 0;
 				foreach (Character character in MapEntities.playableCharacters)

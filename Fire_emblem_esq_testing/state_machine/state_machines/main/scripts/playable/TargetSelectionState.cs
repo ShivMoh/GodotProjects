@@ -104,6 +104,12 @@ public partial class TargetSelectionState : State {
 			}
 		}
 
+
+		if (Input.IsActionJustPressed("cancel")) {
+			MapEntities.map.ClearLayer(1);
+			EmitSignal(SignalName.StateChange, this, nameof(AttackSelectionState));
+		}
+
 		// this.highLightTarget();	
 		this.highLightTargetable();
 		this.highLightSelected();	

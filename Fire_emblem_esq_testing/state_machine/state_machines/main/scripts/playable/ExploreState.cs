@@ -86,7 +86,12 @@ public partial class ExploreState : State
 			MapEntities.selectedCharacter = characterUtility.selectCharacter(currentTileCoords, ref path) as PlayableCharacter;
 			combatUtility.setSelectedCharacter(MapEntities.selectedCharacter);
 			tileUtility.drawCursor(currentTileCoords);
+		}
 
+
+		if (Input.IsActionJustPressed("cancel")) {
+			MapEntities.selectedCharacter = characterUtility.unselectCharacter(ref path);
+			tileUtility.drawCursor(currentTileCoords);
 		}
 
 		if (MapEntities.selectedCharacter != null) {

@@ -6,34 +6,66 @@ public partial class StateMachine : Node2D {
 	public State currentState;
 	public List<State> states = new List<State>();
 
-
 	[Export]
+	public TileMap tilemap;
 	public State initialState;
 	
 	public override void _Ready()
 	{
-		foreach (var child in this.GetChildren())
-		{   
-			if (child.GetChildCount() != 0) {
-				foreach (var subChild in child.GetChildren()) {
-					if (subChild is State) {
-						states.Add(subChild as State);
+		InitialState firstState = new InitialState();
+		firstState.tilemap = this.tilemap;
+		FinalState finalState =	new FinalState();
 
-						(subChild as State).StateChange += onChildTransition;
-						// (child as State).ShareAttack += setAttack;
-						// (child as State).ShareAttack += setAttacks;
-					}
-				}
-			} else {
-				if (child is State) {
-					states.Add(child as State);
-					(child as State).StateChange += onChildTransition;
-					// (child as State).ShareAttack += setAttack;
-					// (child as State).ShareAttack += setAttacks;
-				}
+		states.Add(firstState as State);
+		states.Add(finalState as State);
+
+		states.AddRange(
+			new List<State>() {		
+				new ExploreState(),
+				new DecisionState(),
+				new AttackSelectionState(),
+				new TargetSelectionState(),
+				new AttackState()
 			}
-		
+		);
+
+		states.AddRange(
+			new List<State>() {
+				new EnemyTargetSelectionState(),
+				new EnemyAttackSelectionState(),
+				new EnemyAttackState(),
+				new EnemyAttackState()
+			}
+		);
+		initialState = states.First();
+
+		foreach (State state in this.states)
+		{
+			state.StateChange += onChildTransition;
 		}
+
+		// foreach (var child in this.GetChildren())
+		// {   
+		// 	if (child.GetChildCount() != 0) {
+		// 		foreach (var subChild in child.GetChildren()) {
+		// 			if (subChild is State) {
+		// 				states.Add(subChild as State);
+
+		// 				(subChild as State).StateChange += onChildTransition;
+		// 				// (child as State).ShareAttack += setAttack;
+		// 				// (child as State).ShareAttack += setAttacks;
+		// 			}
+		// 		}
+		// 	} else {
+		// 		if (child is State) {
+		// 			states.Add(child as State);
+		// 			(child as State).StateChange += onChildTransition;
+		// 			// (child as State).ShareAttack += setAttack;
+		// 			// (child as State).ShareAttack += setAttacks;
+		// 		}
+		// 	}
+		
+		// }
 
 
 		if (initialState is not null) {

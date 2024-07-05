@@ -49,14 +49,14 @@ public partial class CharacterUtility {
 		if (reachLast) {
 			selectedCharacter.move = false;
 			characterMoveIndex = 0;
-			this.clearPath(tilemap, ref path, current);
+			this.clearPath(tilemap, ref path);
 			return true;
 		}
 
 		return false;
 	}
 
-	public void clearPath(TileMap tilemap, ref List<Vector2I> path, Vector2I current) {	
+	public void clearPath(TileMap tilemap, ref List<Vector2I> path) {	
 		tilemap.ClearLayer(1);
 		path.Clear();
 		// TileUtil.drawCursor(tilemap, current);
@@ -85,7 +85,7 @@ public partial class CharacterUtility {
 				return selectedCharacter as PlayableCharacter;
 			} else {
 				selectedCharacter = null;
-				this.clearPath(tilemap, ref path, current);
+				this.clearPath(tilemap, ref path);
 				return null;
 			}
 		} 
@@ -93,6 +93,13 @@ public partial class CharacterUtility {
 		return selectedCharacter as PlayableCharacter;
 		
 	}
+
+	public PlayableCharacter unselectCharacter(ref List<Vector2I> path)	 {
+		this.selectedCharacter = null;
+		this.clearPath(tilemap, ref path);
+		return this.selectedCharacter as PlayableCharacter;
+	}
+
 
 
 	public Vector2 calculateTileFromMatchingDistance(Character target) {

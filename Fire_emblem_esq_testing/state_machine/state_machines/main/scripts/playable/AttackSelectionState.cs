@@ -19,6 +19,8 @@ public partial class AttackSelectionState : State {
 		{
 			popupMenuOptions.Add(attack.name);
 		}
+
+		popupMenuOptions.Add("Back");
 		
 		this.selectedCharacter.actionsMenu.Clear();
 		this.selectedCharacter.addPopupMenuItem(popupMenuOptions);
@@ -39,6 +41,12 @@ public partial class AttackSelectionState : State {
 			currentCheckedItem = focusedItem;
 			
 			string choice = this.selectedCharacter.actionsMenu.GetItemText(currentCheckedItem);
+
+			if (choice == "Back") {
+				MapEntities.map.ClearLayer(1);
+				EmitSignal(SignalName.StateChange, this, nameof(DecisionState));
+			}
+
 			AttackMeta chosenAttack = MapEntities.attackMetas.ElementAt(popupMenuOptions.IndexOf(choice));
 			MapEntities.chosenAttack = chosenAttack;
 
@@ -48,17 +56,10 @@ public partial class AttackSelectionState : State {
 			EmitSignal(SignalName.StateChange, this, typeof(TargetSelectionState).ToString());
 
 		}
-	}
 
-
-	private void processSelectedChoice(string option) {
-		switch (option)
-		{
-			case "Attack":
-				EmitSignal(SignalName.StateChange, this, 3);
-			break;
-			default:
-				return;
+		if (Input.IsActionJustPressed("cancel")) {
+			MapEntities.map.ClearLayer(1);
+			EmitSignal(SignalName.StateChange, this, nameof(DecisionState));
 		}
 	}
 }

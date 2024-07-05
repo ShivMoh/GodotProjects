@@ -111,8 +111,7 @@ public partial class InitialState : State {
 	};
 
 
-	[Export]
-	TileMap tilemap;
+	public TileMap tilemap;
 
 	public override void enter()
 	{
