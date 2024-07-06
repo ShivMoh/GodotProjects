@@ -91,7 +91,7 @@ public partial class Character : CharacterBody2D
 		return direction;
 	}
  
-	protected void playAnimation(Vector2 direction) {
+	public void playAnimation(Vector2 direction) {
 		if (direction.X > 0) animatedSprite.Play("right");
 	
 		if (direction.X < 0) animatedSprite.Play("left");

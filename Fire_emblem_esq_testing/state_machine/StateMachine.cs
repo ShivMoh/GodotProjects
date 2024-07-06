@@ -5,44 +5,11 @@ public partial class StateMachine : Node2D {
 
 	public State currentState;
 	public List<State> states = new List<State>();
-
-	[Export]
-	public TileMap tilemap;
 	public State initialState;
 	
 	public override void _Ready()
 	{
-		InitialState firstState = new InitialState();
-		firstState.tilemap = this.tilemap;
-		FinalState finalState =	new FinalState();
-
-		states.Add(firstState as State);
-		states.Add(finalState as State);
-
-		states.AddRange(
-			new List<State>() {		
-				new ExploreState(),
-				new DecisionState(),
-				new AttackSelectionState(),
-				new TargetSelectionState(),
-				new AttackState()
-			}
-		);
-
-		states.AddRange(
-			new List<State>() {
-				new EnemyTargetSelectionState(),
-				new EnemyAttackSelectionState(),
-				new EnemyAttackState(),
-				new EnemyAttackState()
-			}
-		);
-		initialState = states.First();
-
-		foreach (State state in this.states)
-		{
-			state.StateChange += onChildTransition;
-		}
+		
 
 		// foreach (var child in this.GetChildren())
 		// {   
@@ -66,12 +33,19 @@ public partial class StateMachine : Node2D {
 		// 	}
 		
 		// }
+		initialState = states.First();
 
-
+		foreach (State state in this.states)
+		{
+			state.StateChange += onChildTransition;
+		}
+		
 		if (initialState is not null) {
 			initialState.enter();
 			currentState = initialState;
 		}
+
+
 	}
 
 	public override void _Process(double delta)
@@ -84,7 +58,7 @@ public partial class StateMachine : Node2D {
 		if (currentState is not null) currentState.physicsUpdate(delta);
 	}
 
-	public void onChildTransition(State state, string stateName) {
+	public virtual void onChildTransition(State state, string stateName) {
 
 		if (state != currentState) return;
 

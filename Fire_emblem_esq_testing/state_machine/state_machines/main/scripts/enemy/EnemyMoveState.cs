@@ -21,7 +21,8 @@ public partial class EnemyMoveState : State {
 	List<Vector2I> path = new List<Vector2I>();
 	public override void enter()
 	{
-		
+		GD.Print(this.Name);
+
 		currentActingEnemey = MapEntities.selectedCharacter as EnemyCharacter;
 
 		this.characterUtility = new CharacterUtility(MapEntities.map, currentActingEnemey, MapEntities.playableCharacters);

@@ -16,6 +16,7 @@ public partial class EnemyAttackSelectionState : State {
 			MapEntities.attackMetas,
 			MapEntities.closeRangeTargets            
 		);
+		GD.Print(this.Name);
 	}
 
 	public override void physicsUpdate(double _delta)

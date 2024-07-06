@@ -1,10 +1,8 @@
+using Godot;
 using System.Collections.Generic;
 using System.Linq;
-using Godot;
-
-public partial class InitialState : State {
-
-	static List<AttackMeta> attacksMeta = new List<AttackMeta>() {
+public partial class OpenWorldInitialState : State {
+    static List<AttackMeta> attacksMeta = new List<AttackMeta>() {
 		new AttackMeta(
 			name: "Fire ball",
 			power: 5,
@@ -127,11 +125,14 @@ public partial class InitialState : State {
 
 		MapEntities.characters.AddRange(MapEntities.enemyCharacters);
 		MapEntities.characters.AddRange(MapEntities.playableCharacters);
+        
+        GD.Print(this.Name);
+
 	}
 
 	public override void physicsUpdate(double _delta)
 	{
-		EmitSignal(SignalName.StateChange, this, typeof(ExploreState).ToString());
+		EmitSignal(SignalName.StateChange, this, typeof(OpenWorldExploreState).ToString());
 	}
 
 	private void loadCharacters() {
