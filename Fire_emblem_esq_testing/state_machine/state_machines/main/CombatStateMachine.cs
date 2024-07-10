@@ -6,6 +6,8 @@ public partial class CombatStateMachine : StateMachine {
 
     public override void _EnterTree()
     {
+		GD.Print(nameof(CombatStateMachine), " is running");
+
         InitialState firstState = new InitialState();
 		FinalState finalState =	new FinalState();
 
@@ -31,7 +33,7 @@ public partial class CombatStateMachine : StateMachine {
 			}
 		);
 		
-
+		
     }
 
     // public override void _Ready()

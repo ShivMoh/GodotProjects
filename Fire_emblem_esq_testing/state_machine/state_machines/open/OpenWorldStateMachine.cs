@@ -7,7 +7,7 @@ public partial class OpenWorldStateMachine : StateMachine {
 
     public override void _EnterTree()
     {
-        GD.Print("State machine is machining i suppose");
+        GD.Print(nameof(CombatStateMachine), " is running");
         this.states.Add(new OpenWorldInitialState());
         this.states.Add(new OpenWorldExploreState());
     }

@@ -6,6 +6,9 @@ public partial class StateMachine : Node2D {
 	public State currentState;
 	public List<State> states = new List<State>();
 	public State initialState;
+
+	[Signal]
+	public delegate void StateMachineChangeEventHandler(StateMachine currentStateMachine, string stateMachineName);
 	
 	public override void _Ready()
 	{
@@ -55,7 +58,11 @@ public partial class StateMachine : Node2D {
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (currentState is not null) currentState.physicsUpdate(delta);
+		if (currentState.switchStateMachine) { 
+			EmitSignal(SignalName.StateMachineChange, this, this.GetType().Name);
+		} else if (currentState is not null) {
+			currentState.physicsUpdate(delta);
+		} 
 	}
 
 	public virtual void onChildTransition(State state, string stateName) {

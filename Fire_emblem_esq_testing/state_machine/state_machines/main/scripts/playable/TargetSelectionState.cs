@@ -83,7 +83,7 @@ public partial class TargetSelectionState : State {
 				if (this.selectedEnemy != null) {
 						if (!MapEntities.targetedCharacters.Contains(this.selectedEnemy) && this.selectedEnemy != null) { 
 						MapEntities.targetedCharacters.Add(this.selectedEnemy);
-					
+						
 						this.numberOfSelectedEnemies += 1;
 					}
 

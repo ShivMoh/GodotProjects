@@ -5,6 +5,7 @@ public partial class State : Node2D {
     [Signal]
     public delegate void StateChangeEventHandler(State state, string stateName);
 
+    public bool switchStateMachine = false;
     // [Signal]
     // public delegate void ShareAttacksEventHandler(Godot.Collections.Array<AttackMeta> attacks);
 

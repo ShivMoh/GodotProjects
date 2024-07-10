@@ -14,7 +14,9 @@ public partial class Character : CharacterBody2D
 	public bool move = false;
 
 	public bool usedTurn = false;
-	protected AnimatedSprite2D animatedSprite;
+
+	public bool open = false;
+	public AnimatedSprite2D animatedSprite;
 
 	public List<AttackMeta> attacks;
 
@@ -31,12 +33,15 @@ public partial class Character : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 velocity = Velocity;
+		if (!open) {
+			Vector2 velocity = this.Velocity;
 
-		velocity = this.moveTo(velocity);
+			velocity = this.moveTo(velocity);
 
-		Velocity = velocity;
-		MoveAndSlide();
+			this.Velocity = velocity;
+			
+			MoveAndSlide();
+		}
 	}
 
 	public bool isMoving() {

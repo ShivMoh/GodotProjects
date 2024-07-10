@@ -9,6 +9,7 @@ public partial class OpenWorldExploreState : State {
     public override void enter()
     {
         MapEntities.selectedCharacter = MapEntities.playableCharacters.First();
+        MapEntities.selectedCharacter.open = true;
         GD.Print(this.Name);
     }
 
@@ -23,5 +24,11 @@ public partial class OpenWorldExploreState : State {
         
         MapEntities.selectedCharacter.MoveAndSlide();        
 
+
+        if (Input.IsActionJustPressed("select")) {
+            GD.Print("Switching states");
+            this.switchStateMachine = true;
+        }
     }
+
 }
