@@ -11,8 +11,8 @@ public partial class StateMachineManager : Node {
 	List<StateMachine> stateMachines;
 
 	StateMachine currentStateMachine;
-    public override void _EnterTree()
-    {
+	public override void _EnterTree()
+	{
 		stateMachines = new List<StateMachine>();
 
 		stateMachines.Add(new OpenWorldStateMachine());
@@ -20,9 +20,9 @@ public partial class StateMachineManager : Node {
 
 		this.currentStateMachine = stateMachines.First();
 	
-    }
+	}
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 		MapEntities.map = tilemap;
 		foreach (StateMachine stateMachine in this.stateMachines)
@@ -34,12 +34,12 @@ public partial class StateMachineManager : Node {
 		AddChild(currentStateMachine);
 	}
 
-	public void onChildTransition(StateMachine stateMachine, string stateMachineName) {
-		
+	public void onChildTransition(string stateMachine, string stateMachineName) {
+
+
 		if (currentStateMachine.GetType().Name == stateMachineName) return;
 
-		StateMachine newStateMachine = this.stateMachines.FirstOrDefault( stateMachine => stateMachine.Name == stateMachineName, null);
-
+		StateMachine newStateMachine = this.stateMachines.FirstOrDefault( stateMachine => stateMachine.GetType().Name == stateMachineName, null);
 		if (newStateMachine == null) return;
 
 		currentStateMachine.QueueFree();
@@ -48,7 +48,6 @@ public partial class StateMachineManager : Node {
 
 		AddChild(currentStateMachine);
 
-		GD.Print("Is this shit working or what??", currentStateMachine.GetType().Name);		
 	}
 
 	

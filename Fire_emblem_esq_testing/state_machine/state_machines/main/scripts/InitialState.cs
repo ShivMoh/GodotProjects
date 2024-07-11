@@ -115,6 +115,20 @@ public partial class InitialState : State {
 
 	public override void enter()
 	{
+
+		if (MapEntities.characters.Count() != 0) {
+			foreach (Character character in MapEntities.characters)
+			{
+				character.QueueFree();	
+			}
+
+			MapEntities.characters.Clear();
+			MapEntities.playableCharacters.Clear();
+			MapEntities.enemyCharacters.Clear();
+			MapEntities.playableCharacterCount = 0;
+			MapEntities.enemyCharacterCount = 0;
+		}
+		
 		// MapEntities.map = tilemap;
 		MapEntities.selectedCharacter = null;
 		MapEntities.cursorCoords = new Vector2I(0, 0);
