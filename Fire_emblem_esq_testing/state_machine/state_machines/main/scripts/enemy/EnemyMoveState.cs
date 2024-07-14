@@ -29,7 +29,7 @@ public partial class EnemyMoveState : State {
 		this.tileUtility = new TileUtility(MapEntities.map);
 		this.enemySelectionUtility = new EnemySelectionUtility(MapEntities.selectedCharacter as EnemyCharacter, MapEntities.map);
 
-		this.tileUtility.highLight(MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition), new Vector2I(0, 1));
+		this.tileUtility.highLight(MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition), new Vector2I(0, 0));
 		// we need the distance from that target (number of tiles away)
 		
 		this.target = MapEntities.targetedCharacters.First();

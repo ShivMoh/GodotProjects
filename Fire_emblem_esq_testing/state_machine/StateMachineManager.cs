@@ -15,8 +15,8 @@ public partial class StateMachineManager : Node {
 	{
 		stateMachines = new List<StateMachine>();
 
-		stateMachines.Add(new OpenWorldStateMachine());
 		stateMachines.Add(new CombatStateMachine());
+		stateMachines.Add(new OpenWorldStateMachine());
 
 		this.currentStateMachine = stateMachines.First();
 	
@@ -25,9 +25,9 @@ public partial class StateMachineManager : Node {
 	public override void _Ready()
 	{
 		MapEntities.map = tilemap;
+		
 		foreach (StateMachine stateMachine in this.stateMachines)
 		{
-			GD.Print("this runs????");
 			stateMachine.StateMachineChange += onChildTransition;
 		}
 
@@ -36,10 +36,10 @@ public partial class StateMachineManager : Node {
 
 	public void onChildTransition(string stateMachine, string stateMachineName) {
 
-
 		if (currentStateMachine.GetType().Name == stateMachineName) return;
 
 		StateMachine newStateMachine = this.stateMachines.FirstOrDefault( stateMachine => stateMachine.GetType().Name == stateMachineName, null);
+
 		if (newStateMachine == null) return;
 
 		currentStateMachine.QueueFree();

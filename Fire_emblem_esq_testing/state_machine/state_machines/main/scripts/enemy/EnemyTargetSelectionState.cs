@@ -20,7 +20,7 @@ public partial class EnemyTargetSelectionState : State {
 		MapEntities.selectedCharacter = MapEntities.enemyCharacters.FirstOrDefault(character => { return character.characterStat.speed == maxSpeed && character.usedTurn  == false; }, null);
 
 		this.tileUtility = new TileUtility(MapEntities.map);
-		this.tileUtility.highLight(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.GlobalPosition), new Vector2I(0, 1));
+		this.tileUtility.highLight(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.GlobalPosition), new Vector2I(0, 0));
 		this.trait = MapEntities.selectedCharacter.characterStat.trait;
 		this.enemySelectionUtility = new EnemySelectionUtility(MapEntities.selectedCharacter as EnemyCharacter, MapEntities.map);
 	}

@@ -12,24 +12,24 @@ public partial class TileUtility {
 		tilemap.SetCell(
 				1,
 				previous,
-				0,
-				new Vector2I(1, 0)
+				2,
+				new Vector2I(0, 0)
 		);
 
 		tilemap.SetCell(
 				1,
 				current,
-				0,
+				2,
 				new Vector2I(0, 0)
 		);
 
 	}
 
-	public void highLight(Vector2I coords, Vector2I tile) {
+	public void highLight(Vector2I coords, Vector2I tile, int source = 2) {
 		tilemap.SetCell(
 			1,
 			coords,
-			0, 
+			source, 
 			tile
 		);
 	}
@@ -38,8 +38,8 @@ public partial class TileUtility {
 		tilemap.SetCell(
 			1,
 			coords,
-			0,
-			new Vector2I(0, 0)
+			2,
+			new Vector2I(1, 0)
 		);
 	}
 
