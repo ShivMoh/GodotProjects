@@ -14,9 +14,10 @@ public partial class StateMachineManager : Node {
 	public override void _EnterTree()
 	{
 		stateMachines = new List<StateMachine>();
-
-		stateMachines.Add(new CombatStateMachine());
+		
 		stateMachines.Add(new OpenWorldStateMachine());
+		stateMachines.Add(new CombatStateMachine());
+	
 
 		this.currentStateMachine = stateMachines.First();
 	

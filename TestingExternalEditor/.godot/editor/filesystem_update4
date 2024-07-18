@@ -1,1 +1,2 @@
-res://Scenes/HealthBar/health_bar.tscn
+res://Scenes/Player/player.tscn
+res://Scenes/Player/Scripts/Player.cs

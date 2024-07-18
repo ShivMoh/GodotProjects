@@ -18,6 +18,7 @@ func Enter(_args = []):
 	time_passed_since_previous_tap = 0
 	player_sprite = player.get_node("sprite")
 	player.detect_object_type("test")
+	
 
 func Physics_Update(delta: float):
 	

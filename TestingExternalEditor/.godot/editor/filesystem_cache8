@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1718920378
+::res://::1721054610
 data.cs::CSharpScript::-1::1708817287::0::1::::<>Node<>::
 Icon.cs::CSharpScript::-1::1708817287::0::1::::<>Sprite2D<>::
 move_character.cs::CSharpScript::-1::1708817287::0::1::::<>CharacterBody2D<>::
@@ -11,9 +11,9 @@ icon.svg::CompressedTexture2D::3656508449322818059::1708817287::1708817287::1:::
 ::res://Scenes/Bullet/::1717347941
 Bullet.cs::CSharpScript::-1::1708817287::0::1::::<>Area2D<>::
 bullet_pack.tscn::PackedScene::7160937557995821921::1717347941::0::1::::<><>::uid://bsdifo5guxsal::::res://Assets/icon.svg<>res://Scenes/Bullet/Bullet.cs
-::res://Scenes/HealthBar/::1717347941
+::res://Scenes/HealthBar/::1718920511
 health_bar.cs::CSharpScript::-1::1712529197::0::1::::<>TextureProgressBar<>::
-health_bar.tscn::PackedScene::3906911993741521125::1717347941::0::1::::<><>::res://Scenes/HealthBar/health_bar.cs
+health_bar.tscn::PackedScene::3906911993741521125::1718920511::0::1::::<><>::res://Scenes/HealthBar/health_bar.cs
 ::res://Scenes/Player/::1717347941
 Dummy.tscn::PackedScene::3082580173234197757::1717347941::0::1::::<><>::res://Scenes/Player/Enemy.cs<>uid://bsdifo5guxsal::::res://Assets/icon.svg<>uid://bvwsjf2p3bw6h::::res://Scenes/HealthBar/health_bar.tscn
 Enemy.cs::CSharpScript::-1::1708817287::0::1::::<>CharacterBody2D<>::
