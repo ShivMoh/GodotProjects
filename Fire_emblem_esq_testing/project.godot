@@ -21,8 +21,7 @@ MapEntities="*res://global/MapEntities.cs"
 [display]
 
 window/stretch/mode="viewport"
-window/stretch/aspect="ignore"
-window/stretch/scale_mode="integer"
+window/stretch/aspect="expand"
 
 [dotnet]
 
