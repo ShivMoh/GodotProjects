@@ -37,7 +37,7 @@ public partial class ExploreState : State
 		characterUtility = new CharacterUtility(MapEntities.map, MapEntities.selectedCharacter, MapEntities.playableCharacters);
 		tileUtility = new TileUtility(MapEntities.map);
 
-		MapEntities.map.ClearLayer(1);
+		// MapEntities.map.ClearLayer(1);
 		placeCursor();
 
 	}
@@ -152,7 +152,10 @@ public partial class ExploreState : State
 				if (path.Last() == currentTileCoords) {
 					tileUtility.eraseCursor(previousTileCoords);
 					tileUtility.drawCursor(currentTileCoords);
-					MapEntities.selectedCharacter.moveSteps = Mathf.Min(MapEntities.selectedCharacter.moveSteps + 1, MapEntities.selectedCharacter.getCharacterStats().speed);
+					MapEntities.selectedCharacter.moveSteps = Mathf.Min(
+						MapEntities.selectedCharacter.moveSteps + 1, 
+						MapEntities.selectedCharacter.getCharacterStats().speed
+					);
 					return;
 				}
 			}

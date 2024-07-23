@@ -116,18 +116,18 @@ public partial class InitialState : State {
 	public override void enter()
 	{
 
-		if (MapEntities.characters.Count() != 0) {
-			foreach (Character character in MapEntities.characters)
-			{
-				character.QueueFree();	
-			}
+		// if (MapEntities.characters.Count() != 0) {
+		// 	foreach (Character character in MapEntities.characters)
+		// 	{
+		// 		character.QueueFree();	
+		// 	}
 
-			MapEntities.characters.Clear();
-			MapEntities.playableCharacters.Clear();
-			MapEntities.enemyCharacters.Clear();
-			MapEntities.playableCharacterCount = 0;
-			MapEntities.enemyCharacterCount = 0;
-		}
+		// 	MapEntities.characters.Clear();
+		// 	MapEntities.playableCharacters.Clear();
+		// 	MapEntities.enemyCharacters.Clear();
+		// 	MapEntities.playableCharacterCount = 0;
+		// 	MapEntities.enemyCharacterCount = 0;
+		// }
 		
 		// MapEntities.map = tilemap;
 		MapEntities.selectedCharacter = null;
@@ -145,7 +145,7 @@ public partial class InitialState : State {
 
 	public override void physicsUpdate(double _delta)
 	{
-		EmitSignal(SignalName.StateChange, this, typeof(ExploreState).ToString());
+		EmitSignal(SignalName.StateChange, this, nameof(ExploreState));
 	}
 
 	private void loadCharacters() {

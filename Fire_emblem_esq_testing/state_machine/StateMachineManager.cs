@@ -15,10 +15,9 @@ public partial class StateMachineManager : Node {
 	{
 		stateMachines = new List<StateMachine>();
 		
-		stateMachines.Add(new OpenWorldStateMachine());
 		stateMachines.Add(new CombatStateMachine());
+		stateMachines.Add(new OpenWorldStateMachine());
 	
-
 		this.currentStateMachine = stateMachines.First();
 	
 	}

@@ -57,7 +57,7 @@ public partial class CharacterUtility {
 	}
 
 	public void clearPath(TileMap tilemap, ref List<Vector2I> path) {	
-		tilemap.ClearLayer(1);
+		// tilemap.ClearLayer(1);
 		path.Clear();
 		// TileUtil.drawCursor(tilemap, current);
 	}

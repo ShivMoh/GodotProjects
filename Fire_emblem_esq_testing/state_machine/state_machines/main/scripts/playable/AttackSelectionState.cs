@@ -43,7 +43,7 @@ public partial class AttackSelectionState : State {
 			string choice = this.selectedCharacter.actionsMenu.GetItemText(currentCheckedItem);
 
 			if (choice == "Back") {
-				MapEntities.map.ClearLayer(1);
+				// MapEntities.map.ClearLayer(1);
 				EmitSignal(SignalName.StateChange, this, nameof(DecisionState));
 			}
 
@@ -58,7 +58,7 @@ public partial class AttackSelectionState : State {
 		}
 
 		if (Input.IsActionJustPressed("cancel")) {
-			MapEntities.map.ClearLayer(1);
+			// MapEntities.map.ClearLayer(1);
 			EmitSignal(SignalName.StateChange, this, nameof(DecisionState));
 		}
 	}
