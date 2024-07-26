@@ -21,9 +21,8 @@ public partial class OpenWorldExploreState : State {
         MapEntities.selectedCharacter.Velocity = direction * speed;
 
         MapEntities.selectedCharacter.playAnimation(direction);
-        
-        MapEntities.selectedCharacter.MoveAndSlide();        
 
+        MapEntities.selectedCharacter.MoveAndSlide();        
 
         if (Input.IsActionJustPressed("select")) {
             GD.Print("Switching states");

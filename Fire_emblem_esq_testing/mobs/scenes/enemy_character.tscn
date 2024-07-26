@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddwlr1lmi6gjr"]
+[gd_scene load_steps=6 format=3 uid="uid://ddwlr1lmi6gjr"]
 
 [ext_resource type="Script" path="res://mobs/scripts/EnemyCharacter.cs" id="1_5hirs"]
 [ext_resource type="Texture2D" uid="uid://dy54j4odw8ha5" path="res://assets/characters/knight..png" id="1_oq3ux"]
@@ -47,11 +47,13 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ensb6"]
+size = Vector2(22, 56)
+
 [node name="EnemyCharacter" type="CharacterBody2D" node_paths=PackedStringArray("healthBar")]
+collision_layer = 2
 script = ExtResource("1_5hirs")
 healthBar = NodePath("HealthBar")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0056k")
@@ -62,3 +64,7 @@ offset_left = -58.0
 offset_top = -65.0
 offset_right = 58.0
 offset_bottom = -46.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_ensb6")

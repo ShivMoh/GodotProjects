@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cxrlkcw01dda"]
+[gd_scene load_steps=29 format=3 uid="uid://cxrlkcw01dda"]
 
 [ext_resource type="Texture2D" uid="uid://b5xv32i6xq2fs" path="res://assets/characters/walk_back.png" id="1_0oi2i"]
 [ext_resource type="Script" path="res://mobs/scripts/PlayableCharacter.cs" id="1_nmofl"]
@@ -169,17 +169,13 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a4uvf"]
+size = Vector2(20, 43)
+
 [node name="PlayableCharacter" type="CharacterBody2D" node_paths=PackedStringArray("healthBar")]
 position = Vector2(4, 0)
 script = ExtResource("1_nmofl")
 healthBar = NodePath("HealthBar")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_mp8j5")
-animation = &"idle"
-autoplay = "idle"
 
 [node name="PopupMenu" type="PopupMenu" parent="."]
 visible = true
@@ -194,3 +190,12 @@ offset_bottom = -34.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_speed = 20.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mp8j5")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_a4uvf")

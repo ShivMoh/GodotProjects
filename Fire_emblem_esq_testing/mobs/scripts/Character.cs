@@ -108,6 +108,5 @@ public partial class Character : CharacterBody2D
 		if (direction == Vector2.Zero) animatedSprite.Play("idle");
 	}
 
-
 }
    
