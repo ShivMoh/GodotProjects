@@ -57,7 +57,7 @@ public partial class MobCharacter : Character {
             }
         }
 
-        theta+=0.01f;
+   
         return true;
 
     }
