@@ -160,6 +160,7 @@ public partial class OpenWorldInitialState : State {
 				enemyCharactersMeta[i].characterPath
 			) as EnemyCharacter;
 
+
 			character.setAttacks(enemyCharactersMeta[i].attacks);
 			// character.setCharacterStats(characterStat);
 

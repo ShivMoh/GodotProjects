@@ -51,7 +51,7 @@ animations = [{
 size = Vector2(22, 56)
 
 [node name="EnemyCharacter" type="CharacterBody2D" node_paths=PackedStringArray("healthBar")]
-collision_layer = 2
+collision_layer = 0
 script = ExtResource("1_5hirs")
 healthBar = NodePath("HealthBar")
 

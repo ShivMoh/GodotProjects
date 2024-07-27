@@ -8,7 +8,13 @@ public partial class MobCharacter : Character {
 
     public bool agro = false;
 
-    public float theta = 90.0f;
+    public float theta = 0.0f;
+
+    Vector2 endPoint = Vector2.Zero;
+
+    public override void _Process(double delta)
+    {
+    }
 
     public override void _PhysicsProcess(double delta)
 	{
@@ -28,7 +34,9 @@ public partial class MobCharacter : Character {
     protected bool detectEnemyPresence() {
         var spaceState = GetWorld2D().DirectSpaceState;
         Vector2 endPoint = calculateVectorDistance(300.0f, theta);
-        GD.Print("fsfdf", this.GlobalPosition + endPoint);
+
+        this.endPoint = endPoint;
+       
         var query = PhysicsRayQueryParameters2D.Create(
                                                         this.GlobalPosition, 
                                                         this.GlobalPosition + endPoint,
@@ -36,14 +44,20 @@ public partial class MobCharacter : Character {
                                                         new Godot.Collections.Array<Rid> {GetRid()}
                                                     );
 
+        QueueRedraw();
+
+        
         var result = spaceState.IntersectRay(query);
 
         if (result.Count > 0) {
             if (((Node) (result["collider"])).GetType().Name is nameof(PlayableCharacter)) {
+                GD.Print("FDFSD", this.GlobalPosition);
+                GD.Print("fsfdf", this.GlobalPosition + endPoint);
                 GD.Print("collider detected", result["collider"]);
             }
         }
 
+        theta+=0.01f;
         return true;
 
     }
@@ -65,4 +79,12 @@ public partial class MobCharacter : Character {
 
         return endPoint;
     }
+
+    public override void _Draw()
+    {
+        DrawLine(this.GlobalPosition, this.GlobalPosition + new Vector2(1.0f, 1.0f), new Color(1.0f, 0.0f, 0.0f), width: 5.0f);
+        DrawLine(this.GlobalPosition, this.GlobalPosition + this.endPoint, new Color(0.0f, 1.0f, 0.0f), width: 1.0f);
+    }
 }
+
+
