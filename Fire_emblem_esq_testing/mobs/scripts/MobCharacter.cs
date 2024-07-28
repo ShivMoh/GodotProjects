@@ -8,7 +8,7 @@ public partial class MobCharacter : Character {
 
     public bool agro = false;
 
-    public float theta = 0.0f;
+    public float theta = 90.0f;
 
     Vector2 endPoint = Vector2.Zero;
 
@@ -44,9 +44,6 @@ public partial class MobCharacter : Character {
                                                         new Godot.Collections.Array<Rid> {GetRid()}
                                                     );
 
-        QueueRedraw();
-
-        
         var result = spaceState.IntersectRay(query);
 
         if (result.Count > 0) {
@@ -75,16 +72,9 @@ public partial class MobCharacter : Character {
             endPoint = new Vector2(radius * Mathf.Cos(thetaInRadians), radius * Mathf.Sin(theta));
         }
 
-        // GD.Print(endPoint);
-
         return endPoint;
     }
 
-    public override void _Draw()
-    {
-        DrawLine(this.GlobalPosition, this.GlobalPosition + new Vector2(1.0f, 1.0f), new Color(1.0f, 0.0f, 0.0f), width: 5.0f);
-        DrawLine(this.GlobalPosition, this.GlobalPosition + this.endPoint, new Color(0.0f, 1.0f, 0.0f), width: 1.0f);
-    }
 }
 
 

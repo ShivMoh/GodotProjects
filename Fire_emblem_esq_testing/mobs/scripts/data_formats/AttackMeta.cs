@@ -63,7 +63,7 @@ public enum AttackEffect
 }
 
 
-public partial class AttackMeta : Node {
+public partial class AttackMeta  {
 
     public string name;
     public int power;

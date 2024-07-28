@@ -10,6 +10,7 @@ public partial class OpenWorldExploreState : State {
     {
         MapEntities.selectedCharacter = MapEntities.playableCharacters.First();
         MapEntities.selectedCharacter.open = true;
+
         GD.Print(this.Name);
     }
 
@@ -24,9 +25,10 @@ public partial class OpenWorldExploreState : State {
 
         MapEntities.selectedCharacter.MoveAndSlide();        
 
+        MapEntities.mapCamera.GlobalPosition = MapEntities.selectedCharacter.GlobalPosition;
+
         if (Input.IsActionJustPressed("select")) {
-            GD.Print("Switching states");
-            this.switchStateMachine = true;
+            EmitSignal(SignalName.StateChange, this, nameof(OpenWorldFinalState));
         }
     }
 

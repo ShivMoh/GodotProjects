@@ -76,11 +76,8 @@ public partial class ExploreState : State
 		if (Input.IsActionJustPressed("ui_text_delete")) {
 			MapEntities.selectedCharacter.move = true;
 			lastTile = path.Last();
-			characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);
-
-		
+			characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);		
 		}
-
 
 		if (Input.IsActionJustPressed("select")) {
 			MapEntities.selectedCharacter = characterUtility.selectCharacter(currentTileCoords, ref path) as PlayableCharacter;
@@ -88,10 +85,25 @@ public partial class ExploreState : State
 			tileUtility.drawCursor(currentTileCoords);
 		}
 
-
 		if (Input.IsActionJustPressed("cancel")) {
 			MapEntities.selectedCharacter = characterUtility.unselectCharacter(ref path);
 			tileUtility.drawCursor(currentTileCoords);
+		}
+
+		if (Input.IsActionJustPressed("zoom_out")) {
+			MapEntities.mapCamera.Zoom = MapEntities.mapCamera.Zoom * 2;
+			GD.Print(MapEntities.mapCamera.Enabled);
+			GD.Print(MapEntities.mapCamera.Zoom);
+			GD.Print("Zooming out");
+		}
+
+		if (Input.IsActionJustPressed("zoom_in")) {
+			MapEntities.mapCamera.Zoom = MapEntities.mapCamera.Zoom / 2;
+
+			//GD.Print(GetViewport().GetCamera2D() as Camera2D is null);
+			// GD.Print(MapEntities.mapCamera.Enabled);
+			// GD.Print(MapEntities.mapCamera.Zoom);
+			GD.Print("Zooming in");
 		}
 
 		if (MapEntities.selectedCharacter != null) {
@@ -103,7 +115,7 @@ public partial class ExploreState : State
 					tileUtility.drawCursor(currentTileCoords); 
 					
 					if (MapEntities.selectedCharacter.usedTurn == false) {
-						EmitSignal(SignalName.StateChange, this, typeof(DecisionState).ToString());
+						EmitSignal(SignalName.StateChange, this, nameof(DecisionState));
 					} else {
 						MapEntities.selectedCharacter = null;
 					}

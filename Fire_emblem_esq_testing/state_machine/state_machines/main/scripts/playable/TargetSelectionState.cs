@@ -267,7 +267,7 @@ public partial class TargetSelectionState : State {
 			} else {
 				this.tileUtilitiy.highLight(
 					localPosition,
-					new Vector2I(1, 0)
+					new Vector2I(0, 0)
 				);
 			}
 

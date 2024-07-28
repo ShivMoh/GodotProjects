@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bsqe08kmksteh"]
+[gd_scene load_steps=19 format=3 uid="uid://bsqe08kmksteh"]
 
 [ext_resource type="Texture2D" uid="uid://bt274knqqbv7u" path="res://assets/tiles/new_tile.png" id="1_5as0c"]
 [ext_resource type="Texture2D" uid="uid://das4ooj7q8bni" path="res://assets/objects/objects.png" id="2_e4rxn"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bqn030nrih2u0" path="res://assets/house_3.png" id="6_yy5cf"]
 [ext_resource type="Texture2D" uid="uid://mr20766tgt3i" path="res://assets/church_attempt_1.png" id="7_bdbqj"]
 [ext_resource type="Texture2D" uid="uid://0wtw5mn8n05v" path="res://assets/cursors.png" id="8_q2eef"]
+[ext_resource type="PackedScene" uid="uid://ddwlr1lmi6gjr" path="res://mobs/scenes/enemy_character.tscn" id="9_02how"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8kbdx"]
 texture = ExtResource("1_5as0c")
@@ -108,3 +109,10 @@ layer_3/tile_data = PackedInt32Array(393223, 4, 0, 458758, 4, 0, 327686, 4, 0, 2
 [node name="playableCharacters" type="Node2D" parent="."]
 
 [node name="enemyCharacters" type="Node2D" parent="."]
+
+[node name="EnemyCharacter" parent="enemyCharacters" instance=ExtResource("9_02how")]
+position = Vector2(606, 464)
+
+[node name="EnemyCharacter2" parent="enemyCharacters" node_paths=PackedStringArray("healthBar") instance=ExtResource("9_02how")]
+position = Vector2(721, 513)
+healthBar = NodePath("../EnemyCharacter/HealthBar")

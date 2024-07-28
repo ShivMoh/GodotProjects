@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using System.Linq;
 public partial class OpenWorldInitialState : State {
-    static List<AttackMeta> attacksMeta = new List<AttackMeta>() {
+	static List<AttackMeta> attacksMeta = new List<AttackMeta>() {
 		new AttackMeta(
 			name: "Fire ball",
 			power: 5,
@@ -36,7 +36,7 @@ public partial class OpenWorldInitialState : State {
 
 	static CharacterStat characterStat= new CharacterStat(
 		name: "John",
-		health: 50,
+		health: 20,
 		strenth: 2,
 		magic : 18,
 		speed: 20,
@@ -62,54 +62,31 @@ public partial class OpenWorldInitialState : State {
 		trait: Trait.CUNNING
 	);
 
-	CharacterMeta[] playableCharactersMeta = {
-		new CharacterMeta(
-			tileCoord: new Vector2I(5, 5),
-			characterPath : "res://mobs/scenes/playable_character.tscn",
-			attacks : attacksMeta
-		),
-		new CharacterMeta(
-			tileCoord: new Vector2I(0, 7),
-			characterPath : "res://mobs/scenes/playable_character.tscn",
-			attacks : attacksMeta
-		),
-		new CharacterMeta(
-			tileCoord: new Vector2I(5, 0),
-			characterPath : "res://mobs/scenes/playable_character.tscn",
-			attacks : attacksMeta			
-		),
-	};
+	CharacterMeta playableCharacterMeta = new CharacterMeta(
+		tileCoord: new Vector2I(5, 5),
+		characterPath : "res://mobs/scenes/playable_character.tscn",
+		attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
+		characterStat : characterStat.Clone() as CharacterStat
+	);
 
 	CharacterMeta[] enemyCharactersMeta = {
 		new CharacterMeta(
 			tileCoord: new Vector2I(7, 2),
 			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : enemyAttacks
+			attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
+			characterStat : characterStat.Clone() as CharacterStat
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(6, 1),
 			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : enemyAttacks
-		),
-		new CharacterMeta(
-			tileCoord: new Vector2I(6, 3),
-			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : enemyAttacks
-		),
-		new CharacterMeta(
-			tileCoord: new Vector2I(3, 7),
-			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : enemyAttacks
-		),
-		new CharacterMeta(
-			tileCoord: new Vector2I(3, 9),
-			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : enemyAttacks
-		),
+			attacks : enemyAttacks,
+			characterStat : characterStat.Clone() as CharacterStat
+		)
 	};
 
-
 	// public TileMap tilemap;
+
+	private SetupUtility setupUtility;
 
 	public override void enter()
 	{
@@ -117,16 +94,18 @@ public partial class OpenWorldInitialState : State {
 		MapEntities.selectedCharacter = null;
 		MapEntities.cursorCoords = new Vector2I(0, 0);
 		
-		loadCharacters();
-		loadEnemies();
+		GD.Print(BasicAttackPack.basicMagicAttacksPacks["0001"]);
+		this.setupUtility = new SetupUtility(MapEntities.map);
 
-		MapEntities.playableCharacterCount = MapEntities.playableCharacters.Count();
-		MapEntities.enemyCharacterCount = MapEntities.enemyCharacters.Count();
+		this.enemyCharactersMeta = this.setupUtility.setUpCharactersMetas("enemyCharacters", enemyCharactersMeta);
+		this.setupUtility.setUpCharacters(this.enemyCharactersMeta, "enemyCharacters");
 
+		loadSelectedCharacter();
+	
 		MapEntities.characters.AddRange(MapEntities.enemyCharacters);
 		MapEntities.characters.AddRange(MapEntities.playableCharacters);
-        
-        GD.Print(this.Name);
+		
+		GD.Print(this.Name);
 
 	}
 
@@ -134,46 +113,19 @@ public partial class OpenWorldInitialState : State {
 	{
 		EmitSignal(SignalName.StateChange, this, typeof(OpenWorldExploreState).ToString());
 	}
+	
+	private void loadSelectedCharacter() {
+		PlayableCharacter character = Character.instantiate(
+			MapEntities.map.MapToLocal(playableCharacterMeta.tileCoord),
+			playableCharacterMeta.characterPath
+		) as PlayableCharacter;
 
-	private void loadCharacters() {
-		for (int i = 0; i < playableCharactersMeta.Length; i++) {
-			PlayableCharacter character = Character.instantiate(
-				MapEntities.map.MapToLocal(playableCharactersMeta[i].tileCoord),
-				playableCharactersMeta[i].characterPath
-			) as PlayableCharacter;
+		character.setAttacks(playableCharacterMeta.attacks);
+		character.setCharacterStats(playableCharacterMeta.characterStat);	
+		character.moveSteps = character.getCharacterStats().speed;
+		MapEntities.map.GetNode("playableCharacters").AddChild(character);
 
-			character.setAttacks(playableCharactersMeta[i].attacks);
-			character.setCharacterStats(characterStat.Clone() as CharacterStat);
-
-			GD.Print("Initial character health", characterStat.health);
-		
-			character.moveSteps = character.getCharacterStats().speed;
-			MapEntities.map.GetNode("playableCharacters").AddChild(character);
-			MapEntities.playableCharacters.Add(character);
-		}
+		MapEntities.playableCharacters.Add(character);
 	}
 
-	private void loadEnemies() {
-		for (int i = 0; i < enemyCharactersMeta.Length; i++) {
-			EnemyCharacter character = Character.instantiate(
-				MapEntities.map.MapToLocal(enemyCharactersMeta[i].tileCoord),
-				enemyCharactersMeta[i].characterPath
-			) as EnemyCharacter;
-
-
-			character.setAttacks(enemyCharactersMeta[i].attacks);
-			// character.setCharacterStats(characterStat);
-
-			if (i > 1) {
-				character.setCharacterStats(characterStat2.Clone() as CharacterStat);
-			} else {
-				character.setCharacterStats(characterStat.Clone() as CharacterStat);
-			}
-
-			character.moveSteps = character.getCharacterStats().speed;
-		
-			MapEntities.map.GetNode("enemyCharacters").AddChild(character);
-			MapEntities.enemyCharacters.Add(character);
-		}
-	}
 }

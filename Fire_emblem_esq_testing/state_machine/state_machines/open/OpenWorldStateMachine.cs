@@ -10,6 +10,7 @@ public partial class OpenWorldStateMachine : StateMachine {
         GD.Print(nameof(CombatStateMachine), " is running");
         this.states.Add(new OpenWorldInitialState());
         this.states.Add(new OpenWorldExploreState());
+        this.states.Add(new OpenWorldFinalState());
     }
 
 

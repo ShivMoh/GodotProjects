@@ -23,6 +23,8 @@ public partial class EnemyMoveState : State {
 	{
 		GD.Print(this.Name);
 
+		(MapEntities.selectedCharacter.GetNode("CollisionShape2D") as CollisionShape2D).Disabled = true;
+		
 		currentActingEnemey = MapEntities.selectedCharacter as EnemyCharacter;
 
 		this.characterUtility = new CharacterUtility(MapEntities.map, currentActingEnemey, MapEntities.playableCharacters);

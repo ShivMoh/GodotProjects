@@ -25,7 +25,7 @@ public partial class TileUtility {
 
 	}
 
-	public void highLight(Vector2I coords, Vector2I tile, int source = 2) {
+	public void highLight(Vector2I coords, Vector2I tile, int source = 9) {
 		tilemap.SetCell(
 			1,
 			coords,
@@ -38,7 +38,7 @@ public partial class TileUtility {
 		tilemap.SetCell(
 			1,
 			coords,
-			2,
+			9,
 			new Vector2I(1, 0)
 		);
 	}

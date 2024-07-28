@@ -14,9 +14,9 @@ public partial class StateMachineManager : Node {
 	public override void _EnterTree()
 	{
 		stateMachines = new List<StateMachine>();
-		
+
 		stateMachines.Add(new OpenWorldStateMachine());
-		stateMachines.Add(new CombatStateMachine());
+		stateMachines.Add(new CombatStateMachine());		
 	
 		this.currentStateMachine = stateMachines.First();
 	
@@ -24,7 +24,15 @@ public partial class StateMachineManager : Node {
 
 	public override void _Ready()
 	{
-		MapEntities.map = tilemap;
+		TileMap instance = MapManager.loadMap(MapList.map1);
+		GetParent().AddChild(instance);
+		MapEntities.map = instance;
+
+		if (GetParent().GetNode("Camera2D") is Camera2D camera) {
+			GD.Print("Camera assigned");
+			MapEntities.mapCamera = camera;
+
+		}
 		
 		foreach (StateMachine stateMachine in this.stateMachines)
 		{
@@ -32,6 +40,7 @@ public partial class StateMachineManager : Node {
 		}
 
 		AddChild(currentStateMachine);
+
 	}
 
 	public void onChildTransition(string stateMachine, string stateMachineName) {
