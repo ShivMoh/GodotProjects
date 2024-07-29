@@ -8,7 +8,7 @@ public partial class Character : CharacterBody2D
 	public CharacterStat characterStat;
 	public const float Speed = 200.0f;
 
-	public Vector2 targetPosition;
+	public Vector2 targetGlobalPosition;
 
 	public int moveSteps;
 	public bool move = false;
@@ -26,7 +26,7 @@ public partial class Character : CharacterBody2D
 	public HealthBar healthBar;
 	public override void _Ready()
 	{
-		targetPosition = this.GlobalPosition;
+		targetGlobalPosition = this.GlobalPosition;
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		this.ZIndex = 10;
 	}
@@ -48,10 +48,10 @@ public partial class Character : CharacterBody2D
 		return move;
 	}
 
-	public static Character instantiate(Vector2 globalPosition, string path) {
+	public static Character instantiate(Vector2 GlobalPosition, string path) {
 		PackedScene characterScene = GD.Load<PackedScene>(path);
 		Character instance = characterScene.Instantiate<Character>();
-		instance.GlobalPosition = globalPosition;
+		instance.GlobalPosition = GlobalPosition;
 		return instance;
 	}
 
@@ -89,8 +89,8 @@ public partial class Character : CharacterBody2D
 	}
 
 	protected Vector2 calculateDirection() {
-		float directionX =  Mathf.Round(targetPosition.X - this.GlobalPosition.X);
-		float directionY = Mathf.Round(targetPosition.Y - this.GlobalPosition.Y);
+		float directionX =  Mathf.Round(targetGlobalPosition.X - this.GlobalPosition.X);
+		float directionY = Mathf.Round(targetGlobalPosition.Y - this.GlobalPosition.Y);
 
 		Vector2 direction = new Vector2(directionX, directionY).Normalized();
 		return direction;

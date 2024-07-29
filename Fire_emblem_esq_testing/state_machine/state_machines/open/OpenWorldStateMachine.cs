@@ -4,10 +4,11 @@ using Godot;
 public partial class OpenWorldStateMachine : StateMachine {
 
 
-
+    string name = "fsjfdsdjf";
     public override void _EnterTree()
     {
         GD.Print(nameof(CombatStateMachine), " is running");
+        GD.Print(GetParent());
         this.states.Add(new OpenWorldInitialState());
         this.states.Add(new OpenWorldExploreState());
         this.states.Add(new OpenWorldFinalState());

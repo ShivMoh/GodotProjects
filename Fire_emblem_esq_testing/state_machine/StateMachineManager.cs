@@ -24,9 +24,11 @@ public partial class StateMachineManager : Node {
 
 	public override void _Ready()
 	{
-		TileMap instance = MapManager.loadMap(MapList.map1);
-		GetParent().AddChild(instance);
-		MapEntities.map = instance;
+		MapManager.mapContainer = GetParent().GetNode("MapManager"); 
+		TileMap instance = MapManager.loadMap(
+			MapList.mapNodes.First().path
+		);
+		
 
 		if (GetParent().GetNode("Camera2D") is Camera2D camera) {
 			GD.Print("Camera assigned");

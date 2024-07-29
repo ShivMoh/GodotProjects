@@ -31,14 +31,14 @@ public partial class CharacterUtility {
 								Vector2I lastTile
 							) {
 
-		bool reachDestination = 	Math.Abs(selectedCharacter.GlobalPosition.X - selectedCharacter.targetPosition.X) < 2.0f
-									&& Math.Abs(selectedCharacter.GlobalPosition.Y - selectedCharacter.targetPosition.Y) < 2.0f;
+		bool reachDestination = 	Math.Abs(selectedCharacter.GlobalPosition.X - selectedCharacter.targetGlobalPosition.X) < 2.0f
+									&& Math.Abs(selectedCharacter.GlobalPosition.Y - selectedCharacter.targetGlobalPosition.Y) < 2.0f;
 	 
 		if (reachDestination && path.Count() != 0 && characterMoveIndex < path.Count()) {
 			Vector2I next_tile = path.ElementAt(characterMoveIndex); 
 			
-			selectedCharacter.targetPosition = tilemap.MapToLocal(next_tile);			
-			// GD.Print("Updated position", selectedCharacter.targetPosition);
+			selectedCharacter.targetGlobalPosition = tilemap.MapToLocal(next_tile);			
+			// GD.Print("Updated GlobalPosition", selectedCharacter.targetGlobalPosition);
 			characterMoveIndex++;
 		} 
 
@@ -105,19 +105,19 @@ public partial class CharacterUtility {
 	public Vector2 calculateTileFromMatchingDistance(Character target) {
 		int numberOfTiles = MapEntities.attackRange + 1;
 		
-		Vector2I tilePosition = MapEntities.map.LocalToMap(target.GlobalPosition);
+		Vector2I tileGlobalPosition = MapEntities.map.LocalToMap(target.GlobalPosition);
 
-		Vector2I calculatedPosition = tilePosition - new Vector2I(numberOfTiles, 0);
-		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+		Vector2I calculatedGlobalPosition = tileGlobalPosition - new Vector2I(numberOfTiles, 0);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedGlobalPosition)) return MapEntities.map.MapToLocal(calculatedGlobalPosition);
 
-		calculatedPosition = tilePosition - new Vector2I(-numberOfTiles, 0);
-		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+		calculatedGlobalPosition = tileGlobalPosition - new Vector2I(-numberOfTiles, 0);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedGlobalPosition)) return MapEntities.map.MapToLocal(calculatedGlobalPosition);
 
-		calculatedPosition = tilePosition - new Vector2I(0, -numberOfTiles);
-		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+		calculatedGlobalPosition = tileGlobalPosition - new Vector2I(0, -numberOfTiles);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedGlobalPosition)) return MapEntities.map.MapToLocal(calculatedGlobalPosition);
 
-		calculatedPosition = tilePosition - new Vector2I(0, numberOfTiles);
-		if (MapEntities.map.GetUsedCells(0).Contains(calculatedPosition)) return MapEntities.map.MapToLocal(calculatedPosition);
+		calculatedGlobalPosition = tileGlobalPosition - new Vector2I(0, numberOfTiles);
+		if (MapEntities.map.GetUsedCells(0).Contains(calculatedGlobalPosition)) return MapEntities.map.MapToLocal(calculatedGlobalPosition);
 
 		return Vector2.Zero;
 	}

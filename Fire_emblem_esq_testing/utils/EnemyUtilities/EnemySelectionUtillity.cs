@@ -91,27 +91,27 @@ public partial class EnemySelectionUtility {
 
 	public Vector2 findAvailableSpotForTarget(Character character, List<EnemyCharacter> entities, int range) {
 
-		Vector2I centerPosition = this.tileMap.LocalToMap(character.GlobalPosition);
-		Vector2I pointPosition = Vector2I.Zero;
+		Vector2I centerGlobalPosition = this.tileMap.LocalToMap(character.GlobalPosition);
+		Vector2I pointGlobalPosition = Vector2I.Zero;
 		bool occupied = false;
 		float increment = 0.0f;
 		
 		for (int i = 0; i < 12; i++)
 		{
-			pointPosition = new Vector2I(
-											Mathf.RoundToInt(centerPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment))),
-											Mathf.RoundToInt(centerPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)))
+			pointGlobalPosition = new Vector2I(
+											Mathf.RoundToInt(centerGlobalPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment))),
+											Mathf.RoundToInt(centerGlobalPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)))
 										);
 			
 			foreach (Character entity in entities)
 			{
-				// GD.Print("ENEMY POSITION", entity.GlobalPosition);
-				Vector2I entityPosition = this.tileMap.LocalToMap(entity.GlobalPosition);
+				// GD.Print("ENEMY GlobalPosition", entity.GlobalPosition);
+				Vector2I entityGlobalPosition = this.tileMap.LocalToMap(entity.GlobalPosition);
 	
-				if (pointPosition == entityPosition) {
-					// GD.Print(centerPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment)));
-					// GD.Print(centerPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)));
-					// GD.Print(entityPosition, pointPosition);
+				if (pointGlobalPosition == entityGlobalPosition) {
+					// GD.Print(centerGlobalPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment)));
+					// GD.Print(centerGlobalPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)));
+					// GD.Print(entityGlobalPosition, pointGlobalPosition);
 					occupied = true;
 				} 
 
@@ -121,7 +121,7 @@ public partial class EnemySelectionUtility {
 
 			if (occupied == false) {
 				GD.Print("Does this run");
-				return this.tileMap.MapToLocal(pointPosition); 
+				return this.tileMap.MapToLocal(pointGlobalPosition); 
 			} else {
 				occupied = false;
 			}

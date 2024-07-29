@@ -8,7 +8,7 @@ public partial class EnemyMoveState : State {
 	private EnemyCharacter currentActingEnemey;
 	private Character target;
 
-	private Vector2 targetPosition;
+	private Vector2 targetGlobalPosition;
 
 	private CharacterUtility characterUtility;
 
@@ -36,12 +36,12 @@ public partial class EnemyMoveState : State {
 		
 		this.target = MapEntities.targetedCharacters.First();
 
-		this.targetPosition = this.enemySelectionUtility.findAvailableSpotForTarget(
+		this.targetGlobalPosition = this.enemySelectionUtility.findAvailableSpotForTarget(
 														this.target, 
 														MapEntities.enemyCharacters, 
 														MapEntities.chosenAttack.attackTargetMeta.range
 													);
-		GD.Print("TARGET LOCATION", this.targetPosition);
+		GD.Print("TARGET LOCATION", this.targetGlobalPosition);
 		calculatePathTowardsTarget();
 	
 		this.currentActingEnemey.move = true;
@@ -85,7 +85,7 @@ public partial class EnemyMoveState : State {
 	}
 
 	private void calculatePathTowardsTarget() {
-		Vector2I targetTileCoords = MapEntities.map.LocalToMap(this.targetPosition);
+		Vector2I targetTileCoords = MapEntities.map.LocalToMap(this.targetGlobalPosition);
 		Vector2I actingEnemyTileCoords = MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition);
 		this.currentTileCoords = actingEnemyTileCoords;
 

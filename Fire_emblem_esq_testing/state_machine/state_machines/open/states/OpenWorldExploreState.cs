@@ -5,31 +5,52 @@ using Godot;
 using Vector2 = Godot.Vector2;
 public partial class OpenWorldExploreState : State {
 
-    private float speed = 100.0f;
-    public override void enter()
-    {
-        MapEntities.selectedCharacter = MapEntities.playableCharacters.First();
-        MapEntities.selectedCharacter.open = true;
+	private float speed = 100.0f;
+	public override void enter()
+	{
+		MapEntities.selectedCharacter = MapEntities.playableCharacters.First();
+		MapEntities.selectedCharacter.open = true;
 
-        GD.Print(this.Name);
-    }
+		GD.Print(this.Name);
+	}
 
-    public override void physicsUpdate(double _delta)
-    {
+	private bool changingMap = false;
+	public override void physicsUpdate(double _delta)
+	{
 
-        Vector2 direction = Input.GetVector("left", "right", "up", "down");
+		
 
-        MapEntities.selectedCharacter.Velocity = direction * speed;
+			Vector2 direction = Input.GetVector("left", "right", "up", "down");
 
-        MapEntities.selectedCharacter.playAnimation(direction);
+			MapEntities.selectedCharacter.Velocity = direction * speed;
 
-        MapEntities.selectedCharacter.MoveAndSlide();        
+			MapEntities.selectedCharacter.playAnimation(direction);
 
-        MapEntities.mapCamera.GlobalPosition = MapEntities.selectedCharacter.GlobalPosition;
+			MapEntities.selectedCharacter.MoveAndSlide();        
 
-        if (Input.IsActionJustPressed("select")) {
-            EmitSignal(SignalName.StateChange, this, nameof(OpenWorldFinalState));
-        }
-    }
+			MapEntities.mapCamera.GlobalPosition = MapEntities.selectedCharacter.GlobalPosition;
+
+			if (Input.IsActionJustPressed("select")) {
+				EmitSignal(SignalName.StateChange, this, nameof(OpenWorldFinalState));
+			}
+	
+		GD.Print(MapManager.determineBounds(MapEntities.selectedCharacter.Position));
+
+		if(Input.IsActionJustPressed("cancel")) {
+		
+		//   TileMap instance = MapManager.loadMap(MapList.mapNodes.First());
+		//   GetParent().GetNode("MapManager").AddChild(instance);  
+		
+			EmitSignal(SignalName.StateChange, this, nameof(OpenWorldFinalState));
+		
+			// MapManager.loadMap(
+			// 	MapList.mapNodes.ElementAt(1).path
+			// );
+
+	
+
+		}
+		
+	}
 
 }

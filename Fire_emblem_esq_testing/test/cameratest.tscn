@@ -9,5 +9,4 @@ script = ExtResource("1_hkoax")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="House1" type="Sprite2D" parent="."]
-position = Vector2(-1, -11)
 texture = ExtResource("1_j2hff")

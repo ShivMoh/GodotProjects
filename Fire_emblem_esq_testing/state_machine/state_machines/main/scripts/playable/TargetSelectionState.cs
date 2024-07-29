@@ -260,13 +260,13 @@ public partial class TargetSelectionState : State {
 		foreach (Character character in MapEntities.targetedCharacters)
 		{
 		
-			Vector2I localPosition = MapEntities.map.LocalToMap(character.GlobalPosition);
+			Vector2I localGlobalPosition = MapEntities.map.LocalToMap(character.GlobalPosition);
 
-			if (currentTileCoords == localPosition) {
+			if (currentTileCoords == localGlobalPosition) {
 				this.placeCursor();
 			} else {
 				this.tileUtilitiy.highLight(
-					localPosition,
+					localGlobalPosition,
 					new Vector2I(0, 0)
 				);
 			}
@@ -277,13 +277,13 @@ public partial class TargetSelectionState : State {
 	private void highLightTargetable() {
 		foreach (Character character in MapEntities.detectedEnemies)
 		{
-			Vector2I localPosition = MapEntities.map.LocalToMap(character.GlobalPosition);
+			Vector2I localGlobalPosition = MapEntities.map.LocalToMap(character.GlobalPosition);
 
-			if (currentTileCoords == localPosition) {
+			if (currentTileCoords == localGlobalPosition) {
 				this.placeCursor();
 			} else {
 				this.tileUtilitiy.highLight(
-					localPosition,
+					localGlobalPosition,
 					new Vector2I(0, 0)
 				);
 

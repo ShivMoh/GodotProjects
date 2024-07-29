@@ -173,12 +173,10 @@ animations = [{
 size = Vector2(20, 43)
 
 [node name="PlayableCharacter" type="CharacterBody2D" node_paths=PackedStringArray("healthBar")]
-position = Vector2(4, 0)
 script = ExtResource("1_nmofl")
 healthBar = NodePath("HealthBar")
 
 [node name="PopupMenu" type="PopupMenu" parent="."]
-visible = true
 hide_on_item_selection = false
 hide_on_checkable_item_selection = false
 
@@ -194,5 +192,4 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3.5)
 shape = SubResource("RectangleShape2D_a4uvf")

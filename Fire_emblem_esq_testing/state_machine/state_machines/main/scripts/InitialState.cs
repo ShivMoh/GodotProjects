@@ -121,11 +121,11 @@ public partial class InitialState : State {
 	}
 	private void loadCharacters() {
 
-		Vector2 currentPosition = MapEntities.selectedCharacter.GlobalPosition;
+		Vector2 currentGlobalPosition = MapEntities.selectedCharacter.Position;
 		MapEntities.selectedCharacter.QueueFree();
 		MapEntities.selectedCharacter = null;
 
-		spawnRelativeToPosition(currentPosition);
+		spawnRelativeToGlobalPosition(currentGlobalPosition);
 		
 		for (int i = 0; i < playableCharactersMeta.Length; i++) {
 
@@ -144,10 +144,10 @@ public partial class InitialState : State {
 		}
 	}
 
-	private void spawnRelativeToPosition(Vector2 position) {
+	private void spawnRelativeToGlobalPosition(Vector2 GlobalPosition) {
 		foreach (CharacterMeta characterMeta in playableCharactersMeta)
 		{
-			characterMeta.tileCoord += MapEntities.map.LocalToMap(position);
+			characterMeta.tileCoord += MapEntities.map.LocalToMap(GlobalPosition);
 		}
 		
 	}

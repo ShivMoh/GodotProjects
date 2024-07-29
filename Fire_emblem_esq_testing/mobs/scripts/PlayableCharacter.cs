@@ -11,7 +11,7 @@ public partial class PlayableCharacter : Character{
 	{
 		actionsMenu = this.GetNode<PopupMenu>("PopupMenu");
 		actionsMenu.Position = new Vector2I(20, 20);
-		targetPosition = this.GlobalPosition;
+		targetGlobalPosition = this.GlobalPosition;
 
 		this.animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 

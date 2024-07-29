@@ -12,5 +12,6 @@ position = Vector2(221.299, 327.221)
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="MapManager" type="Node2D" parent="."]
+position = Vector2(-2772, -1217)
 
 [editable path="StateMachineManager"]

@@ -99,7 +99,7 @@ public partial class AttackSelectionUtility {
 			}
 			// this for ranged attacks with more than one targets
 
-			// I'll have to like calculate the optimal position to target the most enemies...
+			// I'll have to like calculate the optimal GlobalPosition to target the most enemies...
 			// so yh lets deal with this later
 			// if(this.chosenAttack.attackTargetMeta.targetableCount == refinedTargetCandidates.Count()) {
 			// 	this.targets = refinedTargetCandidates;
