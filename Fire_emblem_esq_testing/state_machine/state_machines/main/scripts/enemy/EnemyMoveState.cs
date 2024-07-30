@@ -31,7 +31,7 @@ public partial class EnemyMoveState : State {
 		this.tileUtility = new TileUtility(MapEntities.map);
 		this.enemySelectionUtility = new EnemySelectionUtility(MapEntities.selectedCharacter as EnemyCharacter, MapEntities.map);
 
-		this.tileUtility.highLight(MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition), new Vector2I(0, 0));
+		this.tileUtility.highLight(MapEntities.map.LocalToMap(currentActingEnemey.Position), new Vector2I(0, 0));
 		// we need the distance from that target (number of tiles away)
 		
 		this.target = MapEntities.targetedCharacters.First();
@@ -70,8 +70,8 @@ public partial class EnemyMoveState : State {
 		foreach (PlayableCharacter playableCharacter in MapEntities.playableCharacters)
 		{
 			float distanceBetween = Mathf.Sqrt(
-				Mathf.Pow(playableCharacter.GlobalPosition.X - currentActingEnemey.GlobalPosition.X, 2) +                 
-				Mathf.Pow(playableCharacter.GlobalPosition.Y - currentActingEnemey.GlobalPosition.Y, 2) 
+				Mathf.Pow(playableCharacter.Position.X - currentActingEnemey.Position.X, 2) +                 
+				Mathf.Pow(playableCharacter.Position.Y - currentActingEnemey.Position.Y, 2) 
 			);
 
 			if (distanceBetween < closestDistance) {
@@ -86,7 +86,7 @@ public partial class EnemyMoveState : State {
 
 	private void calculatePathTowardsTarget() {
 		Vector2I targetTileCoords = MapEntities.map.LocalToMap(this.targetGlobalPosition);
-		Vector2I actingEnemyTileCoords = MapEntities.map.LocalToMap(currentActingEnemey.GlobalPosition);
+		Vector2I actingEnemyTileCoords = MapEntities.map.LocalToMap(currentActingEnemey.Position);
 		this.currentTileCoords = actingEnemyTileCoords;
 
 		path.Add(this.currentTileCoords);

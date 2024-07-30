@@ -26,7 +26,8 @@ public partial class Character : CharacterBody2D
 	public HealthBar healthBar;
 	public override void _Ready()
 	{
-		targetGlobalPosition = this.GlobalPosition;
+		targetGlobalPosition = this.Position;
+		GD.Print("Initialized", targetGlobalPosition);
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		this.ZIndex = 10;
 	}
@@ -89,8 +90,8 @@ public partial class Character : CharacterBody2D
 	}
 
 	protected Vector2 calculateDirection() {
-		float directionX =  Mathf.Round(targetGlobalPosition.X - this.GlobalPosition.X);
-		float directionY = Mathf.Round(targetGlobalPosition.Y - this.GlobalPosition.Y);
+		float directionX =  Mathf.Round(targetGlobalPosition.X - this.Position.X);
+		float directionY = Mathf.Round(targetGlobalPosition.Y - this.Position.Y);
 
 		Vector2 direction = new Vector2(directionX, directionY).Normalized();
 		return direction;

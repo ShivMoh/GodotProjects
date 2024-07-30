@@ -39,7 +39,7 @@ public partial class EnemySelectionUtility {
 	}
 	public List<List<Character>> findTargetsWithinRange(List<PlayableCharacter> characters) {
 
-		Vector2I enemyTileLocation = tileMap.LocalToMap(enemyCharacter.GlobalPosition);
+		Vector2I enemyTileLocation = tileMap.LocalToMap(enemyCharacter.Position);
 		this.availableAttacks = AttackSelectionUtility.determineAvailableAttacks(enemyCharacter);
 		//.OrderByDescending(attack => attack.attackTargetMeta.range);
 		List<List<Character>> targetCandidates = new List<List<Character>>();
@@ -49,7 +49,7 @@ public partial class EnemySelectionUtility {
 			List<Character> targetableCandidatesForAttack = new List<Character>();
 
 			foreach (PlayableCharacter playableCharacter in characters) {
-				Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.GlobalPosition);
+				Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.Position);
 
 				int numberOfStepsTo = Mathf.Abs(playableTileLocation.Y - enemyTileLocation.Y) + 
 				Mathf.Abs(playableTileLocation.X - enemyTileLocation.X) - (attack.attackTargetMeta.range + 1);
@@ -70,10 +70,10 @@ public partial class EnemySelectionUtility {
 
 	public List<Character> findTargetsWithinCloseRange(List<PlayableCharacter> characters) {
 		List<Character> targetCandidates = new List<Character>();
-		Vector2I enemyTileLocation = tileMap.LocalToMap(enemyCharacter.GlobalPosition);
+		Vector2I enemyTileLocation = tileMap.LocalToMap(enemyCharacter.Position);
 
 		foreach (PlayableCharacter playableCharacter in characters) {
-			Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.GlobalPosition);
+			Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.Position);
 
 			int numberOfStepsTo = Mathf.Abs(playableTileLocation.Y - enemyTileLocation.Y) + 
 			Mathf.Abs(playableTileLocation.X - enemyTileLocation.X) - 1;
@@ -91,7 +91,7 @@ public partial class EnemySelectionUtility {
 
 	public Vector2 findAvailableSpotForTarget(Character character, List<EnemyCharacter> entities, int range) {
 
-		Vector2I centerGlobalPosition = this.tileMap.LocalToMap(character.GlobalPosition);
+		Vector2I centerGlobalPosition = this.tileMap.LocalToMap(character.Position);
 		Vector2I pointGlobalPosition = Vector2I.Zero;
 		bool occupied = false;
 		float increment = 0.0f;
@@ -105,8 +105,8 @@ public partial class EnemySelectionUtility {
 			
 			foreach (Character entity in entities)
 			{
-				// GD.Print("ENEMY GlobalPosition", entity.GlobalPosition);
-				Vector2I entityGlobalPosition = this.tileMap.LocalToMap(entity.GlobalPosition);
+				// GD.Print("ENEMY Position", entity.Position);
+				Vector2I entityGlobalPosition = this.tileMap.LocalToMap(entity.Position);
 	
 				if (pointGlobalPosition == entityGlobalPosition) {
 					// GD.Print(centerGlobalPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment)));
@@ -157,6 +157,6 @@ public partial class EnemySelectionUtility {
 
 
 // float distanceBetween = Mathf.Sqrt(
-// 	Mathf.Pow(playableCharacter.GlobalPosition.X - enemyCharacter.GlobalPosition.X, 2) +                 
-// 	Mathf.Pow(playableCharacter.GlobalPosition.Y - enemyCharacter.GlobalPosition.Y, 2) 
+// 	Mathf.Pow(playableCharacter.Position.X - enemyCharacter.Position.X, 2) +                 
+// 	Mathf.Pow(playableCharacter.Position.Y - enemyCharacter.Position.Y, 2) 
 // );

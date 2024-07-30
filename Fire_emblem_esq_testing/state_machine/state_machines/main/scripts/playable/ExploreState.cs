@@ -76,6 +76,16 @@ public partial class ExploreState : State
 		if (Input.IsActionJustPressed("ui_text_delete")) {
 			MapEntities.selectedCharacter.move = true;
 			lastTile = path.Last();
+
+			// GD.Print(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.Position));
+			// GD.Print(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.targetGlobalPosition));
+			// GD.Print(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.Position) == MapEntities.map.LocalToMap(MapEntities.selectedCharacter.targetGlobalPosition));
+
+			// foreach (var item in path)
+			// {
+			// 	GD.Print("Path", item);
+			// 	GD.Print("Tile to local", MapEntities.map.MapToLocal(item));
+			// }
 			characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);		
 		}
 

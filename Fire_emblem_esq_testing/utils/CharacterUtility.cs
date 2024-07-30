@@ -30,26 +30,30 @@ public partial class CharacterUtility {
 								Vector2I current, 
 								Vector2I lastTile
 							) {
+		// bool reachDestination = 	Math.Abs(selectedCharacter.Position.X - selectedCharacter.targetGlobalPosition.X) < 5.0f
+		// 							&& Math.Abs(selectedCharacter.Position.Y - selectedCharacter.targetGlobalPosition.Y) < 5.0f;
 
-		bool reachDestination = 	Math.Abs(selectedCharacter.GlobalPosition.X - selectedCharacter.targetGlobalPosition.X) < 2.0f
-									&& Math.Abs(selectedCharacter.GlobalPosition.Y - selectedCharacter.targetGlobalPosition.Y) < 2.0f;
-	 
+		bool reachDestination = tilemap.LocalToMap(selectedCharacter.Position) == tilemap.LocalToMap(selectedCharacter.targetGlobalPosition);
+
 		if (reachDestination && path.Count() != 0 && characterMoveIndex < path.Count()) {
+			GD.Print("Is this running");
 			Vector2I next_tile = path.ElementAt(characterMoveIndex); 
-			
+
 			selectedCharacter.targetGlobalPosition = tilemap.MapToLocal(next_tile);			
-			// GD.Print("Updated GlobalPosition", selectedCharacter.targetGlobalPosition);
 			characterMoveIndex++;
+
+			// GD.Print("Updated GlobalPosition", selectedCharacter.targetGlobalPosition);
 		} 
 
 		Vector2 lastCoordinates = tilemap.MapToLocal(lastTile);
 
-		bool reachLast = 	Math.Abs(selectedCharacter.GlobalPosition.X - lastCoordinates.X) < 2.0f
-									&& Math.Abs(selectedCharacter.GlobalPosition.Y - lastCoordinates.Y) < 2.0f;
+		bool reachLast = 	Math.Abs(selectedCharacter.Position.X - lastCoordinates.X) < 2.0f
+									&& Math.Abs(selectedCharacter.Position.Y - lastCoordinates.Y) < 2.0f;
 		if (reachLast) {
 			selectedCharacter.move = false;
 			characterMoveIndex = 0;
 			this.clearPath(tilemap, ref path);
+			GD.Print("Path is being cleared");
 			return true;
 		}
 
@@ -72,8 +76,13 @@ public partial class CharacterUtility {
 
 
 	public PlayableCharacter selectCharacter( Vector2I current, ref List<Vector2I> path) {
-		var character = playableCharacters.FirstOrDefault<PlayableCharacter>(character => CharacterUtility.compareValues(character.GlobalPosition, tilemap.MapToLocal(current), 2.0f), null);
-		
+
+		var character = playableCharacters.FirstOrDefault<PlayableCharacter>(character => CharacterUtility.compareValues(character.Position, tilemap.MapToLocal(current), 2.0f), null);
+
+		foreach (Character cha in playableCharacters)
+		{
+			GD.Print(cha.Position, tilemap.MapToLocal(current));
+		}		
 		if (character is not null) {
 			if (selectedCharacter == null) {
 				selectedCharacter = character;
@@ -82,13 +91,15 @@ public partial class CharacterUtility {
 					selectedCharacter = null;
 				}
 			
-				return selectedCharacter as PlayableCharacter;
 			} else {
 				selectedCharacter = null;
 				this.clearPath(tilemap, ref path);
-				return null;
 			}
-		} 
+		}
+
+		if (selectedCharacter is not null) {
+			selectedCharacter.targetGlobalPosition = selectedCharacter.Position;
+		}
 		
 		return selectedCharacter as PlayableCharacter;
 		
@@ -105,9 +116,10 @@ public partial class CharacterUtility {
 	public Vector2 calculateTileFromMatchingDistance(Character target) {
 		int numberOfTiles = MapEntities.attackRange + 1;
 		
-		Vector2I tileGlobalPosition = MapEntities.map.LocalToMap(target.GlobalPosition);
+		Vector2I tileGlobalPosition = MapEntities.map.LocalToMap(target.Position);
 
 		Vector2I calculatedGlobalPosition = tileGlobalPosition - new Vector2I(numberOfTiles, 0);
+
 		if (MapEntities.map.GetUsedCells(0).Contains(calculatedGlobalPosition)) return MapEntities.map.MapToLocal(calculatedGlobalPosition);
 
 		calculatedGlobalPosition = tileGlobalPosition - new Vector2I(-numberOfTiles, 0);

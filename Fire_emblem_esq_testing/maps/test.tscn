@@ -112,6 +112,8 @@ layer_3/tile_data = PackedInt32Array(393223, 4, 0, 458758, 4, 0, 327686, 4, 0, 2
 [node name="enemyCharacters" type="Node2D" parent="."]
 
 [node name="EnemyCharacter" parent="enemyCharacters" instance=ExtResource("9_02how")]
+position = Vector2(793, 563)
 
 [node name="EnemyCharacter2" parent="enemyCharacters" node_paths=PackedStringArray("healthBar") instance=ExtResource("9_02how")]
+position = Vector2(959, 622)
 healthBar = NodePath("../EnemyCharacter/HealthBar")

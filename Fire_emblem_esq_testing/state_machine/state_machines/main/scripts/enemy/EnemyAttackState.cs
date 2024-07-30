@@ -42,7 +42,7 @@ public partial class EnemyAttackState : State {
 			}
 		}
 				
-		EmitSignal(SignalName.StateChange, this, typeof(FinalState).ToString());
+		EmitSignal(SignalName.StateChange, this, nameof(FinalState));
 
 	}
 }
