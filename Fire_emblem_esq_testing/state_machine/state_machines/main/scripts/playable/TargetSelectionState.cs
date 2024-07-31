@@ -24,6 +24,8 @@ public partial class TargetSelectionState : State {
 	public override void enter()
 	{
 		GD.Print("I am on target selection");
+		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+
 		this.tileUtilitiy = new TileUtility(MapEntities.map);
 		this.combatUtility = new CombatUtility(
 			MapEntities.map,
@@ -34,7 +36,7 @@ public partial class TargetSelectionState : State {
 		selectedEnemy = MapEntities.detectedEnemies.First();
 		this.highLightEnemies();
 		this.numberOfSelectedEnemies = 0;
-		this.currentTileCoords = MapEntities.map.LocalToMap(MapEntities.selectedCharacter.GlobalPosition);
+		this.currentTileCoords = MapEntities.map.LocalToMap(MapEntities.selectedCharacter.Position);
 		this.cursorRadius = (int) MapEntities.chosenAttack.attackTargetMeta.radius;
 
 		if (this.cursorRadius > 1) {
@@ -42,10 +44,10 @@ public partial class TargetSelectionState : State {
 		}
 		this.placeCursor();
 
-		foreach (Character character in MapEntities.playableCharacters)
-		{
-			GD.Print("Playable character healths target selection state", character.characterStat.health);
-		}
+		// foreach (Character character in MapEntities.playableCharacters)
+		// {
+		// 	GD.Print("Playable character healths target selection state", character.characterStat.health);
+		// }
 	}
 
 	public override void physicsUpdate(double _delta)
@@ -118,7 +120,7 @@ public partial class TargetSelectionState : State {
 	private void detectEnemiesInRadius() {
 		foreach (Character character in MapEntities.detectedEnemies)
 		{
-			if(this.radiusCoords.Contains(MapEntities.map.LocalToMap(character.GlobalPosition))) {
+			if(this.radiusCoords.Contains(MapEntities.map.LocalToMap(character.Position))) {
 				MapEntities.targetedCharacters.Add(character);
 			}
 		}
@@ -128,12 +130,12 @@ public partial class TargetSelectionState : State {
 
 		if (cursorRadius == 1) {
 			this.selectedEnemy = MapEntities.detectedEnemies.FirstOrDefault(
-									enemy => MapEntities.map.LocalToMap(enemy.GlobalPosition) == this.currentTileCoords, 
+									enemy => MapEntities.map.LocalToMap(enemy.Position) == this.currentTileCoords, 
 									null
 								);
 		} else {
 				this.selectedEnemy = MapEntities.detectedEnemies.FirstOrDefault(
-									enemy => MapEntities.map.LocalToMap(enemy.GlobalPosition) == this.currentTileCoords, 
+									enemy => MapEntities.map.LocalToMap(enemy.Position) == this.currentTileCoords, 
 									null
 								);
 		}
@@ -260,7 +262,7 @@ public partial class TargetSelectionState : State {
 		foreach (Character character in MapEntities.targetedCharacters)
 		{
 		
-			Vector2I localGlobalPosition = MapEntities.map.LocalToMap(character.GlobalPosition);
+			Vector2I localGlobalPosition = MapEntities.map.LocalToMap(character.Position);
 
 			if (currentTileCoords == localGlobalPosition) {
 				this.placeCursor();
@@ -277,7 +279,7 @@ public partial class TargetSelectionState : State {
 	private void highLightTargetable() {
 		foreach (Character character in MapEntities.detectedEnemies)
 		{
-			Vector2I localGlobalPosition = MapEntities.map.LocalToMap(character.GlobalPosition);
+			Vector2I localGlobalPosition = MapEntities.map.LocalToMap(character.Position);
 
 			if (currentTileCoords == localGlobalPosition) {
 				this.placeCursor();
@@ -294,14 +296,14 @@ public partial class TargetSelectionState : State {
 
 	private void highLightTarget() {
 		tileUtilitiy.highLight(
-			MapEntities.map.LocalToMap(selectedEnemy.GlobalPosition), 
+			MapEntities.map.LocalToMap(selectedEnemy.Position), 
 			new Vector2I(2, 1)
 		);
 
 		selectedEnemy = MapEntities.detectedEnemies.ElementAt(selectIndex);
 		
 		this.tileUtilitiy.highLight(
-			MapEntities.map.LocalToMap(selectedEnemy.GlobalPosition),
+			MapEntities.map.LocalToMap(selectedEnemy.Position),
 			new Vector2I(0, 1)
 		);
 	}	
@@ -309,7 +311,7 @@ public partial class TargetSelectionState : State {
 	private void highLightEnemies() {
 		foreach (Character enemy in MapEntities.detectedEnemies) 
 		{
-			tileUtilitiy.highLight(MapEntities.map.LocalToMap(enemy.GlobalPosition), new Vector2I(2, 1));
+			tileUtilitiy.highLight(MapEntities.map.LocalToMap(enemy.Position), new Vector2I(2, 1));
 		}
 	}
 

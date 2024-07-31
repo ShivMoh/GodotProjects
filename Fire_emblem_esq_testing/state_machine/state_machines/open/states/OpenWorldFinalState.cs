@@ -9,6 +9,7 @@ public partial class OpenWorldFinalState : State {
         MapEntities.selectedCharacter = MapEntities.playableCharacters.First();
         MapEntities.playableCharacters.Clear();
         MapEntities.characters.Remove(MapEntities.selectedCharacter);
+        MapEntities.playableCharacters.Clear();
     }
 
     public override void physicsUpdate(double _delta)

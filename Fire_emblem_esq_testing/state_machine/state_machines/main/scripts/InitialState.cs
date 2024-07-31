@@ -51,7 +51,7 @@ public partial class InitialState : State {
 		
 		loadCharacters();
 
-		MapEntities.characters.AddRange(MapEntities.enemyCharacters);
+		// MapEntities.characters.AddRange(MapEntities.enemyCharacters);
 		MapEntities.characters.AddRange(MapEntities.playableCharacters);
 	}
 
@@ -64,6 +64,8 @@ public partial class InitialState : State {
 		Vector2 currentGlobalPosition = MapEntities.selectedCharacter.Position;
 		MapEntities.selectedCharacter.QueueFree();
 		MapEntities.selectedCharacter = null;
+
+		GD.Print("Initial Setup", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 
 		spawnRelativeToGlobalPosition(currentGlobalPosition);
 		
@@ -81,7 +83,11 @@ public partial class InitialState : State {
 
 			MapEntities.map.GetNode("playableCharacters").AddChild(character);
 			MapEntities.playableCharacters.Add(character);
+			// MapEntities.characters.Add(character);
 		}
+
+		GD.Print("After spawning", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+
 	}
 
 	private void spawnRelativeToGlobalPosition(Vector2 GlobalPosition) {

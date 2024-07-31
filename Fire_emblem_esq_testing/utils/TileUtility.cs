@@ -12,15 +12,15 @@ public partial class TileUtility {
 		tilemap.SetCell(
 				1,
 				previous,
-				2,
+				9,
 				new Vector2I(0, 0)
 		);
 
 		tilemap.SetCell(
 				1,
 				current,
-				2,
-				new Vector2I(0, 0)
+				9,
+				new Vector2I(1, 0)
 		);
 
 	}

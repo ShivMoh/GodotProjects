@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public partial class DecisionState : State {
@@ -13,6 +14,8 @@ public partial class DecisionState : State {
 		this.selectedCharacter = MapEntities.selectedCharacter as PlayableCharacter;
 		this.selectedCharacter.actionsMenu.Clear();
 		this.selectedCharacter.addPopupMenuItem(new List<string>() {"Attack", "Ability", "Use", "End Turn"});
+		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+
 	}
 	public override void physicsUpdate(double _delta)
 	{

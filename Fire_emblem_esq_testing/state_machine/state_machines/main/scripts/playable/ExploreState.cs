@@ -34,11 +34,17 @@ public partial class ExploreState : State
 		previousTileCoords = currentTileCoords;
 		
 		combatUtility = new CombatUtility(MapEntities.map, MapEntities.characters, MapEntities.selectedCharacter);
-		characterUtility = new CharacterUtility(MapEntities.map, MapEntities.selectedCharacter, MapEntities.playableCharacters);
-		tileUtility = new TileUtility(MapEntities.map);
+		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 
-		// MapEntities.map.ClearLayer(1);
+		characterUtility = new CharacterUtility(MapEntities.map, MapEntities.selectedCharacter, MapEntities.playableCharacters);
+		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+
+		tileUtility = new TileUtility(MapEntities.map);
+		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+
+		MapEntities.map.ClearLayer(1);
 		placeCursor();
+
 
 	}
 
