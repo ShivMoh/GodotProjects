@@ -23,7 +23,7 @@ public partial class FinalState : State {
 			if (    MapEntities.count >= MapEntities.enemyCharacters.Count() || 
 					MapEntities.playableCharacters.Count() == 0
 			) {
-				GD.Print("Changine state");
+				//GD.Print("Changine state");
 				MapEntities.count = 0;
 				foreach (Character character in MapEntities.enemyCharacters)
 				{	

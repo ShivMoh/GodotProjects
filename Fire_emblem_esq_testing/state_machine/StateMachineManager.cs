@@ -28,10 +28,12 @@ public partial class StateMachineManager : Node {
 		TileMap instance = MapManager.loadMap(
 			MapList.mapNodes.First().path
 		);
+
+		// MapEntities.map = GetParent().GetNode("test") as TileMap;
 		
 
 		if (GetParent().GetNode("Camera2D") is Camera2D camera) {
-			GD.Print("Camera assigned");
+			//GD.Print("Camera assigned");
 			MapEntities.mapCamera = camera;
 
 		}

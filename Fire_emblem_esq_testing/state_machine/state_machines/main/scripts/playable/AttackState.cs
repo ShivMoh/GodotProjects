@@ -7,10 +7,10 @@ public partial class AttackState : State {
 	private CombatUtility combatUtility;
 	public override void enter()
 	{
-		GD.Print("I am on attacking state");
+		//GD.Print("I am on attacking state");
 		// this.tileUtility = new TileUtility(MapEntities.map);
 		this.combatUtility = new CombatUtility(MapEntities.map, MapEntities.characters, MapEntities.selectedCharacter);
-		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+		//GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 
 	}
 
@@ -31,7 +31,7 @@ public partial class AttackState : State {
 				Character removedCharacter = MapEntities.targetedCharacters.ElementAt(removalList.IndexOf(item));
 				MapEntities.targetedCharacters.Remove(removedCharacter);
 				removedCharacter.QueueFree();
-				GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+				//GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 			}
 		}
 

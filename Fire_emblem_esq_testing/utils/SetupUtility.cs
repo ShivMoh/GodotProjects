@@ -23,9 +23,9 @@ public partial class SetupUtility {
 
 		// Node2D node2d = this.tileMap.GetNode("enemyCharacters") as Node2D;
 
-		// GD.Print(node);
-		// GD.Print(node2d);
-		// GD.Print(node is Node2D);
+		// //GD.Print(node);
+		// //GD.Print(node2d);
+		// //GD.Print(node is Node2D);
 		
 		for(int i = 0; i < node.GetChildren().Count(); i++) {
 			if (node.GetChild(i) is Character character) {

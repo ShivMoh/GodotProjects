@@ -36,13 +36,13 @@ public partial class CharacterUtility {
 		bool reachDestination = tilemap.LocalToMap(selectedCharacter.Position) == tilemap.LocalToMap(selectedCharacter.targetGlobalPosition);
 
 		if (reachDestination && path.Count() != 0 && characterMoveIndex < path.Count()) {
-			GD.Print("Is this running");
+			//GD.Print("Is this running");
 			Vector2I next_tile = path.ElementAt(characterMoveIndex); 
 
 			selectedCharacter.targetGlobalPosition = tilemap.MapToLocal(next_tile);			
 			characterMoveIndex++;
 
-			// GD.Print("Updated GlobalPosition", selectedCharacter.targetGlobalPosition);
+			// //GD.Print("Updated GlobalPosition", selectedCharacter.targetGlobalPosition);
 		} 
 
 		Vector2 lastCoordinates = tilemap.MapToLocal(lastTile);
@@ -53,7 +53,7 @@ public partial class CharacterUtility {
 			selectedCharacter.move = false;
 			characterMoveIndex = 0;
 			this.clearPath(tilemap, ref path);
-			GD.Print("Path is being cleared");
+			//GD.Print("Path is being cleared");
 			return true;
 		}
 
@@ -81,7 +81,7 @@ public partial class CharacterUtility {
 
 		foreach (Character cha in playableCharacters)
 		{
-			GD.Print(cha.Position, tilemap.MapToLocal(current));
+			//GD.Print(cha.Position, tilemap.MapToLocal(current));
 		}		
 		if (character is not null) {
 			if (selectedCharacter == null) {

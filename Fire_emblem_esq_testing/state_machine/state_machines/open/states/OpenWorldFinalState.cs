@@ -5,7 +5,7 @@ public partial class OpenWorldFinalState : State {
 
     public override void enter()
     {
-        GD.Print("On open world final state");
+        //GD.Print("On open world final state");
         MapEntities.selectedCharacter = MapEntities.playableCharacters.First();
         MapEntities.playableCharacters.Clear();
         MapEntities.characters.Remove(MapEntities.selectedCharacter);
@@ -16,7 +16,7 @@ public partial class OpenWorldFinalState : State {
     {
 
         if (MapManager.determineBounds(MapEntities.selectedCharacter.Position) is not Direction.NONE and Direction direction ) {
-            GD.Print("FSJDFJDFJS");
+            //GD.Print("FSJDFJDFJS");
 			MapManager.loadMap(
 				MapList.mapNodes.ElementAt(1).path
 			);
@@ -43,7 +43,7 @@ public partial class OpenWorldFinalState : State {
             EmitSignal(SignalName.StateChange, this, nameof(OpenWorldInitialState));
             
         } else {
-            GD.Print("Switching states");
+            //GD.Print("Switching states");
             this.switchStateMachine = true;
         }
     }

@@ -7,8 +7,8 @@ public partial class OpenWorldStateMachine : StateMachine {
     string name = "fsjfdsdjf";
     public override void _EnterTree()
     {
-        GD.Print(nameof(CombatStateMachine), " is running");
-        GD.Print(GetParent());
+        //GD.Print(nameof(CombatStateMachine), " is running");
+        //GD.Print(GetParent());
         this.states.Add(new OpenWorldInitialState());
         this.states.Add(new OpenWorldExploreState());
         this.states.Add(new OpenWorldFinalState());
@@ -26,10 +26,10 @@ public partial class OpenWorldStateMachine : StateMachine {
     // 			if (selectedCharacter is not null) {
     // 				(state as DecisionState).setSelectedCharacter(selectedCharacter);
     // 			}
-    // 			GD.Print("selected character", selectedCharacter);
+    // 			//GD.Print("selected character", selectedCharacter);
     // 			break;
     // 		default:
-    // 			GD.Print("Nothing to do here");
+    // 			//GD.Print("Nothing to do here");
     // 			break;
     // 	}
     // }

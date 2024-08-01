@@ -9,7 +9,7 @@ public partial class EnemyAttackState : State {
 	private List<bool> removalList;
 	public override void enter()
 	{
-		// GD.Print("Am on enemy attack state");
+		// //GD.Print("Am on enemy attack state");
 
 		this.combatUtility = new CombatUtility(
 			MapEntities.map,
@@ -28,7 +28,7 @@ public partial class EnemyAttackState : State {
 		
 		foreach (Character character in MapEntities.targetedCharacters)
 		{
-			GD.Print("Character health before attack", character.characterStat.health);
+			//GD.Print("Character health before attack", character.characterStat.health);
 			bool remove = this.combatUtility.attackCharacter(MapEntities.selectedCharacter, character, MapEntities.chosenAttack);
 			removalList.Add(remove);
 		}

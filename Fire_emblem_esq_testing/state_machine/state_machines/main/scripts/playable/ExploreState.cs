@@ -28,19 +28,20 @@ public partial class ExploreState : State
 	public override void enter()
 	{
 	
-		GD.Print("I am on explore state");
+		//GD.Print("I am on explore state");
+
 
 		currentTileCoords = MapEntities.cursorCoords;
 		previousTileCoords = currentTileCoords;
 		
 		combatUtility = new CombatUtility(MapEntities.map, MapEntities.characters, MapEntities.selectedCharacter);
-		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+		//GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 
 		characterUtility = new CharacterUtility(MapEntities.map, MapEntities.selectedCharacter, MapEntities.playableCharacters);
-		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+		//GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 
 		tileUtility = new TileUtility(MapEntities.map);
-		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+		//GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 
 		MapEntities.map.ClearLayer(1);
 		placeCursor();
@@ -83,14 +84,14 @@ public partial class ExploreState : State
 			MapEntities.selectedCharacter.move = true;
 			lastTile = path.Last();
 
-			// GD.Print(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.Position));
-			// GD.Print(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.targetGlobalPosition));
-			// GD.Print(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.Position) == MapEntities.map.LocalToMap(MapEntities.selectedCharacter.targetGlobalPosition));
+			// //GD.Print(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.Position));
+			// //GD.Print(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.targetGlobalPosition));
+			// //GD.Print(MapEntities.map.LocalToMap(MapEntities.selectedCharacter.Position) == MapEntities.map.LocalToMap(MapEntities.selectedCharacter.targetGlobalPosition));
 
 			// foreach (var item in path)
 			// {
-			// 	GD.Print("Path", item);
-			// 	GD.Print("Tile to local", MapEntities.map.MapToLocal(item));
+			// 	//GD.Print("Path", item);
+			// 	//GD.Print("Tile to local", MapEntities.map.MapToLocal(item));
 			// }
 			characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);		
 		}
@@ -108,18 +109,18 @@ public partial class ExploreState : State
 
 		if (Input.IsActionJustPressed("zoom_out")) {
 			MapEntities.mapCamera.Zoom = MapEntities.mapCamera.Zoom * 2;
-			GD.Print(MapEntities.mapCamera.Enabled);
-			GD.Print(MapEntities.mapCamera.Zoom);
-			GD.Print("Zooming out");
+			//GD.Print(MapEntities.mapCamera.Enabled);
+			//GD.Print(MapEntities.mapCamera.Zoom);
+			//GD.Print("Zooming out");
 		}
 
 		if (Input.IsActionJustPressed("zoom_in")) {
 			MapEntities.mapCamera.Zoom = MapEntities.mapCamera.Zoom / 2;
 
-			//GD.Print(GetViewport().GetCamera2D() as Camera2D is null);
-			// GD.Print(MapEntities.mapCamera.Enabled);
-			// GD.Print(MapEntities.mapCamera.Zoom);
-			GD.Print("Zooming in");
+			////GD.Print(GetViewport().GetCamera2D() as Camera2D is null);
+			// //GD.Print(MapEntities.mapCamera.Enabled);
+			// //GD.Print(MapEntities.mapCamera.Zoom);
+			//GD.Print("Zooming in");
 		}
 
 		if (MapEntities.selectedCharacter != null) {

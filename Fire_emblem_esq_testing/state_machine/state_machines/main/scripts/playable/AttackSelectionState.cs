@@ -10,8 +10,8 @@ public partial class AttackSelectionState : State {
 	private PlayableCharacter selectedCharacter;
 	public override void enter()
 	{
-		GD.Print("I am on attack selection state");
-		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+		//GD.Print("I am on attack selection state");
+		//GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 
 		this.selectedCharacter = MapEntities.selectedCharacter as PlayableCharacter;
 		

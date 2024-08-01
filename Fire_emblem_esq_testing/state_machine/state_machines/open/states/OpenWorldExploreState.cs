@@ -10,15 +10,14 @@ public partial class OpenWorldExploreState : State {
 	{
 		MapEntities.selectedCharacter = MapEntities.playableCharacters.First();
 		MapEntities.selectedCharacter.open = true;
+		GD.Print(MapEntities.selectedCharacter.YSortEnabled);
 
-		GD.Print(this.Name);
+		//GD.Print(this.Name);
 	}
 
 	private bool changingMap = false;
 	public override void physicsUpdate(double _delta)
 	{
-
-		
 
 			Vector2 direction = Input.GetVector("left", "right", "up", "down");
 
@@ -34,7 +33,7 @@ public partial class OpenWorldExploreState : State {
 				EmitSignal(SignalName.StateChange, this, nameof(OpenWorldFinalState));
 			}
 	
-		GD.Print(MapManager.determineBounds(MapEntities.selectedCharacter.Position));
+		//GD.Print(MapManager.determineBounds(MapEntities.selectedCharacter.Position));
 
 		if(Input.IsActionJustPressed("cancel")) {
 		

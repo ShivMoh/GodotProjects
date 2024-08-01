@@ -10,11 +10,11 @@ public partial class DecisionState : State {
 	private PlayableCharacter selectedCharacter;
 	public override void enter()
 	{
-		GD.Print("I am on decision state");
+		//GD.Print("I am on decision state");
 		this.selectedCharacter = MapEntities.selectedCharacter as PlayableCharacter;
 		this.selectedCharacter.actionsMenu.Clear();
 		this.selectedCharacter.addPopupMenuItem(new List<string>() {"Attack", "Ability", "Use", "End Turn"});
-		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+		//GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 
 	}
 	public override void physicsUpdate(double _delta)

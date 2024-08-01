@@ -15,7 +15,7 @@ public partial class PlayableCharacter : Character{
 
 		this.animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 
-		this.ZIndex = 10;
+		// this.ZIndex = 10;
 
 	
 	}

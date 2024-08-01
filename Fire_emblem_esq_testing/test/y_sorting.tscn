@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwshjid2jxu5y"]
+
+[ext_resource type="Script" path="res://test/BasicMove.cs" id="2_6yqf3"]
+[ext_resource type="Texture2D" uid="uid://dy54j4odw8ha5" path="res://assets/characters/knight..png" id="2_7rht2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p32nt"]
+size = Vector2(31, 45)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+y_sort_enabled = true
+collision_mask = 5
+script = ExtResource("2_6yqf3")
+
+[node name="Knight_" type="Sprite2D" parent="."]
+position = Vector2(3, 7)
+texture = ExtResource("2_7rht2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, 12)
+shape = SubResource("RectangleShape2D_p32nt")
+
+[node name="Camera2D" type="Camera2D" parent="."]

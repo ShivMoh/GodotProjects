@@ -48,9 +48,9 @@ public partial class MobCharacter : Character {
 
         if (result.Count > 0) {
             if (((Node) (result["collider"])).GetType().Name is nameof(PlayableCharacter)) {
-                GD.Print("FDFSD", this.GlobalPosition);
-                GD.Print("fsfdf", this.GlobalPosition + endPoint);
-                GD.Print("collider detected", result["collider"]);
+                //GD.Print("FDFSD", this.GlobalPosition);
+                //GD.Print("fsfdf", this.GlobalPosition + endPoint);
+                //GD.Print("collider detected", result["collider"]);
             }
         }
 

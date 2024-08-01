@@ -95,7 +95,7 @@ public partial class AttackSelectionUtility {
 			if (randomCharacter is not null) {
 				this.targets.Add(randomCharacter);
 			} else {
-				// GD.Print("Null character reference");
+				// //GD.Print("Null character reference");
 			}
 			// this for ranged attacks with more than one targets
 
@@ -169,7 +169,7 @@ public partial class AttackSelectionUtility {
 		int randomIndex = rand.Next(0, characters.Count());
 		
 		if (!characters.ElementAt(randomIndex).IsQueuedForDeletion()) {
-			// GD.Print(randomIndex);
+			// //GD.Print(randomIndex);
 			return characters.ElementAt(randomIndex);
 		} else {
 			return chooseRandomCharacter(characters);

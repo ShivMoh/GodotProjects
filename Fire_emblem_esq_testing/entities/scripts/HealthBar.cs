@@ -10,11 +10,11 @@ public partial class HealthBar : TextureProgressBar
 		this.character = this.GetParent() as Character;
 
 		if (this.character is Character) {
-			// GD.Print("is character");
+			// //GD.Print("is character");
 			this.Value = this.character.getCharacterStats().health;
 			this.MaxValue = this.character.getCharacterStats().health;
 			this.Size = new Vector2((float) this.Value, this.Size.Y);
-			// GD.Print(this.character.getCharacterStats().health);
+			// //GD.Print(this.character.getCharacterStats().health);
 		}
 	}
 

@@ -23,8 +23,8 @@ public partial class TargetSelectionState : State {
 	private List<Vector2I> radiusCoords;
 	public override void enter()
 	{
-		GD.Print("I am on target selection");
-		GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
+		//GD.Print("I am on target selection");
+		//GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 
 		this.tileUtilitiy = new TileUtility(MapEntities.map);
 		this.combatUtility = new CombatUtility(
@@ -46,7 +46,7 @@ public partial class TargetSelectionState : State {
 
 		// foreach (Character character in MapEntities.playableCharacters)
 		// {
-		// 	GD.Print("Playable character healths target selection state", character.characterStat.health);
+		// 	//GD.Print("Playable character healths target selection state", character.characterStat.health);
 		// }
 	}
 

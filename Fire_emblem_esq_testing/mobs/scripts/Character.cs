@@ -27,9 +27,10 @@ public partial class Character : CharacterBody2D
 	public override void _Ready()
 	{
 		targetGlobalPosition = this.Position;
-		GD.Print("Initialized", targetGlobalPosition);
+		//GD.Print("Initialized", targetGlobalPosition);
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		this.ZIndex = 10;
+
+		// this.ZIndex = 10;
 	}
 
 	public override void _PhysicsProcess(double delta)

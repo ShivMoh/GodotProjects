@@ -91,11 +91,11 @@ public partial class OpenWorldInitialState : State {
 	public override void enter()
 	{
 		// MapEntities.map = tilemap;
-		GD.Print("I am on open world initial state, initial state, initial state");
+		//GD.Print("I am on open world initial state, initial state, initial state");
 		MapEntities.selectedCharacter = null;
 		MapEntities.cursorCoords = new Vector2I(0, 0);
 		
-		// GD.Print(BasicAttackPack.basicMagicAttacksPacks["0001"]);
+		// //GD.Print(BasicAttackPack.basicMagicAttacksPacks["0001"]);
 		this.setupUtility = new SetupUtility(MapEntities.map);
 
 		this.enemyCharactersMeta = this.setupUtility.setUpCharactersMetas("enemyCharacters", enemyCharactersMeta);
@@ -106,7 +106,7 @@ public partial class OpenWorldInitialState : State {
 		MapEntities.characters.AddRange(MapEntities.enemyCharacters);
 		MapEntities.characters.AddRange(MapEntities.playableCharacters);
 		
-		GD.Print(this.Name);
+		//GD.Print(this.Name);
 
 	}
 

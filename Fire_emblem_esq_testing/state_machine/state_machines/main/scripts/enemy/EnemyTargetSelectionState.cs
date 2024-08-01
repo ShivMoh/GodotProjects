@@ -13,7 +13,7 @@ public partial class EnemyTargetSelectionState : State {
 	private bool turnOver = false;
 	public override void enter()
 	{
-		GD.Print("I am on enemy target selection state");
+		//GD.Print("I am on enemy target selection state");
 
 		int maxSpeed = MapEntities.enemyCharacters.Max(character => character.characterStat.speed);
 
@@ -33,19 +33,19 @@ public partial class EnemyTargetSelectionState : State {
 			switch (trait)
 			{
 				case Trait.NONE:
-					GD.Print("NONE");
+					//GD.Print("NONE");
 					break;
 				case Trait.BRAZEN:
-					GD.Print("BRAZEN");
+					//GD.Print("BRAZEN");
 					break;    
 				case Trait.COWARD:
-					GD.Print("COWARD");
+					//GD.Print("COWARD");
 					break;    
 				case Trait.CUNNING:
 					MapEntities.targetCandidates = enemySelectionUtility.findTargetsWithinRange(MapEntities.playableCharacters);
 					MapEntities.closeRangeTargets = enemySelectionUtility.findTargetsWithinCloseRange(MapEntities.playableCharacters);
 					MapEntities.attackMetas = enemySelectionUtility.getAvailableAttacks();
-					GD.Print("Is this running");
+					//GD.Print("Is this running");
 					EmitSignal(SignalName.StateChange, this, nameof(EnemyAttackSelectionState));
 					
 					break;    

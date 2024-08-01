@@ -7,7 +7,7 @@ public partial class DummyState : State {
 
 	public override void enter()
 	{
-        GD.Print("I am on dummy state");
+        //GD.Print("I am on dummy state");
 	}
 
 }

@@ -36,6 +36,7 @@ public partial class StateMachine : Node2D {
 		// 	}
 		
 		// }
+
 		initialState = states.First();
 
 		foreach (State state in this.states)
@@ -94,10 +95,10 @@ public partial class StateMachine : Node2D {
 	// 			if (selectedCharacter is not null) {
 	// 				(state as DecisionState).setSelectedCharacter(selectedCharacter);
 	// 			}
-	// 			GD.Print("selected character", selectedCharacter);
+	// 			//GD.Print("selected character", selectedCharacter);
 	// 			break;
 	// 		default:
-	// 			GD.Print("Nothing to do here");
+	// 			//GD.Print("Nothing to do here");
 	// 			break;
 	// 	}
 	// }

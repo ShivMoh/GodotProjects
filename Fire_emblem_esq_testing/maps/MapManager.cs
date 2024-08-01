@@ -32,8 +32,8 @@ public partial class MapManager : Node {
 	public static Direction determineBounds(Vector2 GlobalPosition) {
 		Rect2I rect = MapEntities.map.GetUsedRect();
 		Vector2I currentPosition = MapEntities.map.LocalToMap(GlobalPosition);
-		GD.Print(currentPosition, rect.Position, rect.End);
-		GD.Print(GlobalPosition, MapEntities.map.MapToLocal(rect.Position), MapEntities.map.MapToLocal(rect.End));
+		//GD.Print(currentPosition, rect.Position, rect.End);
+		//GD.Print(GlobalPosition, MapEntities.map.MapToLocal(rect.Position), MapEntities.map.MapToLocal(rect.End));
 
 		if (currentPosition.X < rect.Position.X) {
 			return Direction.LEFT;

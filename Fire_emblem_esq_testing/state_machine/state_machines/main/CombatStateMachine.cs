@@ -6,7 +6,7 @@ public partial class CombatStateMachine : StateMachine {
 
     public override void _EnterTree()
     {
-		GD.Print(nameof(CombatStateMachine), " is running");
+		//GD.Print(nameof(CombatStateMachine), " is running");
 
         InitialState firstState = new InitialState();
 		FinalState finalState =	new FinalState();
@@ -59,10 +59,10 @@ public partial class CombatStateMachine : StateMachine {
 	// 			if (selectedCharacter is not null) {
 	// 				(state as DecisionState).setSelectedCharacter(selectedCharacter);
 	// 			}
-	// 			GD.Print("selected character", selectedCharacter);
+	// 			//GD.Print("selected character", selectedCharacter);
 	// 			break;
 	// 		default:
-	// 			GD.Print("Nothing to do here");
+	// 			//GD.Print("Nothing to do here");
 	// 			break;
 	// 	}
 	// }

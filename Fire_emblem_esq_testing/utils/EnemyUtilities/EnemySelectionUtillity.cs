@@ -105,13 +105,13 @@ public partial class EnemySelectionUtility {
 			
 			foreach (Character entity in entities)
 			{
-				// GD.Print("ENEMY Position", entity.Position);
+				// //GD.Print("ENEMY Position", entity.Position);
 				Vector2I entityGlobalPosition = this.tileMap.LocalToMap(entity.Position);
 	
 				if (pointGlobalPosition == entityGlobalPosition) {
-					// GD.Print(centerGlobalPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment)));
-					// GD.Print(centerGlobalPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)));
-					// GD.Print(entityGlobalPosition, pointGlobalPosition);
+					// //GD.Print(centerGlobalPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment)));
+					// //GD.Print(centerGlobalPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)));
+					// //GD.Print(entityGlobalPosition, pointGlobalPosition);
 					occupied = true;
 				} 
 
@@ -120,7 +120,7 @@ public partial class EnemySelectionUtility {
 			increment+=30;
 
 			if (occupied == false) {
-				GD.Print("Does this run");
+				//GD.Print("Does this run");
 				return this.tileMap.MapToLocal(pointGlobalPosition); 
 			} else {
 				occupied = false;

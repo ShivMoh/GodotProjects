@@ -1,17 +1,20 @@
 [gd_scene load_steps=2 format=3 uid="uid://dq4abym36lodt"]
 
-[ext_resource type="PackedScene" uid="uid://b0egj88ftwkh8" path="res://state_machine/state_machines/main/main_state_machine.tscn" id="2_liiaq"]
+[ext_resource type="PackedScene" uid="uid://cpda3jli3by4v" path="res://state_machine/state_machines/main/main_state_machine.tscn" id="2_liiaq"]
 
 [node name="main" type="Node2D"]
+y_sort_enabled = true
 
 [node name="container" type="Node2D" parent="."]
 
 [node name="StateMachineManager" parent="." instance=ExtResource("2_liiaq")]
-position = Vector2(221.299, 327.221)
+y_sort_enabled = true
+position = Vector2(771, -474)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="MapManager" type="Node2D" parent="."]
+y_sort_enabled = true
 position = Vector2(-2772, -1217)
 
 [editable path="StateMachineManager"]

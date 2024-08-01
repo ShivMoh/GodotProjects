@@ -21,7 +21,7 @@ public partial class EnemyMoveState : State {
 	List<Vector2I> path = new List<Vector2I>();
 	public override void enter()
 	{
-		GD.Print(this.Name);
+		//GD.Print(this.Name);
 
 		(MapEntities.selectedCharacter.GetNode("CollisionShape2D") as CollisionShape2D).Disabled = true;
 		
@@ -41,7 +41,7 @@ public partial class EnemyMoveState : State {
 														MapEntities.enemyCharacters, 
 														MapEntities.chosenAttack.attackTargetMeta.range
 													);
-		GD.Print("TARGET LOCATION", this.targetGlobalPosition);
+		//GD.Print("TARGET LOCATION", this.targetGlobalPosition);
 		calculatePathTowardsTarget();
 	
 		this.currentActingEnemey.move = true;
