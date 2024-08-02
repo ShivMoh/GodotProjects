@@ -13,8 +13,8 @@ void vertex() {
 void fragment() {
 	// Called for every pixel the material is visible on.
 	// COLOR = vec4(UV, 0.9, 1.0);	
-	COLOR = texture(TEXTURE, UV);
-	COLOR.b = blue;
+	// COLOR = texture(TEXTURE, UV);
+	COLOR = vec4(1.0, 0.0, 0.0, 1.0);
 }
 
 //void light() {
