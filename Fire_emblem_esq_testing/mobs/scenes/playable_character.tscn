@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://dggl60itto42a" path="res://entities/health_bar.tscn" id="7_c72vx"]
 [ext_resource type="Texture2D" uid="uid://c5llphfk828aw" path="res://assets/shadow.png" id="8_68ia6"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a4uvf"]
+size = Vector2(20, 43)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_g4s1y"]
 atlas = ExtResource("1_0oi2i")
 region = Rect2(0, 0, 64, 64)
@@ -170,20 +173,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_a4uvf"]
-size = Vector2(20, 43)
-
 [node name="PlayableCharacter" type="CharacterBody2D" node_paths=PackedStringArray("healthBar")]
-y_sort_enabled = true
 collision_mask = 5
 script = ExtResource("1_nmofl")
 healthBar = NodePath("HealthBar")
-
-[node name="Shadow" type="Sprite2D" parent="."]
-y_sort_enabled = true
-position = Vector2(-4, 8)
-scale = Vector2(0.765625, 0.765625)
-texture = ExtResource("8_68ia6")
 
 [node name="PopupMenu" type="PopupMenu" parent="."]
 hide_on_item_selection = false
@@ -195,10 +188,17 @@ offset_top = -53.0
 offset_right = 52.0
 offset_bottom = -34.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_mp8j5")
-animation = &"idle"
-autoplay = "idle"
+[node name="Shadow" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(1, 14)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_68ia6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_a4uvf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+sprite_frames = SubResource("SpriteFrames_mp8j5")
+animation = &"idle"
+autoplay = "idle"
