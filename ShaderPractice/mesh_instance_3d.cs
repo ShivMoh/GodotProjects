@@ -8,8 +8,8 @@ public partial class mesh_instance_3d : MeshInstance3D
 	{
 		// (Mesh.SurfaceGetMaterial(0).NextPass as ShaderMaterial).SetShaderParameter("height_scale", 0.0);
 
-		(Mesh.SurfaceGetMaterial(0) as ShaderMaterial).SetShaderParameter("height_scale", 0.0);
-		
+		(Mesh.SurfaceGetMaterial(0) as ShaderMaterial).SetShaderParameter("height_scale", 0.5);
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

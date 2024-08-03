@@ -1,6 +1,7 @@
-[gd_scene load_steps=30 format=3 uid="uid://cxrlkcw01dda"]
+[gd_scene load_steps=32 format=3 uid="uid://cxrlkcw01dda"]
 
 [ext_resource type="Texture2D" uid="uid://b5xv32i6xq2fs" path="res://assets/characters/walk_back.png" id="1_0oi2i"]
+[ext_resource type="Shader" path="res://shaders/character.gdshader" id="1_csowi"]
 [ext_resource type="Script" path="res://mobs/scripts/PlayableCharacter.cs" id="1_nmofl"]
 [ext_resource type="Texture2D" uid="uid://bdvl0bque1odu" path="res://assets/characters/walk_forward.png" id="1_yh3vg"]
 [ext_resource type="Texture2D" uid="uid://deu57u4l6vq1g" path="res://assets/characters/idle.png" id="2_x6onr"]
@@ -8,6 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://bku2ow64kp1uv" path="res://assets/characters/walk_right.png" id="5_7f2va"]
 [ext_resource type="PackedScene" uid="uid://dggl60itto42a" path="res://entities/health_bar.tscn" id="7_c72vx"]
 [ext_resource type="Texture2D" uid="uid://c5llphfk828aw" path="res://assets/shadow.png" id="8_68ia6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ekjmw"]
+shader = ExtResource("1_csowi")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a4uvf"]
 size = Vector2(20, 43)
@@ -174,6 +178,7 @@ animations = [{
 }]
 
 [node name="PlayableCharacter" type="CharacterBody2D" node_paths=PackedStringArray("healthBar")]
+material = SubResource("ShaderMaterial_ekjmw")
 collision_mask = 5
 script = ExtResource("1_nmofl")
 healthBar = NodePath("HealthBar")

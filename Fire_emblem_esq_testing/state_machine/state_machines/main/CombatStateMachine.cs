@@ -4,11 +4,11 @@ using Godot;
 public partial class CombatStateMachine : StateMachine {
 
 
-    public override void _EnterTree()
-    {
+	public override void _EnterTree()
+	{
 		//GD.Print(nameof(CombatStateMachine), " is running");
 
-        InitialState firstState = new InitialState();
+		InitialState firstState = new InitialState();
 		FinalState finalState =	new FinalState();
 
 		states.Add(firstState as State);
@@ -34,9 +34,9 @@ public partial class CombatStateMachine : StateMachine {
 		);
 		
 		
-    }
+	}
 
-    // public override void _Ready()
+	// public override void _Ready()
 	// {
 	
 	// 	// MapEntities.map = tilemap;

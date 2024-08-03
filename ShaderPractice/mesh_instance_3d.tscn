@@ -1,11 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://cf1qp6pgjda8s"]
+[gd_scene load_steps=9 format=3 uid="uid://cf1qp6pgjda8s"]
 
 [ext_resource type="Shader" path="res://shaders/3dShaderTut.gdshader" id="1_dnnu8"]
-[ext_resource type="Script" path="res://mesh_instance_3d.gd" id="2_5en55"]
+[ext_resource type="Script" path="res://mesh_instance_3d.cs" id="2_04pan"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xsnev"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lnhbk"]
+noise = SubResource("FastNoiseLite_xsnev")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_23juc"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4qkdu"]
+as_normal_map = true
+noise = SubResource("FastNoiseLite_23juc")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cobaj"]
 render_priority = 0
 shader = ExtResource("1_dnnu8")
+shader_parameter/height_scale = 0.5
+shader_parameter/noise = SubResource("NoiseTexture2D_lnhbk")
+shader_parameter/normal_map = SubResource("NoiseTexture2D_4qkdu")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_0ig04"]
 material = SubResource("ShaderMaterial_cobaj")
@@ -13,13 +27,16 @@ subdivide_width = 32
 subdivide_depth = 32
 
 [node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0432104)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.489366, -0.218871)
 mesh = SubResource("PlaneMesh_0ig04")
-script = ExtResource("2_5en55")
+script = ExtResource("2_04pan")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.448886, 0.218966, -0.866346, 0.00360356, 0.969061, 0.246794, 0.893582, -0.113904, 0.434209, -2.29214, 0.990442, 0)
+transform = Transform3D(0.0573326, 0.271793, -0.960647, 0.00208451, 0.962195, 0.272355, 0.998353, -0.0176173, 0.0545985, -1.08842, -0.0143531, 0.00247094)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.0461127, 0.998936, 0, -0.998936, -0.0461127, 0, 0.990442, 0)
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.206785, -0.978386, 0, 0.978386, -0.206785, 0.180876, 0.167113, -0.431027)
+light_color = Color(0, 1, 1, 1)

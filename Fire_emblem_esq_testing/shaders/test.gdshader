@@ -1,20 +1,15 @@
 shader_type canvas_item;
-
-uniform float blue = 0.0;
+render_mode blend_add;
 
 void vertex() {
 	// Called for every vertex the material is visible on.
-
-	// VERTEX += vec2(100.0, 0.0);
-
-	VERTEX += vec2(cos(TIME) * 100.0, sin(TIME) * 100.0);
 }
-
 void fragment() {
 	// Called for every pixel the material is visible on.
-	// COLOR = vec4(UV, 0.9, 1.0);	
-	// COLOR = texture(TEXTURE, UV);
-	// COLOR = vec4(1.0, 0.0, 0.0, 1.0);
+	
+	COLOR = texture(TEXTURE, UV);
+	COLOR = vec4(1.0, 0.0, 0.0, 1.0);
+	
 }
 
 //void light() {

@@ -1,9 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://dq4abym36lodt"]
+[gd_scene load_steps=4 format=3 uid="uid://dq4abym36lodt"]
 
+[ext_resource type="Shader" path="res://shaders/test.gdshader" id="1_yucw4"]
 [ext_resource type="PackedScene" uid="uid://b0egj88ftwkh8" path="res://state_machine/state_machines/main/main_state_machine.tscn" id="2_liiaq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c6yif"]
+shader = ExtResource("1_yucw4")
 
 [node name="main" type="Node2D"]
 y_sort_enabled = true
+material = SubResource("ShaderMaterial_c6yif")
 
 [node name="container" type="Node2D" parent="."]
 
