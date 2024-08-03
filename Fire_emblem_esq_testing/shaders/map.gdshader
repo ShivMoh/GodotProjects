@@ -1,6 +1,7 @@
 shader_type canvas_item;
 render_mode blend_premul_alpha;
 
+uniform float darkness_factor = 0.4;
 void vertex() {
 	// Called for every vertex the material is visible on.
 }
@@ -8,7 +9,8 @@ void vertex() {
 void fragment() {
 	// Called for every pixel the material is visible on.
 	COLOR = texture(TEXTURE, UV);
-	COLOR.g = COLOR.g * 0.2;
+	COLOR = COLOR - vec4(darkness_factor, darkness_factor, darkness_factor, 0.0);
+	
 }
 
 //void light() {
