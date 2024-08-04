@@ -1,20 +1,13 @@
 shader_type canvas_item;
-// render_mode blend_premul_alpha;
+uniform sampler2D normal_map;
 
-uniform float darkness_factor = 0.0;
 void vertex() {
 	// Called for every vertex the material is visible on.
 }
 
 void fragment() {
 	// Called for every pixel the material is visible on.
-
-	COLOR = texture(TEXTURE, UV);
-	
-	//if (darkness_factor != 0.0) {
-		//COLOR = COLOR - vec4(0.0, 0.0, 0.0, 0.0);
-	//}
-
+	NORMAL = 2.0 * texture(normal_map, UV).rgb - 1.0;
 }
 
 //void light() {

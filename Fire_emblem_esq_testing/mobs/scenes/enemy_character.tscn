@@ -1,8 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddwlr1lmi6gjr"]
+[gd_scene load_steps=12 format=3 uid="uid://ddwlr1lmi6gjr"]
 
 [ext_resource type="Script" path="res://mobs/scripts/EnemyCharacter.cs" id="1_5hirs"]
 [ext_resource type="Texture2D" uid="uid://dy54j4odw8ha5" path="res://assets/characters/knight..png" id="1_oq3ux"]
+[ext_resource type="Shader" path="res://shaders/enemy_character.gdshader" id="2_t4wr3"]
+[ext_resource type="Texture2D" uid="uid://cd7eadm6pqmm6" path="res://assets/characters/knight_n.png" id="3_el25h"]
 [ext_resource type="PackedScene" uid="uid://dggl60itto42a" path="res://entities/health_bar.tscn" id="3_xjmlg"]
+[ext_resource type="Texture2D" uid="uid://dypms2sko1mcd" path="res://assets/characters/knight_s.png" id="4_44h6x"]
+[ext_resource type="Texture2D" uid="uid://1r6pet7amvr6" path="res://assets/light.webp" id="7_ugnxm"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_g67aw"]
+normal_texture = ExtResource("3_el25h")
+specular_texture = ExtResource("4_44h6x")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gfn5c"]
+shader = ExtResource("2_t4wr3")
+shader_parameter/normal_map = SubResource("CanvasTexture_g67aw")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0056k"]
 animations = [{
@@ -59,8 +71,9 @@ script = ExtResource("1_5hirs")
 healthBar = NodePath("HealthBar")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_gfn5c")
 sprite_frames = SubResource("SpriteFrames_0056k")
-animation = &"front"
+animation = &"back"
 
 [node name="HealthBar" parent="." instance=ExtResource("3_xjmlg")]
 offset_left = -58.0
@@ -70,3 +83,14 @@ offset_bottom = -46.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ensb6")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(33, -9)
+scale = Vector2(0.300781, 0.324219)
+energy = 2.95
+texture = ExtResource("7_ugnxm")
+height = 200.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(18, -10)
+zoom = Vector2(2, 2)

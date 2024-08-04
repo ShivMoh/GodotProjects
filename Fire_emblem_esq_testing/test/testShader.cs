@@ -7,7 +7,7 @@ public partial class testShader : TileMap
 	public override void _Ready()
 	{
 
-		(Material as ShaderMaterial).SetShaderParameter("darkness_factor", 0.5f);
+		(Material as ShaderMaterial).SetShaderParameter("darkness_factor", 0.1f);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
