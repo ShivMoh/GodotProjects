@@ -94,11 +94,11 @@ public partial class CombatUtility {
 		int damage = 0;
 	
 		if (chosenAttack.attackType == AttackType.MAGICAL) {
-			 damage = (selectedCharacter.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence;
+			 damage = (attacker.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence;
 		  }
 
 		if (chosenAttack.attackType == AttackType.PHYSICAL) {
-			 damage = (selectedCharacter.characterStat.strenth + chosenAttack.power) - target.equipedAttack.defence;
+			 damage = (attacker.characterStat.strenth + chosenAttack.power) - target.equipedAttack.defence;
 		  }
 		
 		int currentAttackindexPlus = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1 == AttackMeta.attributeMap.Count() ? 0 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute);	
