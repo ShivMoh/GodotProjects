@@ -33,8 +33,32 @@ public partial class TargetSelectionState : State {
 			MapEntities.selectedCharacter
 		);
 		MapEntities.detectedEnemies = combatUtility.detectEnemiesForAttack(tileUtilitiy, MapEntities.chosenAttack);
+
+		foreach(Character character in MapEntities.detectedEnemies) {
+
+			GD.Print(character.GetType().Name);
+			// GD.Print(MapEntities.map.LocalToMap(character.Position));
+			MapEntities.map.SetCell(
+				1,
+				MapEntities.map.LocalToMap(character.Position),
+				0, 
+				new Vector2I(2, 1)
+			);
+
+			MapEntities.map.SetCell(
+				1,
+				MapEntities.map.LocalToMap(character.GlobalPosition),
+				0, 
+				new Vector2I(0, 0)
+			);
+			// this.tileUtilitiy.highLight( MapEntities.map.LocalToMap(character.Position), new Vector2I(0, 1));
+			// this.tileUtilitiy.highLight( MapEntities.map.LocalToMap(character.GlobalPosition), new Vector2I(2, 1));
+
+			GD.Print( MapEntities.map.LocalToMap(character.Position),  MapEntities.map.LocalToMap(character.GlobalPosition));
+
+		}
 		selectedEnemy = MapEntities.detectedEnemies.First();
-		this.highLightEnemies();
+		// this.highLightEnemies();
 		this.numberOfSelectedEnemies = 0;
 		this.currentTileCoords = MapEntities.map.LocalToMap(MapEntities.selectedCharacter.Position);
 		this.cursorRadius = (int) MapEntities.chosenAttack.attackTargetMeta.radius;
@@ -74,7 +98,6 @@ public partial class TargetSelectionState : State {
 			currentTileCoords.Y += 1;
 			this.placeCursor();
 		}
-
 	
 		if (Input.IsActionJustPressed("select")) {
 		

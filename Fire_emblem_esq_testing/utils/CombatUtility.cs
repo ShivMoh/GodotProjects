@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Godot;
 using Vector2 = Godot.Vector2;
+using System.Linq;
 
 public partial class CombatUtility {
 	
@@ -34,19 +35,19 @@ public partial class CombatUtility {
 
 		List<Character> characters = new List<Character>();
 
-		Vector2I currentCoord = tilemap.LocalToMap(selectedCharacter.GlobalPosition);
+		Vector2I currentCoord = tilemap.LocalToMap(selectedCharacter.Position);
 
 		foreach (Character character in enemies)
 		{
-			Vector2I enemyCoord = tilemap.LocalToMap(character.GlobalPosition);
-
+			Vector2I enemyCoord = tilemap.LocalToMap(character.Position);
+			
 			if (attack.attackTargetMeta.closeRange) {
 				if (this.checkAdjacent(currentCoord, enemyCoord)) {
 					characters.Add(character);
 				}
 			}
 
-			if (this.isEnemyInRange(currentCoord, tilemap.LocalToMap(character.GlobalPosition), attack.attackTargetMeta.range)) {
+			if (this.isEnemyInRange(currentCoord, tilemap.LocalToMap(character.Position), attack.attackTargetMeta.range)) {
 				characters.Add(character);
 			}
 		}
@@ -62,13 +63,12 @@ public partial class CombatUtility {
 	}
 
 	public  bool attackCharacter(Character selectedCharacter, Character target, AttackMeta chosenAttack) {
-		int damage = 0;
-	
-		if (chosenAttack.attackType == AttackType.MAGICAL) damage = selectedCharacter.characterStat.magic + chosenAttack.power;
 
-		if (chosenAttack.attackType == AttackType.PHYSICAL) damage = selectedCharacter.characterStat.strenth + chosenAttack.power;
-		
+		int damage = this.attackSequence(selectedCharacter, target, chosenAttack);
+		GD.Print("Base attack", (selectedCharacter.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence);
+		GD.Print(damage);
 		target.characterStat.health -= damage;
+		selectedCharacter.equipedAttack = chosenAttack;
 
 		if (target.characterStat.health <= 0) {
 
@@ -88,6 +88,33 @@ public partial class CombatUtility {
 			target.healthBar.takeDamage(damage);
 		}
 		return false;
+	 }
+	
+	private int attackSequence(Character attacker, Character target, AttackMeta chosenAttack) {
+		int damage = 0;
+	
+		if (chosenAttack.attackType == AttackType.MAGICAL) {
+			 damage = (selectedCharacter.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence;
+		  }
+
+		if (chosenAttack.attackType == AttackType.PHYSICAL) {
+			 damage = (selectedCharacter.characterStat.strenth + chosenAttack.power) - target.equipedAttack.defence;
+		  }
+		
+		int currentAttackindexPlus = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1 == AttackMeta.attributeMap.Count() ? 0 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute);	
+
+			int currentAttackindexLess = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) - 1 == -1 ?  AttackMeta.attributeMap.Count() - 1 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute);	
+
+		  if ( 		currentAttackindexPlus == 
+					AttackMeta.attributeMap.IndexOf(target.equipedAttack.attackAttribute)) {
+						 damage = damage * 2;
+			   }
+
+		  if ( 		currentAttackindexLess == 
+					AttackMeta.attributeMap.IndexOf(target.equipedAttack.attackAttribute)) {
+						 damage = damage/2;
+			   }
+		 return damage; 
 	}
 
 	private bool checkAdjacent(Vector2I one, Vector2I two) {

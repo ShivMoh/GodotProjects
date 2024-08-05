@@ -22,6 +22,8 @@ public partial class Character : CharacterBody2D
 
 	public AttackMeta equipedAttack;
 
+
+
 	[Export]
 	public HealthBar healthBar;
 	public override void _Ready()
@@ -29,7 +31,8 @@ public partial class Character : CharacterBody2D
 		targetGlobalPosition = this.Position;
 		//GD.Print("Initialized", targetGlobalPosition);
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-
+		
+		equipedAttack = attacks.First();
 		// this.ZIndex = 10;
 	}
 
@@ -53,7 +56,7 @@ public partial class Character : CharacterBody2D
 	public static Character instantiate(Vector2 GlobalPosition, string path) {
 		PackedScene characterScene = GD.Load<PackedScene>(path);
 		Character instance = characterScene.Instantiate<Character>();
-		instance.GlobalPosition = GlobalPosition;
+		instance.Position = GlobalPosition;
 		return instance;
 	}
 

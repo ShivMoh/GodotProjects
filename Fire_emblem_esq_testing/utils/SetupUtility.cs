@@ -29,7 +29,7 @@ public partial class SetupUtility {
 		
 		for(int i = 0; i < node.GetChildren().Count(); i++) {
 			if (node.GetChild(i) is Character character) {
-				characterMetas[i].tileCoord = tileMap.LocalToMap(character.GlobalPosition);
+				characterMetas[i].tileCoord = tileMap.LocalToMap(character.ToLocal(character.GlobalPosition));
 				characterMetas[i].characterPath = character.GetPath();
 			}
 		}
@@ -45,6 +45,10 @@ public partial class SetupUtility {
 		for (int i = 0; i < characterMetas.Length; i++) {
 			
 			Character character = node.GetChild(i) as Character;
+
+			character.Position = MapEntities.map.MapToLocal( 
+				 MapEntities.map.LocalToMap(character.Position)
+			);
 
 			character.setAttacks(characterMetas[i].attacks);
 

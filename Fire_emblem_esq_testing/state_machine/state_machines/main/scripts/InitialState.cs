@@ -14,14 +14,14 @@ public partial class InitialState : State {
 		new CharacterMeta(
 			tileCoord: new Vector2I(0, 7),
 			characterPath : "res://mobs/scenes/playable_character.tscn",
-			attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
+			attacks : BasicAttackPack.basicMagicAttacksPacks["0002"],
 			characterStat : CharacterStats.playableCharactersBase["teya"].Clone() as CharacterStat
 
 		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(5, 0),
 			characterPath : "res://mobs/scenes/playable_character.tscn",
-			attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
+			attacks : BasicAttackPack.basicMagicAttacksPacks["0002"],
 			characterStat : CharacterStats.playableCharactersBase["trent"].Clone() as CharacterStat
 		),
 	};

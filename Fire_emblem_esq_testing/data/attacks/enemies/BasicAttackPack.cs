@@ -9,6 +9,11 @@ public static partial class BasicAttackPack {
     {   
         {"0001", new List<AttackMeta> {
             BasicMagicAttack.basicMagicAttacks["iceball"],
-        }}
+        }},
+	    {"0002", new List<AttackMeta> {
+		    BasicMagicAttack.basicMagicAttacks["iceball"],
+		    BasicMagicAttack.basicMagicAttacks["fireball"],
+            BasicMagicAttack.basicMagicAttacks["windball"]
+	    }}
     };
 }   

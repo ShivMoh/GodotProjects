@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using System.Collections.Generic;
 
 public enum AttackAttribute
 {
@@ -67,6 +68,8 @@ public partial class AttackMeta  {
 
     public string name;
     public int power;
+	public int defence;
+
     public int timesUsableUntilReset = 0;
 
     public AttackTargetMeta attackTargetMeta;
@@ -77,11 +80,18 @@ public partial class AttackMeta  {
 
     public AttackType attackType;
     
+	public static List<AttackAttribute> attributeMap = new List<AttackAttribute> {
+		  AttackAttribute.FIRE, // stronger than -->
+		  AttackAttribute.EARTH, // stronger than -->
+		  AttackAttribute.WIND, // stronger than -->
+		  AttackAttribute.WATER // strong than ^
+	};
     // perhaps effect in future
     // Effect effect
     public AttackMeta(
         string name, 
-        int power, 
+        int power,
+		int defence,
         int timesUsableUntilReset,
         AttackTargetMeta attackTargetMeta,
         AttackAttribute attackAttribute,
@@ -90,6 +100,7 @@ public partial class AttackMeta  {
     ) {
         this.name = name;
         this.power = power;
+		this.defence = defence;
         this.timesUsableUntilReset = timesUsableUntilReset;
         this.attackTargetMeta = attackTargetMeta;
         this.attackAttribute = attackAttribute;

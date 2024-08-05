@@ -9,7 +9,7 @@ public partial class ExploreState : State
 	
 	Vector2I currentTileCoords;
 	Vector2I previousTileCoords;
-
+	
 	List<Vector2I> path = new List<Vector2I>();
 
 	bool  move = false;
@@ -94,6 +94,8 @@ public partial class ExploreState : State
 			// 	//GD.Print("Tile to local", MapEntities.map.MapToLocal(item));
 			// }
 			characterUtility.moveCharacter(ref path, currentTileCoords, lastTile);		
+			
+			(MapEntities.selectedCharacter.GetNode("CollisionShape2D") as CollisionShape2D).Disabled = true;
 		}
 
 		if (Input.IsActionJustPressed("select")) {

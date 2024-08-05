@@ -8,6 +8,7 @@ public partial class FinalState : State {
 	public override void enter()
 	{
 		(MapEntities.selectedCharacter.GetNode("CollisionShape2D") as CollisionShape2D).Disabled = false;
+		MapEntities.selectedCharacter.moveSteps = MapEntities.selectedCharacter.characterStat.speed;
 		MapEntities.selectedCharacter.usedTurn = true;
 		MapEntities.selectedCharacter = null;
 		MapEntities.count++;
@@ -43,7 +44,8 @@ public partial class FinalState : State {
 				MapEntities.count = 0;
 				foreach (Character character in MapEntities.playableCharacters)
 				{	
-					character.usedTurn = false;	
+					character.usedTurn = false;
+
 				}
 				EmitSignal(SignalName.StateChange, this, typeof(EnemyTargetSelectionState).ToString());
 			} else {

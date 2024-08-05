@@ -6,6 +6,7 @@ public partial class OpenWorldInitialState : State {
 		new AttackMeta(
 			name: "Fire ball",
 			power: 5,
+			defence: 2,
 			timesUsableUntilReset: 20,
 			attackTargetMeta: new AttackTargetMeta(20, 1, radius: 5, areaOfEffect: true),
 			attackAttribute: AttackAttribute.FIRE,
@@ -15,6 +16,7 @@ public partial class OpenWorldInitialState : State {
 		new AttackMeta(
 			name: "Ice ball",
 			power: 3,
+			defence: 4,
 			timesUsableUntilReset: 20,
 			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
 			attackAttribute: AttackAttribute.WATER,
@@ -27,6 +29,7 @@ public partial class OpenWorldInitialState : State {
 		new AttackMeta(
 			name: "Ice ball",
 			power: 3,
+			defence: 4,
 			timesUsableUntilReset: 20,
 			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
 			attackAttribute: AttackAttribute.WATER,
@@ -36,7 +39,7 @@ public partial class OpenWorldInitialState : State {
 
 	static CharacterStat characterStat= new CharacterStat(
 		name: "John",
-		health: 20,
+		health: 100,
 		strenth: 2,
 		magic : 18,
 		speed: 20,
