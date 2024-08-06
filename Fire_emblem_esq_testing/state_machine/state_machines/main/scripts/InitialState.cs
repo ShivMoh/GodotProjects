@@ -47,7 +47,7 @@ public partial class InitialState : State {
 
 	public override void enter()
 	{
-		MapEntities.cursorCoords = new Vector2I(0, 0);
+		MapEntities.cursorCoords = MapEntities.map.LocalToMap(MapEntities.selectedCharacter.Position);
 		
 		loadCharacters();
 

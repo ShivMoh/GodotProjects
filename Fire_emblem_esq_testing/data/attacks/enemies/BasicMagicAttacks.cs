@@ -31,7 +31,7 @@ public static partial class BasicMagicAttack {
 			power: 3,
 			defence: 4,
 			timesUsableUntilReset: 20,
-			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
+			attackTargetMeta: new AttackTargetMeta(2, 2, radius: 1),
 			attackAttribute: AttackAttribute.WIND,
 			effect: AttackEffect.NONE,
 			attackType: AttackType.MAGICAL

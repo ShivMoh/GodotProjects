@@ -7,10 +7,10 @@ using Godot;
 public partial class EnemyAttackSelectionState : State {
 
 
-	private AttackSelectionUtility attackSelectionUtility;
+	private CunningCharacterUtility attackSelectionUtility;
 	public override void enter()
 	{
-		this.attackSelectionUtility = new AttackSelectionUtility(
+		this.attackSelectionUtility = new CunningCharacterUtility(
 			MapEntities.selectedCharacter as EnemyCharacter,
 			MapEntities.targetCandidates,
 			MapEntities.attackMetas,
@@ -21,7 +21,7 @@ public partial class EnemyAttackSelectionState : State {
 
 	public override void physicsUpdate(double _delta)
 	{
-		this.attackSelectionUtility.chooseCunningCharacterAttack();
+		this.attackSelectionUtility.chooseAttack();
 		MapEntities.chosenAttack = this.attackSelectionUtility.getAttack();
 		MapEntities.targetedCharacters.Clear();
 		MapEntities.targetedCharacters.AddRange(this.attackSelectionUtility.getTargets());

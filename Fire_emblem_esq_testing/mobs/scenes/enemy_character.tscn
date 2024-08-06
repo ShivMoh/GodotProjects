@@ -63,11 +63,12 @@ healthBar = NodePath("HealthBar")
 sprite_frames = SubResource("SpriteFrames_0056k")
 animation = &"back"
 
-[node name="HealthBar" parent="." instance=ExtResource("3_xjmlg")]
+[node name="HealthBar" parent="." node_paths=PackedStringArray("character") instance=ExtResource("3_xjmlg")]
 offset_left = -58.0
 offset_top = -65.0
 offset_right = 58.0
 offset_bottom = -46.0
+character = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ensb6")

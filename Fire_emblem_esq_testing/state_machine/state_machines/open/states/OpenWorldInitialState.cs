@@ -52,8 +52,8 @@ public partial class OpenWorldInitialState : State {
 	);
 
 	static CharacterStat characterStat2 = new CharacterStat(
-		name: "John",
-		health: 100,
+		name: "Broski",
+		health: 120,
 		strenth: 2,
 		magic : 18,
 		speed: 20,
@@ -83,7 +83,7 @@ public partial class OpenWorldInitialState : State {
 			tileCoord: new Vector2I(6, 1),
 			characterPath : "res://mobs/scenes/enemy_character.tscn",
 			attacks : enemyAttacks,
-			characterStat : characterStat.Clone() as CharacterStat
+			characterStat : characterStat2.Clone() as CharacterStat
 		)
 	};
 

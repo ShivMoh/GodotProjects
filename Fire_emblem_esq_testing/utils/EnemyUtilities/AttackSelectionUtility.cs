@@ -5,16 +5,16 @@ using System.Linq;
 
 public partial class AttackSelectionUtility {
 
-	private EnemyCharacter enemyCharacter;
-	private List<List<Character>> targetCandidates;
+	protected EnemyCharacter enemyCharacter;
+	protected List<List<Character>> targetCandidates;
 
-	private List<Character> targetableCharactersInCloseRange;
+	protected List<Character> targetableCharactersInCloseRange;
 
-	private List<AttackMeta> availableAttacks; 
+	protected List<AttackMeta> availableAttacks; 
 
-	private AttackMeta chosenAttack;
+	protected AttackMeta chosenAttack;
 
-	private List<Character> targets;
+	protected List<Character> targets;
 
 	public AttackSelectionUtility(
 		EnemyCharacter enemyCharacter, 
@@ -28,112 +28,116 @@ public partial class AttackSelectionUtility {
 		this.targetableCharactersInCloseRange = targetableCharactersInCloseRange;
 		this.targets = new List<Character>();
 	}
-	
-	public void chooseCunningCharacterAttack() {
-	  
-		List<AttackMeta> attackCandidates = new List<AttackMeta>();
-		List<Character> refinedTargetCandidates = new List<Character>();        
-		int targetRange = 0;
 
-		if (canAttackFromDistance()) {
-			attackCandidates = chooseAttacksWithGreatestRange();
-			
-			for (int i = 0; i < attackCandidates.Count(); i++)
-			{
-				List<Character> characterList = targetCandidates.ElementAt(i);
-				
-				foreach (Character character in characterList)
-				{
-					if (!willAttackingHurtCharacter(character, attackCandidates.ElementAt(i))) {
-						refinedTargetCandidates.Add(character);
-					}
-				}
-			}
-
-			targetRange = attackCandidates.First().attackTargetMeta.range;			
-		}
-
-
-		if (refinedTargetCandidates.Count() == 0) {
-
-			List<AttackMeta> closeRangeAttacks = this.getCloseRangeAttacks();
-			List<Character> closeRangeTargetable = new List<Character>();
-
-			foreach (Character character in targetableCharactersInCloseRange)
-			{
-				if (closeRangeAttacks.Count() > 0) {
-					if (!willAttackingHurtCharacter(character, closeRangeAttacks.First())) {
-						closeRangeTargetable.Add(character);
-					}
-				}     
-			}
-
-			if (closeRangeTargetable.Count() > 0) {
-				refinedTargetCandidates = closeRangeTargetable;
-				attackCandidates = closeRangeAttacks;
-				targetRange = 1;			
-
-			} else {
-				refinedTargetCandidates = this.targetCandidates.ElementAt(0);
-				targetRange = this.availableAttacks.Max(attack => attack.attackTargetMeta.range);; 
-			}
- 
-		} 
-		
-		this.chosenAttack = this.choseRandomAttack(attackCandidates);
-
-		if (this.chosenAttack.attackTargetMeta.targetableCount == 1 && !this.chosenAttack.attackTargetMeta.areaOfEffect) {
-			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
-		} else if (this.chosenAttack.attackTargetMeta.areaOfEffect) {
-			// lets deal with this later i suppose
-			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
-			
-		} else {
-			
-			Character randomCharacter = this.chooseRandomCharacter(refinedTargetCandidates);
-
-			if (randomCharacter is not null) {
-				this.targets.Add(randomCharacter);
-			} else {
-				// //GD.Print("Null character reference");
-			}
-			// this for ranged attacks with more than one targets
-
-			// I'll have to like calculate the optimal GlobalPosition to target the most enemies...
-			// so yh lets deal with this later
-			// if(this.chosenAttack.attackTargetMeta.targetableCount == refinedTargetCandidates.Count()) {
-			// 	this.targets = refinedTargetCandidates;
-			// } else if (this.chosenAttack.attackTargetMeta.targetableCount < refinedTargetCandidates.Count()) {
-			// 	for(int i = 0; i < refinedTargetCandidates.Count(); i++) {
-			// 		Character candidate = this.chooseRandomCharacter(refinedTargetCandidates);
-			// 		this.targets.Add(candidate);
-			// 		refinedTargetCandidates.Remove(candidate);				
-			// 	}
-			// } else {
-			// 	this.targets.AddRange(refinedTargetCandidates);
-			// 	List<Character> targetableCharacters = this.targetCandidates.ElementAt(
-			// 		this.enemyCharacter.attacks.IndexOf(this.chosenAttack)
-			// 	);
-
-			// 	for(int i = 0; i < (this.chosenAttack.attackTargetMeta.targetableCount - this.targets.Count()); i++) {
-
-			// 		while (true)
-			// 		{
-			// 			Character candidate = this.chooseRandomCharacter(targetableCharacters);
-
-			// 			if(!this.targets.Contains(candidate)) {
-			// 				this.targets.Add(candidate);				
-			// 				break;
-			// 			} 
-
-			// 			targetableCharacters.Remove(candidate);
-						
-			// 		}
-			// 	}
-			// }
-		}
-		MapEntities.attackRange = targetRange;
+	public virtual void chooseAttack() {
+		return;
 	}
+	
+	// public void chooseCunningCharacterAttack() {
+	  
+	// 	List<AttackMeta> attackCandidates = new List<AttackMeta>();
+	// 	List<Character> refinedTargetCandidates = new List<Character>();        
+	// 	int targetRange = 0;
+
+	// 	if (canAttackFromDistance()) {
+	// 		attackCandidates = chooseAttacksWithGreatestRange();
+			
+	// 		for (int i = 0; i < attackCandidates.Count(); i++)
+	// 		{
+	// 			List<Character> characterList = targetCandidates.ElementAt(i);
+				
+	// 			foreach (Character character in characterList)
+	// 			{
+	// 				if (!willAttackingHurtCharacter(character, attackCandidates.ElementAt(i))) {
+	// 					refinedTargetCandidates.Add(character);
+	// 				}
+	// 			}
+	// 		}
+
+	// 		targetRange = attackCandidates.First().attackTargetMeta.range;			
+	// 	}
+
+
+	// 	if (refinedTargetCandidates.Count() == 0) {
+
+	// 		List<AttackMeta> closeRangeAttacks = this.getCloseRangeAttacks();
+	// 		List<Character> closeRangeTargetable = new List<Character>();
+
+	// 		foreach (Character character in targetableCharactersInCloseRange)
+	// 		{
+	// 			if (closeRangeAttacks.Count() > 0) {
+	// 				if (!willAttackingHurtCharacter(character, closeRangeAttacks.First())) {
+	// 					closeRangeTargetable.Add(character);
+	// 				}
+	// 			}     
+	// 		}
+
+	// 		if (closeRangeTargetable.Count() > 0) {
+	// 			refinedTargetCandidates = closeRangeTargetable;
+	// 			attackCandidates = closeRangeAttacks;
+	// 			targetRange = 1;			
+
+	// 		} else {
+	// 			refinedTargetCandidates = this.targetCandidates.ElementAt(0);
+	// 			targetRange = this.availableAttacks.Max(attack => attack.attackTargetMeta.range);; 
+	// 		}
+ 
+	// 	} 
+		
+	// 	this.chosenAttack = this.choseRandomAttack(attackCandidates);
+
+	// 	if (this.chosenAttack.attackTargetMeta.targetableCount == 1 && !this.chosenAttack.attackTargetMeta.areaOfEffect) {
+	// 		this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
+	// 	} else if (this.chosenAttack.attackTargetMeta.areaOfEffect) {
+	// 		// lets deal with this later i suppose
+	// 		this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
+			
+	// 	} else {
+			
+	// 		Character randomCharacter = this.chooseRandomCharacter(refinedTargetCandidates);
+
+	// 		if (randomCharacter is not null) {
+	// 			this.targets.Add(randomCharacter);
+	// 		} else {
+	// 			// //GD.Print("Null character reference");
+	// 		}
+	// 		// this for ranged attacks with more than one targets
+
+	// 		// I'll have to like calculate the optimal GlobalPosition to target the most enemies...
+	// 		// so yh lets deal with this later
+	// 		// if(this.chosenAttack.attackTargetMeta.targetableCount == refinedTargetCandidates.Count()) {
+	// 		// 	this.targets = refinedTargetCandidates;
+	// 		// } else if (this.chosenAttack.attackTargetMeta.targetableCount < refinedTargetCandidates.Count()) {
+	// 		// 	for(int i = 0; i < refinedTargetCandidates.Count(); i++) {
+	// 		// 		Character candidate = this.chooseRandomCharacter(refinedTargetCandidates);
+	// 		// 		this.targets.Add(candidate);
+	// 		// 		refinedTargetCandidates.Remove(candidate);				
+	// 		// 	}
+	// 		// } else {
+	// 		// 	this.targets.AddRange(refinedTargetCandidates);
+	// 		// 	List<Character> targetableCharacters = this.targetCandidates.ElementAt(
+	// 		// 		this.enemyCharacter.attacks.IndexOf(this.chosenAttack)
+	// 		// 	);
+
+	// 		// 	for(int i = 0; i < (this.chosenAttack.attackTargetMeta.targetableCount - this.targets.Count()); i++) {
+
+	// 		// 		while (true)
+	// 		// 		{
+	// 		// 			Character candidate = this.chooseRandomCharacter(targetableCharacters);
+
+	// 		// 			if(!this.targets.Contains(candidate)) {
+	// 		// 				this.targets.Add(candidate);				
+	// 		// 				break;
+	// 		// 			} 
+
+	// 		// 			targetableCharacters.Remove(candidate);
+						
+	// 		// 		}
+	// 		// 	}
+	// 		// }
+	// 	}
+	// 	MapEntities.attackRange = targetRange;
+	// }
 
 	public List<Character> getTargets() {
 		return this.targets;
@@ -151,7 +155,7 @@ public partial class AttackSelectionUtility {
 		this.targets.Clear();
 	}
 
-	private AttackMeta choseRandomAttack(List<AttackMeta> attacks) {
+	protected AttackMeta choseRandomAttack(List<AttackMeta> attacks) {
 		var rand = new Random();
 
 		int randomIndex = rand.Next(0, attacks.Count());
@@ -160,7 +164,7 @@ public partial class AttackSelectionUtility {
 	}
 
 
-	private Character chooseRandomCharacter(List<Character> characters) {
+	protected Character chooseRandomCharacter(List<Character> characters) {
 		var rand = new Random();
 
 		if (characters.Count() == 0) return null;
@@ -176,17 +180,17 @@ public partial class AttackSelectionUtility {
 		}
 	}
 
-	private bool canAttackFromDistance() {
+	protected bool canAttackFromDistance() {
 		return this.availableAttacks.First().attackTargetMeta.range > 1;
 	}
 
-	private List<AttackMeta> getCloseRangeAttacks() {
+	protected List<AttackMeta> getCloseRangeAttacks() {
 		return (List<AttackMeta>)   this.availableAttacks
 									.Where(attack => attack.attackTargetMeta.closeRange == true)
 									.ToList();
 	}
 
-	private List<AttackMeta> chooseAttacksWithGreatestRange() {
+	protected List<AttackMeta> chooseAttacksWithGreatestRange() {
 		int greatestRange = availableAttacks.Max(attack => attack.attackTargetMeta.range);
 		return (List<AttackMeta>)   availableAttacks
 									.Where(attack => attack.attackTargetMeta.range == greatestRange)
@@ -195,11 +199,11 @@ public partial class AttackSelectionUtility {
 	}
 
 
-	private bool willAttackingHurtCharacter(Character target, AttackMeta attackCandidate) {
+	protected bool willAttackingHurtCharacter(Character target, AttackMeta attackCandidate) {
 		return target.equipedAttack.attackTargetMeta.range >= attackCandidate.attackTargetMeta.range;
 	}
 
-	private bool shouldEnemyAttackFromDistance() {
+	protected bool shouldEnemyAttackFromDistance() {
 
 		if (enemyCharacter.characterStat.health > 10) {
 			return false;

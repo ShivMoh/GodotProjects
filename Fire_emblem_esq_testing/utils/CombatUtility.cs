@@ -67,7 +67,11 @@ public partial class CombatUtility {
 		int damage = this.attackSequence(selectedCharacter, target, chosenAttack);
 		GD.Print("Base attack", (selectedCharacter.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence);
 		GD.Print(damage);
+		
 		target.characterStat.health -= damage;
+
+		GD.Print("Character", target.characterStat.name, target.characterStat.health);
+
 		selectedCharacter.equipedAttack = chosenAttack;
 
 		if (target.characterStat.health <= 0) {
@@ -86,6 +90,7 @@ public partial class CombatUtility {
 
 		} else {
 			target.healthBar.takeDamage(damage);
+			GD.Print(target.healthBar.Value);
 		}
 		return false;
 	 }
@@ -94,17 +99,16 @@ public partial class CombatUtility {
 		int damage = 0;
 	
 		if (chosenAttack.attackType == AttackType.MAGICAL) {
-			 damage = (selectedCharacter.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence;
+			 damage = (attacker.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence;
 		  }
 
 		if (chosenAttack.attackType == AttackType.PHYSICAL) {
-			 damage = (selectedCharacter.characterStat.strenth + chosenAttack.power) - target.equipedAttack.defence;
+			 damage = (attacker.characterStat.strenth + chosenAttack.power) - target.equipedAttack.defence;
 		  }
 		
-		int currentAttackindexPlus = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1 == AttackMeta.attributeMap.Count() ? 0 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute);	
+		int currentAttackindexPlus = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1 == AttackMeta.attributeMap.Count() ? 0 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1;	
 
-			int currentAttackindexLess = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) - 1 == -1 ?  AttackMeta.attributeMap.Count() - 1 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute);	
-
+			int currentAttackindexLess = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) - 1 == -1 ?  AttackMeta.attributeMap.Count() - 1 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) - 1;	
 		  if ( 		currentAttackindexPlus == 
 					AttackMeta.attributeMap.IndexOf(target.equipedAttack.attackAttribute)) {
 						 damage = damage * 2;

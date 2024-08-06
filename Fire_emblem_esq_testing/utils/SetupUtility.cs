@@ -55,7 +55,12 @@ public partial class SetupUtility {
 			character.setCharacterStats(characterMetas[i].characterStat);
 
 			character.moveSteps = character.getCharacterStats().speed;
+			GD.Print("Health bar", character.healthBar.Value, character.healthBar);
 
+			character.equipedAttack = character.attacks.First();
+			GD.Print("Attack attribute", character.equipedAttack.attackAttribute);
+			
+			character.healthBar.setUpParameters(characterMetas[i].characterStat.health);
 			characters.Add(character);
 
 			MapEntities.enemyCharacters.Add(character as EnemyCharacter);
