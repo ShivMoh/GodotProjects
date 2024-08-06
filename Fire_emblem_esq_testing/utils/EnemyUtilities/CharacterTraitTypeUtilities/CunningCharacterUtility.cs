@@ -23,55 +23,22 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 
 		if (canAttackFromDistance()) {
 			attackCandidates = chooseAttacksWithGreatestRange();
-			
-			for (int i = 0; i < attackCandidates.Count(); i++)
-			{
-				List<Character> characterList = targetCandidates.ElementAt(i);
 				
-				foreach (Character character in characterList)
-				{
-					if (!willAttackingHurtCharacter(character, attackCandidates.ElementAt(i))) {
-						refinedTargetCandidates.Add(character);
-					}
-				}
-			}
+			List<Character> characterList = targetCandidates.ElementAt(0);
+
+            refinedTargetCandidates.AddRange(characterList);
 
 			targetRange = attackCandidates.First().attackTargetMeta.range;			
 		}
 
-
-		if (refinedTargetCandidates.Count() == 0) {
-
-			List<AttackMeta> closeRangeAttacks = this.getCloseRangeAttacks();
-			List<Character> closeRangeTargetable = new List<Character>();
-
-			foreach (Character character in targetableCharactersInCloseRange)
-			{
-				if (closeRangeAttacks.Count() > 0) {
-					if (!willAttackingHurtCharacter(character, closeRangeAttacks.First())) {
-						closeRangeTargetable.Add(character);
-					}
-				}     
-			}
-
-			if (closeRangeTargetable.Count() > 0) {
-				refinedTargetCandidates = closeRangeTargetable;
-				attackCandidates = closeRangeAttacks;
-				targetRange = 1;			
-
-			} else {
-				refinedTargetCandidates = this.targetCandidates.ElementAt(0);
-				targetRange = this.availableAttacks.Max(attack => attack.attackTargetMeta.range);; 
-			}
- 
-		} 
-		
 		this.chosenAttack = this.choseRandomAttack(attackCandidates);
 
 		if (this.chosenAttack.attackTargetMeta.targetableCount == 1 && !this.chosenAttack.attackTargetMeta.areaOfEffect) {
 			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
 		} else if (this.chosenAttack.attackTargetMeta.areaOfEffect) {
 			// lets deal with this later i suppose
+
+            
 			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
 			
 		} else {
@@ -98,8 +65,16 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
     }
 
     public void findSafestAttackRoute() {
-        
+
     }
+
+
+	private bool isEnemyInRange(Vector2I currentCoord, Vector2I enemyCoord, int attackRange) {
+		float distanceTo  = Mathf.Sqrt(Mathf.Pow(currentCoord.X - enemyCoord.X, 2) + Mathf.Pow(currentCoord.Y - enemyCoord.Y, 2));
+		if (Mathf.Floor(distanceTo) <= attackRange ) return true;
+		return false;
+	}
+
 
 
 }
