@@ -7,15 +7,16 @@ using Godot;
 public partial class EnemyAttackSelectionState : State {
 
 
-	private CunningCharacterUtility attackSelectionUtility;
+	private AttackSelectionUtility attackSelectionUtility;
 	public override void enter()
 	{
-		this.attackSelectionUtility = new CunningCharacterUtility(
+		this.attackSelectionUtility = new TestCharacterUtility(
 			MapEntities.selectedCharacter as EnemyCharacter,
 			MapEntities.targetCandidates,
 			MapEntities.attackMetas,
 			MapEntities.closeRangeTargets            
 		);
+
 		//GD.Print(this.Name);
 	}
 

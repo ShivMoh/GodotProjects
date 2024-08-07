@@ -65,13 +65,9 @@ public partial class CombatUtility {
 	public  bool attackCharacter(Character selectedCharacter, Character target, AttackMeta chosenAttack) {
 
 		int damage = this.attackSequence(selectedCharacter, target, chosenAttack);
-		GD.Print("Base attack", (selectedCharacter.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence);
-		GD.Print(damage);
-		
+		// GD.Print("Base attack damange", (selectedCharacter.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence);
+		// GD.Print("Damage taken", damage);
 		target.characterStat.health -= damage;
-
-		GD.Print("Character", target.characterStat.name, target.characterStat.health);
-
 		selectedCharacter.equipedAttack = chosenAttack;
 
 		if (target.characterStat.health <= 0) {
@@ -90,7 +86,6 @@ public partial class CombatUtility {
 
 		} else {
 			target.healthBar.takeDamage(damage);
-			GD.Print(target.healthBar.Value);
 		}
 		return false;
 	 }
@@ -106,9 +101,10 @@ public partial class CombatUtility {
 			 damage = (attacker.characterStat.strenth + chosenAttack.power) - target.equipedAttack.defence;
 		  }
 		
-		int currentAttackindexPlus = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1 == AttackMeta.attributeMap.Count() ? 0 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1;	
+		int currentAttackindexPlus = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1 == AttackMeta.attributeMap.Count() ? 0 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute);	
 
-			int currentAttackindexLess = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) - 1 == -1 ?  AttackMeta.attributeMap.Count() - 1 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) - 1;	
+			int currentAttackindexLess = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) - 1 == -1 ?  AttackMeta.attributeMap.Count() - 1 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute);	
+
 		  if ( 		currentAttackindexPlus == 
 					AttackMeta.attributeMap.IndexOf(target.equipedAttack.attackAttribute)) {
 						 damage = damage * 2;

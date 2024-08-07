@@ -82,7 +82,7 @@ public partial class OpenWorldInitialState : State {
 		new CharacterMeta(
 			tileCoord: new Vector2I(6, 1),
 			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : enemyAttacks,
+			attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
 			characterStat : characterStat2.Clone() as CharacterStat
 		)
 	};

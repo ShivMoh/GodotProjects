@@ -19,6 +19,8 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 	  
 		List<AttackMeta> attackCandidates = new List<AttackMeta>();
 		List<Character> refinedTargetCandidates = new List<Character>();        
+		int threshold = 10;
+
 		int targetRange = 0;
 
 		if (canAttackFromDistance()) {
@@ -36,25 +38,59 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 		if (this.chosenAttack.attackTargetMeta.targetableCount == 1 && !this.chosenAttack.attackTargetMeta.areaOfEffect) {
 			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
 		} else if (this.chosenAttack.attackTargetMeta.areaOfEffect) {
-			// lets deal with this later i suppose
-
-            
 			this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
-			
 		} else {
 			
-			Character randomCharacter = this.chooseRandomCharacter(refinedTargetCandidates);
+			
+			
+			// Character randomCharacter = this.chooseRandomCharacter(refinedTargetCandidates);
 
-			if (randomCharacter is not null) {
-				this.targets.Add(randomCharacter);
-			} else {
-				// //GD.Print("Null character reference");
-			}
-			// this for ranged attacks with more than one targets
-
+			// if (randomCharacter is not null) {
+			// 	this.targets.Add(randomCharacter);
+			// } else {
+			// 	// //GD.Print("Null character reference");
+			// }
 		}
+		
 		MapEntities.attackRange = targetRange;
 	}
+
+	
+
+	public Dictionary<Vector2I, List<Character>> findPoolsForAttack(AttackMeta attackMeta) {
+		Dictionary<Vector2I, List<Character>> spots = new Dictionary<Vector2I, List<Character>>();
+		
+		int attackIndex = enemyCharacter.attacks.IndexOf(attackMeta);
+		
+		List<Character> targetCandidatesForAttack = targetCandidates[attackIndex];
+
+		foreach(Character character in targetCandidatesForAttack) {
+
+			Vector2I tileCoordsForCharacter = MapEntities.map.LocalToMap(character.Position);
+			List<Character> hitCharacters = new List<Character>();
+			int radius = (int) Mathf.Floor( (float)  attackMeta.attackTargetMeta.radius / 2);
+
+			Vector2 pointA = new Vector2(tileCoordsForCharacter.X - radius, tileCoordsForCharacter.Y - radius);
+			Vector2 pointB = new Vector2(tileCoordsForCharacter.X + radius, tileCoordsForCharacter.Y + radius);
+			
+			foreach(Character character2 in targetCandidatesForAttack) {
+				Vector2 tileCoordsForCharacter2 = MapEntities.map.LocalToMap(character2.Position);
+
+				if( 	tileCoordsForCharacter2.X > pointA.X && tileCoordsForCharacter2.X < pointB.X &&
+						tileCoordsForCharacter2.X < pointB.X && tileCoordsForCharacter2.Y < pointB.Y
+				) {
+					hitCharacters.Add(character2);
+				}
+				
+			}
+
+			spots.Add(tileCoordsForCharacter, hitCharacters);
+		}
+
+		return spots;
+	}
+
+	
 
     // character who priortizes most characters targeted
     // character who priortizes most damage dealth
