@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddwlr1lmi6gjr"]
+[gd_scene load_steps=8 format=3 uid="uid://ddwlr1lmi6gjr"]
 
 [ext_resource type="Script" path="res://mobs/scripts/EnemyCharacter.cs" id="1_5hirs"]
 [ext_resource type="Texture2D" uid="uid://dy54j4odw8ha5" path="res://assets/characters/knight..png" id="1_oq3ux"]
+[ext_resource type="Shader" path="res://shaders/character.gdshader" id="1_unjva"]
 [ext_resource type="PackedScene" uid="uid://dggl60itto42a" path="res://entities/health_bar.tscn" id="3_xjmlg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k1o1f"]
+shader = ExtResource("1_unjva")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0056k"]
 animations = [{
@@ -51,8 +55,9 @@ animations = [{
 size = Vector2(22, 56)
 
 [node name="EnemyCharacter" type="CharacterBody2D" node_paths=PackedStringArray("healthBar")]
-z_index = 10
+z_index = 1
 y_sort_enabled = true
+material = SubResource("ShaderMaterial_k1o1f")
 position = Vector2(591, 20)
 collision_layer = 0
 collision_mask = 5

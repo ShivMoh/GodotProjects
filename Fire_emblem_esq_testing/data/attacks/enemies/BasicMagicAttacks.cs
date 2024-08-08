@@ -11,7 +11,7 @@ public static partial class BasicMagicAttack {
 			power: 5,
 			defence: 2,
 			timesUsableUntilReset: 20,
-			attackTargetMeta: new AttackTargetMeta(20, 1, radius: 5, areaOfEffect: true),
+			attackTargetMeta: new AttackTargetMeta(5, 1, radius: 5, areaOfEffect: true),
 			attackAttribute: AttackAttribute.FIRE,
 			effect: AttackEffect.BURN,  
 			attackType: AttackType.MAGICAL
@@ -21,7 +21,7 @@ public static partial class BasicMagicAttack {
 			power: 3,
 			defence: 4,
 			timesUsableUntilReset: 20,
-			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
+			attackTargetMeta: new AttackTargetMeta(7, 1, radius: 1),
 			attackAttribute: AttackAttribute.WATER,
 			effect: AttackEffect.FREEZE,
 			attackType: AttackType.MAGICAL

@@ -20,22 +20,21 @@ public partial class TestCharacterUtility : AttackSelectionUtility{
 		this.chosenAttack = this.enemyCharacter.attacks.Where(attack => attack.attackTargetMeta.areaOfEffect).FirstOrDefault();
 
 		Dictionary<Vector2I, List<Character>> pools = findPoolsForAttack(this.chosenAttack);
+		
+		var maxPool = pools.MaxBy(pool => pool.Value.Count());
+		// int maxCount = pools.Values.First().Count();
+		// List<Character> characters = new List<Character>();
+		// foreach(List<Character> pool in pools.Values) {
+		// 	if(pool.Count() > maxCount) {
+		// 		maxCount = pool.Count();
+		// 		characters.Clear();
+		// 		characters.AddRange(pool);
+		// 	}
+		// }
 
-		int maxCount = pools.Values.First().Count();
-		List<Character> characters = new List<Character>();
-		foreach(List<Character> pool in pools.Values) {
-			if(pool.Count() > maxCount) {
-				maxCount = pool.Count();
-				characters.Clear();
-				characters.AddRange(pool);
-			}
-		}
-
-		if(characters.Count() == 0) characters.AddRange(pools.Values.First());
-		GD.Print(pools.Values.First().Count());
-		GD.Print(maxCount);
-		GD.Print("Characters", characters.Count());
-		this.targets.AddRange(characters);
+		// if(characters.Count() == 0) characters.AddRange(pools.Values.First());
+	
+		this.targets.AddRange(maxPool.Value);
 
 		MapEntities.attackRange = this.chosenAttack.attackTargetMeta.range;
 		
@@ -43,49 +42,6 @@ public partial class TestCharacterUtility : AttackSelectionUtility{
 
 	
 
-	public Dictionary<Vector2I, List<Character>> findPoolsForAttack(AttackMeta attackMeta) {
-		Dictionary<Vector2I, List<Character>> spots = new Dictionary<Vector2I, List<Character>>();
-		
-		int attackIndex = enemyCharacter.attacks.IndexOf(attackMeta);
-		// GD.Print("attack index", attackIndex);
-		// GD.Print("targetCandididates count", targetCandidates.Count());
-		List<Character> targetCandidatesForAttack = targetCandidates[attackIndex];
-
-		foreach(Character character in targetCandidatesForAttack) {
-
-			Vector2I tileCoordsForCharacter = MapEntities.map.LocalToMap(character.Position);
-			List<Character> hitCharacters = new List<Character>();
-			int radius = (int) Mathf.Floor( (float)  attackMeta.attackTargetMeta.radius / 2);
-			// GD.Print("Radius", radius);
-
-			Vector2 pointA = new Vector2(tileCoordsForCharacter.X - radius, tileCoordsForCharacter.Y - radius);
-			Vector2 pointB = new Vector2(tileCoordsForCharacter.X + radius, tileCoordsForCharacter.Y + radius);
-			
-			foreach(Character character2 in targetCandidatesForAttack) {
-
-				// if (character == character2) continue;
-
-				Vector2I tileCoordsForCharacter2 = MapEntities.map.LocalToMap(character2.Position);
-
-				if( 	(tileCoordsForCharacter2.X >= pointA.X && tileCoordsForCharacter2.X <= pointB.X) &&
-						(tileCoordsForCharacter2.Y >= pointA.Y && tileCoordsForCharacter2.Y <= pointB.Y)
-				) {
-					GD.Print("Hit");
-					hitCharacters.Add(character2);
-				}
-				
-			}
-
-			spots.Add(tileCoordsForCharacter, hitCharacters);
-			// hitCharacters.Clear();
-		}
-
-		foreach(List<Character> characterS in spots.Values) {
-			GD.Print("Checking count", characterS.Count());
-		}
-
-		return spots;
-	}
 
 	
 

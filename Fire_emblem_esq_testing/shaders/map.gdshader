@@ -1,5 +1,5 @@
 shader_type canvas_item;
-// render_mode blend_premul_alpha;
+render_mode blend_premul_alpha;
 
 uniform float darkness_factor = 0.0;
 void vertex() {

@@ -155,6 +155,47 @@ public partial class AttackSelectionUtility {
 		this.targets.Clear();
 	}
 
+
+	protected Dictionary<Vector2I, List<Character>> findPoolsForAttack(AttackMeta attackMeta) {
+		Dictionary<Vector2I, List<Character>> spots = new Dictionary<Vector2I, List<Character>>();
+		
+		int attackIndex = enemyCharacter.attacks.IndexOf(attackMeta);
+		// GD.Print("attack index", attackIndex);
+		// GD.Print("targetCandididates count", targetCandidates.Count());
+		List<Character> targetCandidatesForAttack = targetCandidates[attackIndex];
+
+		foreach(Character character in targetCandidatesForAttack) {
+
+			Vector2I tileCoordsForCharacter = MapEntities.map.LocalToMap(character.Position);
+			List<Character> hitCharacters = new List<Character>();
+			int radius = (int) Mathf.Floor( (float)  attackMeta.attackTargetMeta.radius / 2);
+			// GD.Print("Radius", radius);
+
+			Vector2 pointA = new Vector2(tileCoordsForCharacter.X - radius, tileCoordsForCharacter.Y - radius);
+			Vector2 pointB = new Vector2(tileCoordsForCharacter.X + radius, tileCoordsForCharacter.Y + radius);
+			
+			foreach(Character character2 in targetCandidatesForAttack) {
+
+				// if (character == character2) continue;
+
+				Vector2I tileCoordsForCharacter2 = MapEntities.map.LocalToMap(character2.Position);
+
+				if( 	(tileCoordsForCharacter2.X >= pointA.X && tileCoordsForCharacter2.X <= pointB.X) &&
+						(tileCoordsForCharacter2.Y >= pointA.Y && tileCoordsForCharacter2.Y <= pointB.Y)
+				) {
+					GD.Print("Hit");
+					hitCharacters.Add(character2);
+				}
+				
+			}
+
+			spots.Add(tileCoordsForCharacter, hitCharacters);
+			// hitCharacters.Clear();
+		}
+
+		return spots;
+	}
+
 	protected AttackMeta choseRandomAttack(List<AttackMeta> attacks) {
 		var rand = new Random();
 
@@ -179,6 +220,14 @@ public partial class AttackSelectionUtility {
 			return chooseRandomCharacter(characters);
 		}
 	}
+
+	protected double generateRandomFloat() {
+		var rand = new Random();
+
+		double randomFloat = rand.NextDouble();
+
+		return randomFloat;
+	}	
 
 	protected bool canAttackFromDistance() {
 		return this.availableAttacks.First().attackTargetMeta.range > 1;

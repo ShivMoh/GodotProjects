@@ -10,7 +10,7 @@ public partial class EnemyAttackSelectionState : State {
 	private AttackSelectionUtility attackSelectionUtility;
 	public override void enter()
 	{
-		this.attackSelectionUtility = new TestCharacterUtility(
+		this.attackSelectionUtility = new CunningCharacterUtility(
 			MapEntities.selectedCharacter as EnemyCharacter,
 			MapEntities.targetCandidates,
 			MapEntities.attackMetas,
