@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cxrlkcw01dda"]
+[gd_scene load_steps=34 format=3 uid="uid://cxrlkcw01dda"]
 
 [ext_resource type="Texture2D" uid="uid://b5xv32i6xq2fs" path="res://assets/characters/walk_back.png" id="1_0oi2i"]
 [ext_resource type="Shader" path="res://shaders/character.gdshader" id="1_csowi"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bku2ow64kp1uv" path="res://assets/characters/walk_right.png" id="5_7f2va"]
 [ext_resource type="PackedScene" uid="uid://dggl60itto42a" path="res://entities/health_bar.tscn" id="7_c72vx"]
 [ext_resource type="Texture2D" uid="uid://c5llphfk828aw" path="res://assets/shadow.png" id="8_68ia6"]
+[ext_resource type="Shader" path="res://mobs/scenes/playable_character.gdshader" id="10_x1ub8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ekjmw"]
 shader = ExtResource("1_csowi")
@@ -177,6 +178,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e3w8n"]
+shader = ExtResource("10_x1ub8")
+
 [node name="PlayableCharacter" type="CharacterBody2D" node_paths=PackedStringArray("healthBar")]
 z_index = 1
 material = SubResource("ShaderMaterial_ekjmw")
@@ -187,12 +191,6 @@ healthBar = NodePath("HealthBar")
 [node name="PopupMenu" type="PopupMenu" parent="."]
 hide_on_item_selection = false
 hide_on_checkable_item_selection = false
-
-[node name="HealthBar" parent="." instance=ExtResource("7_c72vx")]
-offset_left = -64.0
-offset_top = -53.0
-offset_right = 52.0
-offset_bottom = -34.0
 
 [node name="Shadow" type="Sprite2D" parent="."]
 y_sort_enabled = true
@@ -208,3 +206,32 @@ y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_mp8j5")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="Label" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -102.0
+offset_right = 53.0
+offset_bottom = -79.0
+text = "TESTING"
+
+[node name="Health" type="Label" parent="."]
+offset_left = -22.0
+offset_top = -66.0
+offset_right = 19.0
+offset_bottom = -43.0
+text = "100"
+
+[node name="HealthBar" parent="." instance=ExtResource("7_c72vx")]
+visible = false
+offset_left = -64.0
+offset_top = -53.0
+offset_right = 52.0
+offset_bottom = -34.0
+
+[node name="Hit" type="Label" parent="."]
+material = SubResource("ShaderMaterial_e3w8n")
+offset_left = 36.0
+offset_top = -41.0
+offset_right = 76.0
+offset_bottom = -18.0
+text = "!"

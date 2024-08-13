@@ -13,6 +13,7 @@ public partial class CombatStateMachine : StateMachine {
 
 		states.Add(firstState as State);
 		states.Add(finalState as State);
+		states.Add(new CameraState() as State);
 
 		states.AddRange(
 			new List<State>() {		

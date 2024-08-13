@@ -23,8 +23,6 @@ public partial class TargetSelectionState : State {
 	private List<Vector2I> radiusCoords;
 	public override void enter()
 	{
-		//GD.Print("I am on target selection");
-		//GD.Print("Stats", MapEntities.characters.Count(), MapEntities.playableCharacters.Count(), MapEntities.enemyCharacters.Count());
 
 		this.tileUtilitiy = new TileUtility(MapEntities.map);
 		this.combatUtility = new CombatUtility(
@@ -36,8 +34,6 @@ public partial class TargetSelectionState : State {
 
 		foreach(Character character in MapEntities.detectedEnemies) {
 
-			GD.Print(character.GetType().Name);
-			// GD.Print(MapEntities.map.LocalToMap(character.Position));
 			MapEntities.map.SetCell(
 				1,
 				MapEntities.map.LocalToMap(character.Position),
@@ -51,14 +47,11 @@ public partial class TargetSelectionState : State {
 				0, 
 				new Vector2I(0, 0)
 			);
-			// this.tileUtilitiy.highLight( MapEntities.map.LocalToMap(character.Position), new Vector2I(0, 1));
-			// this.tileUtilitiy.highLight( MapEntities.map.LocalToMap(character.GlobalPosition), new Vector2I(2, 1));
 
-			GD.Print( MapEntities.map.LocalToMap(character.Position),  MapEntities.map.LocalToMap(character.GlobalPosition));
 
 		}
 		selectedEnemy = MapEntities.detectedEnemies.First();
-		// this.highLightEnemies();
+
 		this.numberOfSelectedEnemies = 0;
 		this.currentTileCoords = MapEntities.map.LocalToMap(MapEntities.selectedCharacter.Position);
 		this.cursorRadius = (int) MapEntities.chosenAttack.attackTargetMeta.radius;
@@ -68,10 +61,6 @@ public partial class TargetSelectionState : State {
 		}
 		this.placeCursor();
 
-		// foreach (Character character in MapEntities.playableCharacters)
-		// {
-		// 	//GD.Print("Playable character healths target selection state", character.characterStat.health);
-		// }
 	}
 
 	public override void physicsUpdate(double _delta)
@@ -131,7 +120,6 @@ public partial class TargetSelectionState : State {
 
 
 		if (Input.IsActionJustPressed("cancel")) {
-			// MapEntities.map.ClearLayer(1);
 			EmitSignal(SignalName.StateChange, this, nameof(AttackSelectionState));
 		}
 

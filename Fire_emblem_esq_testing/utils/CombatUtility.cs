@@ -3,6 +3,7 @@ using System.Numerics;
 using Godot;
 using Vector2 = Godot.Vector2;
 using System.Linq;
+using System;
 
 public partial class CombatUtility {
 	
@@ -41,6 +42,8 @@ public partial class CombatUtility {
 		{
 			Vector2I enemyCoord = tilemap.LocalToMap(character.Position);
 			
+			// perhaps instead of this, I'll not make it impossible for like a bow to shoot a close range
+			// but rather incur a penality on its attack
 			if (attack.attackTargetMeta.closeRange) {
 				if (this.checkAdjacent(currentCoord, enemyCoord)) {
 					characters.Add(character);
@@ -64,11 +67,16 @@ public partial class CombatUtility {
 
 	public  bool attackCharacter(Character selectedCharacter, Character target, AttackMeta chosenAttack) {
 
+		target.GetNode<Label>("Hit").Text = "Missed!";
+		if (!doesAttackHit(selectedCharacter, target, chosenAttack)) return false;
+		target.GetNode<Label>("Hit").Text = "Hit!";
+
 		int damage = this.attackSequence(selectedCharacter, target, chosenAttack);
-		// GD.Print("Base attack damange", (selectedCharacter.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence);
-		// GD.Print("Damage taken", damage);
 		target.characterStat.health -= damage;
+
+		if (target is EnemyCharacter) GD.Print("Health after attack", target.characterStat.health, damage);
 		selectedCharacter.equipedAttack = chosenAttack;
+		target.updateText();
 
 		if (target.characterStat.health <= 0) {
 
@@ -89,31 +97,58 @@ public partial class CombatUtility {
 		}
 		return false;
 	 }
+
+	private bool doesAttackHit(Character attacker, Character target, AttackMeta chosenAttack) {
+
+		RandomNumberGenerator random = new RandomNumberGenerator();
+		int randomNumber = random.RandiRange(0, 100);
+		int chanceToHit = (attacker.characterStat.skill + chosenAttack.accuracy) - (target.characterStat.speed); 
+
+		if (chanceToHit >= randomNumber) return true;
+		
+		return false;
+	}
 	
 	private int attackSequence(Character attacker, Character target, AttackMeta chosenAttack) {
 		int damage = 0;
 	
 		if (chosenAttack.attackType == AttackType.MAGICAL) {
-			 damage = (attacker.characterStat.magic + chosenAttack.power) - target.equipedAttack.defence;
-		  }
+			damage = (attacker.characterStat.magic + chosenAttack.power);
+		}
 
 		if (chosenAttack.attackType == AttackType.PHYSICAL) {
-			 damage = (attacker.characterStat.strenth + chosenAttack.power) - target.equipedAttack.defence;
-		  }
+			damage = (attacker.characterStat.strenth + chosenAttack.power); 
+
+		}
 		
-		int currentAttackindexPlus = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1 == AttackMeta.attributeMap.Count() ? 0 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute);	
+		int currentAttackindexPlus = 
+			AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1 == AttackMeta.attributeMap.Count() 
+			? 0 
+			: AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) + 1;	
 
-			int currentAttackindexLess = AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) - 1 == -1 ?  AttackMeta.attributeMap.Count() - 1 : AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute);	
+		int currentAttackindexLess = 
+			AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) - 1 == -1 
+			?  AttackMeta.attributeMap.Count() - 1 
+			: AttackMeta.attributeMap.IndexOf(chosenAttack.attackAttribute) - 1;	
 
-		  if ( 		currentAttackindexPlus == 
-					AttackMeta.attributeMap.IndexOf(target.equipedAttack.attackAttribute)) {
-						 damage = damage * 2;
-			   }
+		if ( 		currentAttackindexPlus == 
+				AttackMeta.attributeMap.IndexOf(target.equipedAttack.attackAttribute)) {
+					GD.Print("Double Damage");
+					damage = damage * 2;
+			}
 
-		  if ( 		currentAttackindexLess == 
-					AttackMeta.attributeMap.IndexOf(target.equipedAttack.attackAttribute)) {
-						 damage = damage/2;
-			   }
+		if ( 		currentAttackindexLess == 
+				AttackMeta.attributeMap.IndexOf(target.equipedAttack.attackAttribute)) {
+					GD.Print("Half Damage");
+					damage = damage/2;
+			}
+		if (chosenAttack.attackType == AttackType.MAGICAL) damage -= (target.equipedAttack.defence + target.characterStat.magicalDefence);
+		if (chosenAttack.attackType == AttackType.PHYSICAL) damage -= (target.equipedAttack.defence + target.characterStat.physicalDefence);
+
+		GD.Print(damage);
+		if (damage < 0 ) damage = 0;
+
+
 		 return damage; 
 	}
 

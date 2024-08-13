@@ -69,6 +69,7 @@ sprite_frames = SubResource("SpriteFrames_0056k")
 animation = &"back"
 
 [node name="HealthBar" parent="." node_paths=PackedStringArray("character") instance=ExtResource("3_xjmlg")]
+visible = false
 offset_left = -58.0
 offset_top = -65.0
 offset_right = 58.0
@@ -77,3 +78,24 @@ character = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ensb6")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -25.0
+offset_top = -92.0
+offset_right = 27.0
+offset_bottom = -69.0
+text = "Label"
+
+[node name="Health" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = -37.0
+text = "100"
+
+[node name="Hit" type="Label" parent="."]
+offset_left = 39.0
+offset_top = -52.0
+offset_right = 79.0
+offset_bottom = -29.0
+text = "!"

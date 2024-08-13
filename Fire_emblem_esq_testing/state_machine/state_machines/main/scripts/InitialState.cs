@@ -80,6 +80,7 @@ public partial class InitialState : State {
 			character.setCharacterStats(playableCharactersMeta[i].characterStat);
 		
 			character.moveSteps = character.getCharacterStats().speed;
+			character.updateText();
 
 			MapEntities.map.GetNode("playableCharacters").AddChild(character);
 			MapEntities.playableCharacters.Add(character);

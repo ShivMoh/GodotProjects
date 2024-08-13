@@ -26,11 +26,13 @@ public partial class Character : CharacterBody2D
 
 	[Export]
 	public HealthBar healthBar;
+
 	public override void _Ready()
 	{
 		targetGlobalPosition = this.Position;
 		//GD.Print("Initialized", targetGlobalPosition);
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+
 		
 		equipedAttack = attacks.First();
 		// this.ZIndex = 10;
@@ -38,6 +40,7 @@ public partial class Character : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		updateText();
 		if (!open) {
 			Vector2 velocity = this.Velocity;
 
@@ -72,6 +75,7 @@ public partial class Character : CharacterBody2D
 		this.attacks = attacks;
 		this.equipedAttack = attacks.First();
 	}
+
 
 
 	protected Vector2 moveTo(Vector2 velocity) {
@@ -112,6 +116,12 @@ public partial class Character : CharacterBody2D
 		
 		if (direction == Vector2.Zero) animatedSprite.Play("idle");
 	}
+
+	public void updateText() {
+		GetNode<Label>("Label").Text = this.equipedAttack.name;
+		GetNode<Label>("Health").Text =  this.characterStat.health.ToString();
+	}
+
 
 }
    

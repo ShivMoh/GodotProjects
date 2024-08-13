@@ -105,25 +105,17 @@ public partial class ExploreState : State
 		}
 
 		if (Input.IsActionJustPressed("cancel")) {
-			MapEntities.selectedCharacter = characterUtility.unselectCharacter(ref path);
-			tileUtility.drawCursor(currentTileCoords);
+
+			if (MapEntities.selectedCharacter == null) {
+				EmitSignal(SignalName.StateChange, this, nameof(CameraState));
+			} else {
+
+				MapEntities.selectedCharacter = characterUtility.unselectCharacter(ref path);
+				tileUtility.drawCursor(currentTileCoords);
+			}
 		}
 
-		if (Input.IsActionJustPressed("zoom_out")) {
-			MapEntities.mapCamera.Zoom = MapEntities.mapCamera.Zoom * 2;
-			//GD.Print(MapEntities.mapCamera.Enabled);
-			//GD.Print(MapEntities.mapCamera.Zoom);
-			//GD.Print("Zooming out");
-		}
 
-		if (Input.IsActionJustPressed("zoom_in")) {
-			MapEntities.mapCamera.Zoom = MapEntities.mapCamera.Zoom / 2;
-
-			////GD.Print(GetViewport().GetCamera2D() as Camera2D is null);
-			// //GD.Print(MapEntities.mapCamera.Enabled);
-			// //GD.Print(MapEntities.mapCamera.Zoom);
-			//GD.Print("Zooming in");
-		}
 
 		if (MapEntities.selectedCharacter != null) {
 			if (MapEntities.selectedCharacter.move) {

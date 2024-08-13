@@ -2,49 +2,14 @@ using Godot;
 using System.Collections.Generic;
 using System.Linq;
 public partial class OpenWorldInitialState : State {
-	static List<AttackMeta> attacksMeta = new List<AttackMeta>() {
-		new AttackMeta(
-			name: "Fire ball",
-			power: 5,
-			defence: 2,
-			timesUsableUntilReset: 20,
-			attackTargetMeta: new AttackTargetMeta(20, 1, radius: 5, areaOfEffect: true),
-			attackAttribute: AttackAttribute.FIRE,
-			effect: AttackEffect.BURN,
-			attackType: AttackType.MAGICAL
-		),
-		new AttackMeta(
-			name: "Ice ball",
-			power: 3,
-			defence: 4,
-			timesUsableUntilReset: 20,
-			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
-			attackAttribute: AttackAttribute.WATER,
-			effect: AttackEffect.FREEZE,
-			attackType: AttackType.MAGICAL
-		)
-	};
-	
-	static List<AttackMeta> enemyAttacks = new List<AttackMeta>() {
-		new AttackMeta(
-			name: "Ice ball",
-			power: 3,
-			defence: 4,
-			timesUsableUntilReset: 20,
-			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
-			attackAttribute: AttackAttribute.WATER,
-			effect: AttackEffect.FREEZE
-		)
-	};
-
 	static CharacterStat characterStat= new CharacterStat(
 		name: "John",
 		health: 100,
 		strenth: 2,
 		magic : 18,
 		speed: 20,
-		magicalDefence: 20,
-		physicalDefence: 20,
+		magicalDefence: 10,
+		physicalDefence: 10,
 		intelligence: 15,
 		skill: 10,
 		constition: 20,
@@ -57,8 +22,8 @@ public partial class OpenWorldInitialState : State {
 		strenth: 2,
 		magic : 18,
 		speed: 20,
-		magicalDefence: 20,
-		physicalDefence: 20,
+		magicalDefence: 10,
+		physicalDefence: 10,
 		intelligence: 15,
 		skill: 10,
 		constition: 20,
@@ -73,6 +38,18 @@ public partial class OpenWorldInitialState : State {
 	);
 
 	CharacterMeta[] enemyCharactersMeta = {
+		new CharacterMeta(
+			tileCoord: new Vector2I(7, 2),
+			characterPath : "res://mobs/scenes/enemy_character.tscn",
+			attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
+			characterStat : characterStat.Clone() as CharacterStat
+		),
+		new CharacterMeta(
+			tileCoord: new Vector2I(6, 1),
+			characterPath : "res://mobs/scenes/enemy_character.tscn",
+			attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
+			characterStat : characterStat2.Clone() as CharacterStat
+		),
 		new CharacterMeta(
 			tileCoord: new Vector2I(7, 2),
 			characterPath : "res://mobs/scenes/enemy_character.tscn",

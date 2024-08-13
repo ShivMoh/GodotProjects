@@ -72,6 +72,8 @@ public partial class AttackMeta  {
 
     public int timesUsableUntilReset = 0;
 
+    public int accuracy = 0;
+
     public AttackTargetMeta attackTargetMeta;
 
     public AttackAttribute attackAttribute;
@@ -79,6 +81,7 @@ public partial class AttackMeta  {
     public AttackEffect effect;
 
     public AttackType attackType;
+
     
 	public static List<AttackAttribute> attributeMap = new List<AttackAttribute> {
 		  AttackAttribute.FIRE, // stronger than -->
@@ -93,6 +96,7 @@ public partial class AttackMeta  {
         int power,
 		int defence,
         int timesUsableUntilReset,
+        int accuracy,
         AttackTargetMeta attackTargetMeta,
         AttackAttribute attackAttribute,
         AttackEffect effect = AttackEffect.NONE,
@@ -102,6 +106,7 @@ public partial class AttackMeta  {
         this.power = power;
 		this.defence = defence;
         this.timesUsableUntilReset = timesUsableUntilReset;
+        this.accuracy = accuracy;
         this.attackTargetMeta = attackTargetMeta;
         this.attackAttribute = attackAttribute;
         this.effect = effect;

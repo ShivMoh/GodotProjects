@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://p87r1a16r1r7"]
+
+[ext_resource type="Texture2D" uid="uid://csc2to617fy44" path="res://assets/church.png" id="1_8lo4r"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Church" type="Sprite2D" parent="."]
+z_index = 2
+y_sort_enabled = true
+texture = ExtResource("1_8lo4r")
+offset = Vector2(0, 150)

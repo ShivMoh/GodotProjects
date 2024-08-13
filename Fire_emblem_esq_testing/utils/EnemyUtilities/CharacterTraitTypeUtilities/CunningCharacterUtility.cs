@@ -19,7 +19,6 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 	  
 		List<AttackMeta> attackCandidates = new List<AttackMeta>();
 		List<Character> refinedTargetCandidates = new List<Character>();        
-		int threshold = 2;
 
 		int targetRange = 0;
 
@@ -33,22 +32,7 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 			targetRange = attackCandidates.First().attackTargetMeta.range;			
 		}
 
-		GD.Print("attack candidates", attackCandidates.Count());
-		GD.Print("attack candidates", attackCandidates.Any(attack => attack.attackTargetMeta.areaOfEffect));
 		refinedTargetCandidates = behaviourSelector(refinedTargetCandidates, availableAttacks);
-		GD.Print("Shouldn't this be running as well", refinedTargetCandidates.Count());
-
-		// adding targets
-		// if (this.chosenAttack.attackTargetMeta.targetableCount == 1 && !this.chosenAttack.attackTargetMeta.areaOfEffect) {
-		// 	// went with the greatest ranged attack
-		// 	this.targets.Add(this.chooseRandomCharacter(refinedTargetCandidates));
-		// } else if (this.chosenAttack.attackTargetMeta.areaOfEffect) {
-		// 	// area of effect
-		// 	GD.Print("Area of effect should be running");
-		// 	this.targets.AddRange(refinedTargetCandidates);
-		// } else {
-		// 	this.targets.AddRange(refinedTargetCandidates);
-		// }
 		
 		this.targets = refinedTargetCandidates;
 		targetRange = this.chosenAttack.attackTargetMeta.range;
@@ -59,7 +43,6 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 		int threshold = 2;
 		List<Character> targets = new List<Character>(refinedTargetCandidates);
 
-		GD.Print(attackCandidates.Count());
 				
 		AttackMeta attackWithGreatestRange = attackCandidates.MaxBy(attack => attack.attackTargetMeta.range);
 		List<AttackMeta> areaOfEffectAttacks  = attackCandidates.Where(attack => attack.attackTargetMeta.areaOfEffect).ToList();
@@ -79,15 +62,12 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 
 		} 
 
-		GD.Print(areaOfEffectAttacks.Count(), multiTargetAttacks.Count());
-		
 		if (this.generateRandomFloat() > 0.5 && (areaOfEffectAttacks.Count() != 0 || multiTargetAttacks.Count() != 0)) {
 			
 			// get viable attacks
 			foreach (AttackMeta attack in areaOfEffectAttacks.Concat(multiTargetAttacks))
 			{	
 				if (Mathf.Abs(attackWithGreatestRange.attackTargetMeta.range - attack.attackTargetMeta.range) <= threshold) {
-					GD.Print("Pass threshold");
 					viableAttacks.Add(attack);
 				}
 			}
@@ -95,7 +75,6 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 
 			// prioritize range so we pick viable attacks with greatest range
 			int maxRange = viableAttacks.Max(attack => attack.attackTargetMeta.range);
-			// int maxRadius = 0;
 			viableAttacks = viableAttacks.Where(attack => attack.attackTargetMeta.range == maxRange).ToList();
 			
 			if (viableAttacks.Count() > 0) {
@@ -161,12 +140,10 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 		} 
 		
 		if (true) {
-			GD.Print("This other sequence is running");
-			List<Character> temp = new List<Character>();
-			temp.Add(this.chooseRandomCharacter(targets));
+			List<Character> temp = new List<Character>() {
+				this.chooseRandomCharacter(targets)
+			};						
 			this.chosenAttack = attackWithGreatestRange;
-			// targets.Add(this.chooseRandomCharacter(targets));
-			// GD.Print(targets.Count());
 			return temp;
 		}
 	}
