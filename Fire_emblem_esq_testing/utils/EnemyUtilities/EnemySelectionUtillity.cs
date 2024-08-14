@@ -37,6 +37,11 @@ public partial class EnemySelectionUtility {
 	public List<AttackMeta> getAvailableAttacks() {
 		return this.availableAttacks;
 	}
+
+	/* 
+		TODO - this function doesn't account for blocked paths. Will need to rewrite it or utlize another function
+		for determining paths that incorporate objects blocking path
+	*/
 	public List<List<Character>> findTargetsWithinRange(List<PlayableCharacter> characters) {
 
 		Vector2I enemyTileLocation = tileMap.LocalToMap(enemyCharacter.Position);
@@ -88,19 +93,19 @@ public partial class EnemySelectionUtility {
 	} 
 
 	
-
+	// this is the circle function 
 	public Vector2 findAvailableSpotForTarget(Character character, List<EnemyCharacter> entities, int range) {
 
-		Vector2I centerGlobalPosition = this.tileMap.LocalToMap(character.Position);
-		Vector2I pointGlobalPosition = Vector2I.Zero;
+		Vector2I centerPosition = this.tileMap.LocalToMap(character.Position);
+		Vector2I pointPosition = Vector2I.Zero;
 		bool occupied = false;
 		float increment = 0.0f;
 		
 		for (int i = 0; i < 12; i++)
 		{
-			pointGlobalPosition = new Vector2I(
-											Mathf.RoundToInt(centerGlobalPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment))),
-											Mathf.RoundToInt(centerGlobalPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)))
+			pointPosition = new Vector2I(
+											Mathf.RoundToInt(centerPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment))),
+											Mathf.RoundToInt(centerPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)))
 										);
 			
 			foreach (Character entity in entities)
@@ -108,10 +113,10 @@ public partial class EnemySelectionUtility {
 				// //GD.Print("ENEMY Position", entity.Position);
 				Vector2I entityGlobalPosition = this.tileMap.LocalToMap(entity.Position);
 	
-				if (pointGlobalPosition == entityGlobalPosition) {
-					// //GD.Print(centerGlobalPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment)));
-					// //GD.Print(centerGlobalPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)));
-					// //GD.Print(entityGlobalPosition, pointGlobalPosition);
+				if (pointPosition == entityGlobalPosition) {
+					// //GD.Print(centerPosition.X + range * Mathf.Cos(Mathf.DegToRad(increment)));
+					// //GD.Print(centerPosition.Y + range * Mathf.Sin(Mathf.DegToRad(increment)));
+					// //GD.Print(entityGlobalPosition, pointPosition);
 					occupied = true;
 				} 
 
@@ -121,7 +126,7 @@ public partial class EnemySelectionUtility {
 
 			if (occupied == false) {
 				//GD.Print("Does this run");
-				return this.tileMap.MapToLocal(pointGlobalPosition); 
+				return this.tileMap.MapToLocal(pointPosition); 
 			} else {
 				occupied = false;
 			}
