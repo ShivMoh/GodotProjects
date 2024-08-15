@@ -1,11 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://mh02ggrctfso"]
 
-[ext_resource type="Script" path="res://test/Test_Seeker.cs" id="1_nbfcf"]
+[ext_resource type="Script" path="res://test/Test_Seeker_AStar.cs" id="1_p00hc"]
 [ext_resource type="Texture2D" uid="uid://dy54j4odw8ha5" path="res://assets/characters/knight..png" id="1_wccke"]
 
-[node name="TestSeeker" type="CharacterBody2D" node_paths=PackedStringArray("navigationAgent2D")]
-script = ExtResource("1_nbfcf")
-navigationAgent2D = NodePath("NavigationAgent2D")
+[node name="TestSeeker" type="CharacterBody2D"]
+script = ExtResource("1_p00hc")
 
 [node name="Knight_" type="Sprite2D" parent="."]
 self_modulate = Color(1, 0.0784314, 0.572549, 1)
