@@ -15,6 +15,8 @@ public partial class FinalState : State {
 		MapEntities.detectedEnemies.Clear();
 		MapEntities.targetedCharacters.Clear();
 		MapEntities.chosenAttack = null;
+		MapEntities.targetCandidates.Clear();
+		MapEntities.targetSpotCandidates.Clear();
 
 	}
 

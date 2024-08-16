@@ -13,6 +13,8 @@ public partial class EnemySelectionUtility {
 
 	private List<AttackMeta> availableAttacks;
 
+	private Dictionary<string, List<Vector2I>> spots;
+
 	public EnemySelectionUtility(
 		EnemyCharacter enemyCharacter,
 		TileMap tileMap
@@ -24,7 +26,7 @@ public partial class EnemySelectionUtility {
 	/*
 		["Fire ball", "Ice ball"]
 		[
-			["this guy", "that guy"],
+			["this guy", "that guy", "other guy"],
 			["this guy", "that guy"]
 		]
 
@@ -48,21 +50,23 @@ public partial class EnemySelectionUtility {
 		this.availableAttacks = AttackSelectionUtility.determineAvailableAttacks(enemyCharacter);
 		//.OrderByDescending(attack => attack.attackTargetMeta.range);
 		List<List<Character>> targetCandidates = new List<List<Character>>();
+		Dictionary<string, List<Vector2I>> targetSpotCandidates = new Dictionary<string, List<Vector2I>>();
 
 		if (availableAttacks.Count() == 0) return targetCandidates; 
 		foreach (AttackMeta attack in availableAttacks) {
 			List<Character> targetableCandidatesForAttack = new List<Character>();
+			List<Vector2I> spots = new List<Vector2I>();
 
 			foreach (PlayableCharacter playableCharacter in characters) {
 				Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.Position);
+				
+				spots = this.findTargetSpotCandidates(enemyTileLocation, playableTileLocation, attack.attackTargetMeta.range);
 
-				int numberOfStepsTo = Mathf.Abs(playableTileLocation.Y - enemyTileLocation.Y) + 
-				Mathf.Abs(playableTileLocation.X - enemyTileLocation.X) - (attack.attackTargetMeta.range + 1);
-
-				if (numberOfStepsTo <= enemyCharacter.moveSteps) {
+				if (spots.Count > 0) {
 					targetableCandidatesForAttack.Add(playableCharacter);
-				}          
+				}
 
+				targetSpotCandidates.Add(playableCharacter.Name + attack.attackTargetMeta.range.ToString(), spots);
 				
 			}          
 			
@@ -70,7 +74,139 @@ public partial class EnemySelectionUtility {
 
 		}
 
+		this.spots = targetSpotCandidates;
 		return targetCandidates;
+	}
+
+	public Dictionary<string, List<Vector2I>> getSpots() {
+		return this.spots;
+	}
+
+	public List<Vector2I> findTargetSpotCandidates(Vector2I current, Vector2I target, int range) {
+
+		List<Vector2I> spots = new List<Vector2I>();
+
+		Vector2I negativeX = new Vector2I(current.X - range, current.Y);
+		List<Vector2I> negativeXs = new List<Vector2I>();
+
+		for(int i = negativeX.X; Mathf.Abs(i) < Mathf.Abs(current.X - range); i++) {
+			if (this.isSpotSolid(new Vector2I(i, negativeX.Y))) {
+				negativeXs.Clear();
+				continue;
+			}
+			negativeXs.Add(new Vector2I(i, negativeX.Y));
+		}
+
+		Vector2I positiveX = new Vector2I(current.X + range, current.Y);
+		List<Vector2I> positiveXs = new List<Vector2I>();
+
+		for(int i = positiveX.X; Mathf.Abs(i) < Mathf.Abs(current.X + range); i--) {
+			if (this.isSpotSolid(new Vector2I(i, positiveX.Y))) {
+				positiveXs.Clear();
+				continue;
+			}
+			positiveXs.Add(new Vector2I(i, positiveX.Y));
+		}
+
+		Vector2I negativeY = new Vector2I(current.X, current.Y - range);
+		List<Vector2I> negativeYs = new List<Vector2I>();
+
+		for(int i = negativeY.Y; Mathf.Abs(i) < Mathf.Abs(current.Y - range); i++) {
+			if (this.isSpotSolid(new Vector2I(i, negativeY.Y))) {
+				negativeYs.Clear();
+				continue;
+			}
+			negativeYs.Add(new Vector2I(i, negativeY.Y));
+		}
+
+		Vector2I positiveY = new Vector2I(current.X, current.Y + range);
+		List<Vector2I> positiveYs = new List<Vector2I>();
+
+		for(int i = positiveY.Y; Mathf.Abs(i) < Mathf.Abs(current.Y + range); i--) {
+			if (this.isSpotSolid(new Vector2I(i, positiveY.Y))) {
+				positiveYs.Clear();
+				continue;
+			}
+			positiveYs.Add(new Vector2I(i, positiveY.Y));
+		}
+
+		Vector2I q1 = new Vector2I(current.X + range, current.Y + range);
+		List<Vector2I> q1s = new List<Vector2I>();
+
+		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(current.Y + range); i++) {
+			if (this.isSpotSolid(q1 + new Vector2I(i, i))) {
+				q1s.Clear();
+				continue;
+			}
+			q1s.Add(q1 + new Vector2I(i, i));
+		}
+		
+		Vector2I q2 = new Vector2I(current.X + range, current.Y - range);
+		List<Vector2I> q2s = new List<Vector2I>();
+
+		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(current.Y + range); i++) {
+			if (this.isSpotSolid(q2 + new Vector2I(i, -i))) {
+				q2s.Clear();
+				continue;
+			}
+			q2s.Add(q2 + new Vector2I(i, -i));
+		}
+		
+		Vector2I q3 = new Vector2I(current.X - range, current.Y - range);
+		List<Vector2I> q3s = new List<Vector2I>();
+
+		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(current.Y + range); i++) {
+			if (this.isSpotSolid(q3 + new Vector2I(-i, -i))) {
+				q3s.Clear();
+				continue;
+			}
+			q3s.Add(q3 + new Vector2I(-i, -i));
+		}
+		
+		Vector2I q4 = new Vector2I(current.X - range, current.Y + range);
+		List<Vector2I> q4s = new List<Vector2I>();
+
+		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(current.Y + range); i++) {
+			if (this.isSpotSolid(q3 + new Vector2I(-i, i))) {
+				q4s.Clear();
+				continue;
+			}
+			q4s.Add(q3 + new Vector2I(-i, i));
+		}
+
+
+		spots.AddRange(negativeXs);
+		spots.AddRange(positiveXs);
+		spots.AddRange(negativeYs);
+		spots.AddRange(positiveYs);
+		spots.AddRange(q1s);
+		spots.AddRange(q2s);
+		spots.AddRange(q3s);
+		spots.AddRange(q4s);
+
+		// we could prolly remove this loop and do the move checks in the individual loops but...
+		// eh...this is more readable to me. i'll change it if i have to
+		foreach (Vector2I spot in spots)
+		{
+			// we can use the a star grid path finding instead
+			// but i fear that would be too computationally expensive so...
+			// let's just estimate ig
+			int numberOfStepsTo = Mathf.Abs(current.Y - target.Y) + Mathf.Abs(current.X - target.X) - (range + 1);
+
+			if (numberOfStepsTo > this.enemyCharacter.moveSteps) {
+				spots.Remove(spot);
+			}          
+
+			
+		}
+
+		return spots;
+
+	}	
+
+	private bool isSpotSolid(Vector2I spot) {
+		return false;
+		// return (bool) this.tileMap.GetCellTileData(0, spot).GetCustomData("isSolid");
 	}
 
 	public List<Character> findTargetsWithinCloseRange(List<PlayableCharacter> characters) {

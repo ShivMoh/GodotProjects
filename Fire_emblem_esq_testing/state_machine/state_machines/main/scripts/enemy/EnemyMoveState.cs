@@ -18,10 +18,15 @@ public partial class EnemyMoveState : State {
 
 	private TileUtility tileUtility;
 
+	private PathUtility pathUtility;
+
 	List<Vector2I> path = new List<Vector2I>();
 	public override void enter()
 	{
 		//GD.Print(this.Name);
+
+		this.pathUtility = new PathUtility(MapEntities.map);
+		this.pathUtility.setUpAStarGrid(0);
 
 		(MapEntities.selectedCharacter.GetNode("CollisionShape2D") as CollisionShape2D).Disabled = true;
 		
@@ -32,17 +37,39 @@ public partial class EnemyMoveState : State {
 		this.enemySelectionUtility = new EnemySelectionUtility(MapEntities.selectedCharacter as EnemyCharacter, MapEntities.map);
 
 		this.tileUtility.highLight(MapEntities.map.LocalToMap(currentActingEnemey.Position), new Vector2I(0, 0));
-		// we need the distance from that target (number of tiles away)
 		
+		// we need the distance from that target (number of tiles away)
 		this.target = MapEntities.targetedCharacters.First();
 
-		this.targetGlobalPosition = this.enemySelectionUtility.findAvailableSpotForTarget(
-														this.target, 
-														MapEntities.enemyCharacters, 
-														MapEntities.chosenAttack.attackTargetMeta.range
-													);
+		// this.targetGlobalPosition = this.enemySelectionUtility.findAvailableSpotForTarget(
+		// 												this.target, 
+		// 												MapEntities.enemyCharacters, 
+		// 												MapEntities.chosenAttack.attackTargetMeta.range
+		// 											);
+		// int indexOfAttack = currentActingEnemey.attacks.IndexOf(MapEntities.chosenAttack);
+		// int indexOfCharacter = MapEntities.targetCandidates.ElementAt(indexOfAttack).IndexOf(this.target);
+		// this.targetGlobalPosition = MapEntities.targetSpotCandidates.ElementAt(indexOfAttack)
+		this.targetGlobalPosition = 
+			MapEntities.map.MapToLocal(
+				MapEntities.targetSpotCandidates.GetValueOrDefault(this.target.Name + MapEntities.chosenAttack.attackTargetMeta.range.ToString()).First()
+			);
+		
+		int index = 0;
+		while(this.path.Count == 0) {
+			this.targetGlobalPosition = 
+			MapEntities.map.MapToLocal(
+				MapEntities.targetSpotCandidates.GetValueOrDefault(this.target.Name + MapEntities.chosenAttack.attackTargetMeta.range.ToString()).ElementAt(0)
+			);
+
+			GD.Print("TargetPos", targetGlobalPosition, "Current Pos", currentActingEnemey.Position);
+			GD.Print(this.pathUtility.aStarGrid2D.GetIdPath(new Vector2I(14, 13), new Vector2I(16, 15)));
+			this.path = this.pathUtility.generatePath(currentActingEnemey.Position, this.targetGlobalPosition);
+			index++;
+		}
+		
+		GD.Print(path.Count);
 		//GD.Print("TARGET LOCATION", this.targetGlobalPosition);
-		calculatePathTowardsTarget();
+		// calculatePathTowardsTarget();
 	
 		this.currentActingEnemey.move = true;
 
@@ -51,7 +78,7 @@ public partial class EnemyMoveState : State {
 
 	public override void physicsUpdate(double _delta)
 	{
-		
+		this.pathUtility.showPath();
 		bool result = this.characterUtility.moveCharacter(ref this.path, currentTileCoords, this.path.Last());
 
 		if (result == true) {

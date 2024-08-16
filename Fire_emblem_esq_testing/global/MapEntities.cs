@@ -20,7 +20,8 @@ public partial class MapEntities : Node
 	public static List<Character> targetedCharacters = new List<Character>();
 
 	public static List<List<Character>> targetCandidates = new List<List<Character>>();
-	 
+
+	public static Dictionary<string, List<Vector2I>> targetSpotCandidates = new Dictionary<string, List<Vector2I>>(); 
 	public static List<Character> closeRangeTargets = new List<Character>();
 	public static List<AttackMeta> attackMetas = new List<AttackMeta>();
 
