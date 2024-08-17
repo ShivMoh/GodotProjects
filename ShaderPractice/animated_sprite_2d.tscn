@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3arom4xyohih"]
+
+[ext_resource type="Texture2D" uid="uid://chfdxkw8ggrja" path="res://elf_girl-Sheet-Sheet.png" id="1_o6r3r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h52jm"]
+atlas = ExtResource("1_o6r3r")
+region = Rect2(682, 0, 341, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc5w5"]
+atlas = ExtResource("1_o6r3r")
+region = Rect2(1705, 0, 341, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hooch"]
+atlas = ExtResource("1_o6r3r")
+region = Rect2(2728, 0, 341, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hih4d"]
+atlas = ExtResource("1_o6r3r")
+region = Rect2(3751, 0, 341, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h30xr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h52jm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oc5w5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hooch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hih4d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_h30xr")
+autoplay = "default"
+frame_progress = 0.106457
+
+[node name="Camera2D" type="Camera2D" parent="."]
