@@ -43,27 +43,8 @@ public partial class OpenWorldInitialState : State {
 			characterPath : "res://mobs/scenes/enemy_character.tscn",
 			attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
 			characterStat : characterStat.Clone() as CharacterStat
-		),
-		new CharacterMeta(
-			tileCoord: new Vector2I(6, 1),
-			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
-			characterStat : characterStat2.Clone() as CharacterStat
-		),
-		new CharacterMeta(
-			tileCoord: new Vector2I(7, 2),
-			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
-			characterStat : characterStat.Clone() as CharacterStat
-		),
-		new CharacterMeta(
-			tileCoord: new Vector2I(6, 1),
-			characterPath : "res://mobs/scenes/enemy_character.tscn",
-			attacks : BasicAttackPack.basicMagicAttacksPacks["0001"],
-			characterStat : characterStat2.Clone() as CharacterStat
-		)
-	};
-
+		  )
+	 };
 	// public TileMap tilemap;
 
 	private SetupUtility setupUtility;

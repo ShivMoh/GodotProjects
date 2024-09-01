@@ -49,9 +49,14 @@ public partial class EnemyMoveState : State {
 		// int indexOfAttack = currentActingEnemey.attacks.IndexOf(MapEntities.chosenAttack);
 		// int indexOfCharacter = MapEntities.targetCandidates.ElementAt(indexOfAttack).IndexOf(this.target);
 		// this.targetGlobalPosition = MapEntities.targetSpotCandidates.ElementAt(indexOfAttack)
+		List<Vector2I> spotsForTarget = MapEntities.targetSpotCandidates.GetValueOrDefault(this.target.Name + MapEntities.chosenAttack.attackTargetMeta.range.ToString());
+		int randomIndex = new RandomNumberGenerator().RandiRange(0, spotsForTarget.Count() - 1);
+		GD.Print("Random index", randomIndex);
+		GD.Print("Spots for target", spotsForTarget);
+
 		this.targetGlobalPosition = 
 			MapEntities.map.MapToLocal(
-				MapEntities.targetSpotCandidates.GetValueOrDefault(this.target.Name + MapEntities.chosenAttack.attackTargetMeta.range.ToString()).First()
+			   spotsForTarget.ElementAt(randomIndex)
 			);
 		
 		int index = 0;
@@ -61,13 +66,10 @@ public partial class EnemyMoveState : State {
 				MapEntities.targetSpotCandidates.GetValueOrDefault(this.target.Name + MapEntities.chosenAttack.attackTargetMeta.range.ToString()).ElementAt(0)
 			);
 
-			GD.Print("TargetPos", targetGlobalPosition, "Current Pos", currentActingEnemey.Position);
-			GD.Print(this.pathUtility.aStarGrid2D.GetIdPath(new Vector2I(14, 13), new Vector2I(16, 15)));
 			this.path = this.pathUtility.generatePath(currentActingEnemey.Position, this.targetGlobalPosition);
 			index++;
 		}
 		
-		GD.Print(path.Count);
 		//GD.Print("TARGET LOCATION", this.targetGlobalPosition);
 		// calculatePathTowardsTarget();
 	

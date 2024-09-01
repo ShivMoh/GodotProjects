@@ -44,6 +44,9 @@ public partial class EnemyTargetSelectionState : State {
 				case Trait.CUNNING:
 					MapEntities.targetCandidates = enemySelectionUtility.findTargetsWithinRange(MapEntities.playableCharacters);
 					MapEntities.targetSpotCandidates = enemySelectionUtility.getSpots();
+					
+					
+
 					MapEntities.closeRangeTargets = enemySelectionUtility.findTargetsWithinCloseRange(MapEntities.playableCharacters);
 					MapEntities.attackMetas = enemySelectionUtility.getAvailableAttacks();
 					

@@ -25,9 +25,9 @@ public partial class TileUtility {
 
 	}
 
-	public void highLight(Vector2I coords, Vector2I tile, int source = 0) {
+	public void highLight(Vector2I coords, Vector2I tile, int source = 0, int layer=0) {
 		tilemap.SetCell(
-			1,
+			layer,
 			coords,
 			source, 
 			new Vector2I(2, 1)

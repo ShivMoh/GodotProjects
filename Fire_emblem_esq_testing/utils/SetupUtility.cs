@@ -54,7 +54,7 @@ public partial class SetupUtility {
 
 			character.setCharacterStats(characterMetas[i].characterStat);
 
-			character.moveSteps = character.getCharacterStats().speed;
+			character.moveSteps = 8;
 
 			character.equipedAttack = character.attacks.First();
 			character.updateText();

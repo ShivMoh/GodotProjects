@@ -15,12 +15,16 @@ public partial class EnemySelectionUtility {
 
 	private Dictionary<string, List<Vector2I>> spots;
 
+	private PathUtility pathUtility;
+
 	public EnemySelectionUtility(
 		EnemyCharacter enemyCharacter,
 		TileMap tileMap
 	) {
 		this.enemyCharacter = enemyCharacter;
 		this.tileMap = tileMap;
+		this.pathUtility = new PathUtility(tileMap);
+		this.pathUtility.setUpAStarGrid(0);
 	}
 
 	/*
@@ -34,7 +38,7 @@ public partial class EnemySelectionUtility {
 
 		fireballindex = indexof(fireball)
 		list[fireballindex]
-			*/
+	 */
 
 	public List<AttackMeta> getAvailableAttacks() {
 		return this.availableAttacks;
@@ -44,6 +48,7 @@ public partial class EnemySelectionUtility {
 		TODO - this function doesn't account for blocked paths. Will need to rewrite it or utlize another function
 		for determining paths that incorporate objects blocking path
 	*/
+
 	public List<List<Character>> findTargetsWithinRange(List<PlayableCharacter> characters) {
 
 		Vector2I enemyTileLocation = tileMap.LocalToMap(enemyCharacter.Position);
@@ -53,6 +58,7 @@ public partial class EnemySelectionUtility {
 		Dictionary<string, List<Vector2I>> targetSpotCandidates = new Dictionary<string, List<Vector2I>>();
 
 		if (availableAttacks.Count() == 0) return targetCandidates; 
+
 		foreach (AttackMeta attack in availableAttacks) {
 			List<Character> targetableCandidatesForAttack = new List<Character>();
 			List<Vector2I> spots = new List<Vector2I>();
@@ -86,10 +92,9 @@ public partial class EnemySelectionUtility {
 
 		List<Vector2I> spots = new List<Vector2I>();
 
-		Vector2I negativeX = new Vector2I(current.X - range, current.Y);
-		List<Vector2I> negativeXs = new List<Vector2I>();
-
-		for(int i = negativeX.X; Mathf.Abs(i) < Mathf.Abs(current.X - range); i++) {
+		Vector2I negativeX = new Vector2I(target.X - range, target.Y);
+		List<Vector2I> negativeXs = new List<Vector2I>(); 
+		for(int i = negativeX.X; Mathf.Abs(i) < Mathf.Abs(target.X - range); i++) {
 			if (this.isSpotSolid(new Vector2I(i, negativeX.Y))) {
 				negativeXs.Clear();
 				continue;
@@ -97,10 +102,10 @@ public partial class EnemySelectionUtility {
 			negativeXs.Add(new Vector2I(i, negativeX.Y));
 		}
 
-		Vector2I positiveX = new Vector2I(current.X + range, current.Y);
+		Vector2I positiveX = new Vector2I(target.X + range, target.Y);
 		List<Vector2I> positiveXs = new List<Vector2I>();
 
-		for(int i = positiveX.X; Mathf.Abs(i) < Mathf.Abs(current.X + range); i--) {
+		for(int i = positiveX.X; Mathf.Abs(i) < Mathf.Abs(target.X + range); i--) {
 			if (this.isSpotSolid(new Vector2I(i, positiveX.Y))) {
 				positiveXs.Clear();
 				continue;
@@ -108,10 +113,10 @@ public partial class EnemySelectionUtility {
 			positiveXs.Add(new Vector2I(i, positiveX.Y));
 		}
 
-		Vector2I negativeY = new Vector2I(current.X, current.Y - range);
+		Vector2I negativeY = new Vector2I(target.X, target.Y - range);
 		List<Vector2I> negativeYs = new List<Vector2I>();
 
-		for(int i = negativeY.Y; Mathf.Abs(i) < Mathf.Abs(current.Y - range); i++) {
+		for(int i = negativeY.Y; Mathf.Abs(i) < Mathf.Abs(target.Y - range); i++) {
 			if (this.isSpotSolid(new Vector2I(i, negativeY.Y))) {
 				negativeYs.Clear();
 				continue;
@@ -119,10 +124,10 @@ public partial class EnemySelectionUtility {
 			negativeYs.Add(new Vector2I(i, negativeY.Y));
 		}
 
-		Vector2I positiveY = new Vector2I(current.X, current.Y + range);
+		Vector2I positiveY = new Vector2I(target.X, target.Y + range);
 		List<Vector2I> positiveYs = new List<Vector2I>();
 
-		for(int i = positiveY.Y; Mathf.Abs(i) < Mathf.Abs(current.Y + range); i--) {
+		for(int i = positiveY.Y; Mathf.Abs(i) < Mathf.Abs(target.Y + range); i--) {
 			if (this.isSpotSolid(new Vector2I(i, positiveY.Y))) {
 				positiveYs.Clear();
 				continue;
@@ -130,10 +135,10 @@ public partial class EnemySelectionUtility {
 			positiveYs.Add(new Vector2I(i, positiveY.Y));
 		}
 
-		Vector2I q1 = new Vector2I(current.X + range, current.Y + range);
+		Vector2I q1 = new Vector2I(target.X + range, target.Y + range);
 		List<Vector2I> q1s = new List<Vector2I>();
 
-		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(current.Y + range); i++) {
+		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(target.Y + range); i++) {
 			if (this.isSpotSolid(q1 + new Vector2I(i, i))) {
 				q1s.Clear();
 				continue;
@@ -141,10 +146,10 @@ public partial class EnemySelectionUtility {
 			q1s.Add(q1 + new Vector2I(i, i));
 		}
 		
-		Vector2I q2 = new Vector2I(current.X + range, current.Y - range);
+		Vector2I q2 = new Vector2I(target.X + range, target.Y - range);
 		List<Vector2I> q2s = new List<Vector2I>();
 
-		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(current.Y + range); i++) {
+		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(target.Y + range); i++) {
 			if (this.isSpotSolid(q2 + new Vector2I(i, -i))) {
 				q2s.Clear();
 				continue;
@@ -152,10 +157,10 @@ public partial class EnemySelectionUtility {
 			q2s.Add(q2 + new Vector2I(i, -i));
 		}
 		
-		Vector2I q3 = new Vector2I(current.X - range, current.Y - range);
+		Vector2I q3 = new Vector2I(target.X - range, target.Y - range);
 		List<Vector2I> q3s = new List<Vector2I>();
 
-		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(current.Y + range); i++) {
+		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(target.Y + range); i++) {
 			if (this.isSpotSolid(q3 + new Vector2I(-i, -i))) {
 				q3s.Clear();
 				continue;
@@ -163,10 +168,10 @@ public partial class EnemySelectionUtility {
 			q3s.Add(q3 + new Vector2I(-i, -i));
 		}
 		
-		Vector2I q4 = new Vector2I(current.X - range, current.Y + range);
+		Vector2I q4 = new Vector2I(target.X - range, target.Y + range);
 		List<Vector2I> q4s = new List<Vector2I>();
 
-		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(current.Y + range); i++) {
+		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(target.Y + range); i++) {
 			if (this.isSpotSolid(q3 + new Vector2I(-i, i))) {
 				q4s.Clear();
 				continue;
@@ -183,23 +188,32 @@ public partial class EnemySelectionUtility {
 		spots.AddRange(q2s);
 		spots.AddRange(q3s);
 		spots.AddRange(q4s);
-
+		  
+		GD.Print("Spots before", spots.Count());  
+		GD.Print(spots.First());
 		// we could prolly remove this loop and do the move checks in the individual loops but...
 		// eh...this is more readable to me. i'll change it if i have to
-		foreach (Vector2I spot in spots)
+		
+		List<Vector2I> spotsCopy = new List<Vector2I>(spots);
+
+		foreach (Vector2I spot in spotsCopy)
 		{
 			// we can use the a star grid path finding instead
 			// but i fear that would be too computationally expensive so...
 			// let's just estimate ig
-			int numberOfStepsTo = Mathf.Abs(current.Y - target.Y) + Mathf.Abs(current.X - target.X) - (range + 1);
-
+			 
+			List<Vector2I> path =  this.pathUtility.generatePath(tileMap.MapToLocal(current), tileMap.MapToLocal(target));
+			// int numberOfStepsTo = Mathf.Abs(current.Y - target.Y) + Mathf.Abs(current.X - target.X) - (range + 1);
+			int numberOfStepsTo = path.Count(); 
 			if (numberOfStepsTo > this.enemyCharacter.moveSteps) {
 				spots.Remove(spot);
 			}          
 
 			
 		}
-
+		
+		GD.Print("Spots after", spots.Count());
+		
 		return spots;
 
 	}	

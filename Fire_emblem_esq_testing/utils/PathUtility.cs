@@ -43,20 +43,14 @@ public partial class PathUtility {
             int layer = 1
         ) {
 
-        GD.Print("WAH?");
         this.tileMap.ClearLayer(layer);
-        this.path.Clear();
-
-        GD.Print(tileMap.LocalToMap(currentPosition), tileMap.LocalToMap(targetPosition));
-        GD.Print(aStarGrid2D.GetIdPath(tileMap.LocalToMap(currentPosition), tileMap.LocalToMap(targetPosition)));
+        this.path.Clear(); 
 
         foreach(Vector2I coord in aStarGrid2D.GetIdPath(tileMap.LocalToMap(currentPosition), tileMap.LocalToMap(targetPosition))) {
-            GD.Print("Is this here running");
 			this.path.Add(coord);
 		}
         
         if (this.path.Count > count) {
-            GD.Print("Is this running");
             this.path.Clear();
         }
 
