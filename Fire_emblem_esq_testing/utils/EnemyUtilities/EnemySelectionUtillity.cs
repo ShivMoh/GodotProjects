@@ -65,7 +65,7 @@ public partial class EnemySelectionUtility {
 
 			foreach (PlayableCharacter playableCharacter in characters) {
 				Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.Position);
-				
+				GD.Print("Playable tile", playableTileLocation);	
 				spots = this.findTargetSpotCandidates(enemyTileLocation, playableTileLocation, attack.attackTargetMeta.range);
 
 				if (spots.Count > 0) {
@@ -94,7 +94,7 @@ public partial class EnemySelectionUtility {
 
 		Vector2I negativeX = new Vector2I(target.X - range, target.Y);
 		List<Vector2I> negativeXs = new List<Vector2I>(); 
-		for(int i = negativeX.X; Mathf.Abs(i) < Mathf.Abs(target.X - range); i++) {
+		for(int i = negativeX.X; i < target.X; i++) {
 			if (this.isSpotSolid(new Vector2I(i, negativeX.Y))) {
 				negativeXs.Clear();
 				continue;
@@ -105,7 +105,7 @@ public partial class EnemySelectionUtility {
 		Vector2I positiveX = new Vector2I(target.X + range, target.Y);
 		List<Vector2I> positiveXs = new List<Vector2I>();
 
-		for(int i = positiveX.X; Mathf.Abs(i) < Mathf.Abs(target.X + range); i--) {
+		for(int i = positiveX.X; i > target.X; i--) {
 			if (this.isSpotSolid(new Vector2I(i, positiveX.Y))) {
 				positiveXs.Clear();
 				continue;
@@ -116,81 +116,87 @@ public partial class EnemySelectionUtility {
 		Vector2I negativeY = new Vector2I(target.X, target.Y - range);
 		List<Vector2I> negativeYs = new List<Vector2I>();
 
-		for(int i = negativeY.Y; Mathf.Abs(i) < Mathf.Abs(target.Y - range); i++) {
-			if (this.isSpotSolid(new Vector2I(i, negativeY.Y))) {
+		for(int i = negativeY.Y; i < target.Y; i++) {
+			if (this.isSpotSolid(new Vector2I(negativeY.X, i))) {
 				negativeYs.Clear();
 				continue;
 			}
-			negativeYs.Add(new Vector2I(i, negativeY.Y));
+			negativeYs.Add(new Vector2I(negativeY.X, i));
 		}
 
 		Vector2I positiveY = new Vector2I(target.X, target.Y + range);
 		List<Vector2I> positiveYs = new List<Vector2I>();
 
-		for(int i = positiveY.Y; Mathf.Abs(i) < Mathf.Abs(target.Y + range); i--) {
-			if (this.isSpotSolid(new Vector2I(i, positiveY.Y))) {
+		for(int i = positiveY.Y; i > target.Y; i--) {
+			if (this.isSpotSolid(new Vector2I(positiveY.X, i))) {
 				positiveYs.Clear();
 				continue;
 			}
-			positiveYs.Add(new Vector2I(i, positiveY.Y));
+			positiveYs.Add(new Vector2I(positiveY.X, i));
 		}
 
 		Vector2I q1 = new Vector2I(target.X + range, target.Y + range);
 		List<Vector2I> q1s = new List<Vector2I>();
 
-		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(target.Y + range); i++) {
-			if (this.isSpotSolid(q1 + new Vector2I(i, i))) {
+		for(Vector2I i = q1; i != target; i+=new Vector2I(-1, -1)) {
+			if (this.isSpotSolid(i)) {
 				q1s.Clear();
 				continue;
 			}
-			q1s.Add(q1 + new Vector2I(i, i));
+			q1s.Add(i);
 		}
 		
 		Vector2I q2 = new Vector2I(target.X + range, target.Y - range);
 		List<Vector2I> q2s = new List<Vector2I>();
 
-		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(target.Y + range); i++) {
-			if (this.isSpotSolid(q2 + new Vector2I(i, -i))) {
+		for(Vector2I i = q2; i != target; i += new Vector2I(-1, 1)) {
+			if (this.isSpotSolid(i)) {
 				q2s.Clear();
 				continue;
 			}
-			q2s.Add(q2 + new Vector2I(i, -i));
+			q2s.Add(i);
 		}
 		
 		Vector2I q3 = new Vector2I(target.X - range, target.Y - range);
 		List<Vector2I> q3s = new List<Vector2I>();
 
-		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(target.Y + range); i++) {
-			if (this.isSpotSolid(q3 + new Vector2I(-i, -i))) {
+		for(Vector2I i = q3; i != target; i+= new Vector2I(1, 1)) {
+			if (this.isSpotSolid(i)) {
 				q3s.Clear();
 				continue;
 			}
-			q3s.Add(q3 + new Vector2I(-i, -i));
+			q3s.Add(i);
 		}
 		
 		Vector2I q4 = new Vector2I(target.X - range, target.Y + range);
 		List<Vector2I> q4s = new List<Vector2I>();
 
-		for(int i = 0; Mathf.Abs(i) < Mathf.Abs(target.Y + range); i++) {
-			if (this.isSpotSolid(q3 + new Vector2I(-i, i))) {
+		for(Vector2I i = q4; i != target; i+= new Vector2I(1, -1)) {
+			if (this.isSpotSolid(i)) {
 				q4s.Clear();
 				continue;
 			}
-			q4s.Add(q3 + new Vector2I(-i, i));
+			q4s.Add(i);
 		}
 
 
-		spots.AddRange(negativeXs);
-		spots.AddRange(positiveXs);
-		spots.AddRange(negativeYs);
-		spots.AddRange(positiveYs);
+		// spots.AddRange(negativeXs);
+		// spots.AddRange(positiveXs);
+		// spots.AddRange(negativeYs);
+		// spots.AddRange(positiveYs);
 		spots.AddRange(q1s);
 		spots.AddRange(q2s);
 		spots.AddRange(q3s);
 		spots.AddRange(q4s);
 		  
+	   
+		GD.Print("Generating spots");
+
+		foreach(Vector2I spot in spots) {
+			 GD.Print("spot", spot);
+		}
+
 		GD.Print("Spots before", spots.Count());  
-		GD.Print(spots.First());
 		// we could prolly remove this loop and do the move checks in the individual loops but...
 		// eh...this is more readable to me. i'll change it if i have to
 		
@@ -213,7 +219,6 @@ public partial class EnemySelectionUtility {
 		}
 		
 		GD.Print("Spots after", spots.Count());
-		
 		return spots;
 
 	}	

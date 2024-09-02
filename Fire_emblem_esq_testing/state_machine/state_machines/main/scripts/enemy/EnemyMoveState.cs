@@ -40,7 +40,8 @@ public partial class EnemyMoveState : State {
 		
 		// we need the distance from that target (number of tiles away)
 		this.target = MapEntities.targetedCharacters.First();
-
+		
+		this.tileUtility.highLight(MapEntities.map.LocalToMap(target.Position), new Vector2I(2, 1));
 		// this.targetGlobalPosition = this.enemySelectionUtility.findAvailableSpotForTarget(
 		// 												this.target, 
 		// 												MapEntities.enemyCharacters, 
@@ -50,28 +51,20 @@ public partial class EnemyMoveState : State {
 		// int indexOfCharacter = MapEntities.targetCandidates.ElementAt(indexOfAttack).IndexOf(this.target);
 		// this.targetGlobalPosition = MapEntities.targetSpotCandidates.ElementAt(indexOfAttack)
 		List<Vector2I> spotsForTarget = MapEntities.targetSpotCandidates.GetValueOrDefault(this.target.Name + MapEntities.chosenAttack.attackTargetMeta.range.ToString());
-		int randomIndex = new RandomNumberGenerator().RandiRange(0, spotsForTarget.Count() - 1);
-		GD.Print("Random index", randomIndex);
-		GD.Print("Spots for target", spotsForTarget);
 
-		this.targetGlobalPosition = 
-			MapEntities.map.MapToLocal(
-			   spotsForTarget.ElementAt(randomIndex)
-			);
-		
 		int index = 0;
 		while(this.path.Count == 0) {
-			this.targetGlobalPosition = 
-			MapEntities.map.MapToLocal(
-				MapEntities.targetSpotCandidates.GetValueOrDefault(this.target.Name + MapEntities.chosenAttack.attackTargetMeta.range.ToString()).ElementAt(0)
-			);
 
-			this.path = this.pathUtility.generatePath(currentActingEnemey.Position, this.targetGlobalPosition);
-			index++;
+			   int randomIndex = new RandomNumberGenerator().RandiRange(0, spotsForTarget.Count() - 1);
+			   this.targetGlobalPosition = 
+						 MapEntities.map.MapToLocal(
+							  spotsForTarget.ElementAt(randomIndex)
+						 );		
+			   GD.Print("Selected target at:", spotsForTarget.ElementAt(randomIndex));
+			   this.path = this.pathUtility.generatePath(currentActingEnemey.Position, this.targetGlobalPosition);
+			   index++;
 		}
 		
-		//GD.Print("TARGET LOCATION", this.targetGlobalPosition);
-		// calculatePathTowardsTarget();
 	
 		this.currentActingEnemey.move = true;
 
