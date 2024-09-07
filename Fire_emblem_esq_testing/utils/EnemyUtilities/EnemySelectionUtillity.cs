@@ -180,10 +180,10 @@ public partial class EnemySelectionUtility {
 		}
 
 
-		// spots.AddRange(negativeXs);
-		// spots.AddRange(positiveXs);
-		// spots.AddRange(negativeYs);
-		// spots.AddRange(positiveYs);
+		spots.AddRange(negativeXs);
+		spots.AddRange(positiveXs);
+		spots.AddRange(negativeYs);
+		spots.AddRange(positiveYs);
 		spots.AddRange(q1s);
 		spots.AddRange(q2s);
 		spots.AddRange(q3s);

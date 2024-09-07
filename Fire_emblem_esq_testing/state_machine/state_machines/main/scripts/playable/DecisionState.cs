@@ -24,6 +24,7 @@ public partial class DecisionState : State {
 		if (Input.IsActionJustPressed("select")) {
 			int focusedItem = this.selectedCharacter.actionsMenu.GetFocusedItem();
 			this.selectedCharacter.actionsMenu.SetItemChecked(focusedItem, true);
+
 			if (this.selectedCharacter.actionsMenu.IsItemChecked(currentCheckedItem)) {
 				this.selectedCharacter.actionsMenu.SetItemChecked(currentCheckedItem, false);
 			}
