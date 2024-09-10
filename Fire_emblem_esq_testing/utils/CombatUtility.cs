@@ -60,8 +60,20 @@ public partial class CombatUtility {
 	}   
 
 	private bool isEnemyInRange(Vector2I currentCoord, Vector2I enemyCoord, int attackRange) {
-		float distanceTo  = Mathf.Sqrt(Mathf.Pow(currentCoord.X - enemyCoord.X, 2) + Mathf.Pow(currentCoord.Y - enemyCoord.Y, 2));
-		if (Mathf.Floor(distanceTo) <= attackRange ) return true;
+		
+		int absX = Mathf.Abs(enemyCoord.X - currentCoord.X);
+		int absY = Mathf.Abs(enemyCoord.Y - currentCoord.Y);
+		// check if in x
+		if(absX <= attackRange && enemyCoord.Y == currentCoord.Y) return true;
+	   
+		// check if in y
+		if (absY <= attackRange && enemyCoord.X == currentCoord.X) return true;
+
+		// check if in diagonal
+		if (absX <= attackRange && absX == absY) return true;
+
+	//	float distanceTo  = Mathf.Sqrt(Mathf.Pow(currentCoord.X - enemyCoord.X, 2) + Mathf.Pow(currentCoord.Y - enemyCoord.Y, 2));
+	//		if (Mathf.Floor(distanceTo) < attackRange ) return true;
 		return false;
 	}
 

@@ -65,7 +65,6 @@ public partial class EnemySelectionUtility {
 
 			foreach (PlayableCharacter playableCharacter in characters) {
 				Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.Position);
-				GD.Print("Playable tile", playableTileLocation);	
 				spots = this.findTargetSpotCandidates(enemyTileLocation, playableTileLocation, attack.attackTargetMeta.range);
 
 				if (spots.Count > 0) {
@@ -190,13 +189,6 @@ public partial class EnemySelectionUtility {
 		spots.AddRange(q4s);
 		  
 	   
-		GD.Print("Generating spots");
-
-		foreach(Vector2I spot in spots) {
-			 GD.Print("spot", spot);
-		}
-
-		GD.Print("Spots before", spots.Count());  
 		// we could prolly remove this loop and do the move checks in the individual loops but...
 		// eh...this is more readable to me. i'll change it if i have to
 		
@@ -218,14 +210,13 @@ public partial class EnemySelectionUtility {
 			
 		}
 		
-		GD.Print("Spots after", spots.Count());
 		return spots;
 
 	}	
 
 	private bool isSpotSolid(Vector2I spot) {
-		return false;
-		// return (bool) this.tileMap.GetCellTileData(0, spot).GetCustomData("isSolid");
+		// return false;
+		return (bool) this.tileMap.GetCellTileData(0, spot).GetCustomData("isSolid");
 	}
 
 	public List<Character> findTargetsWithinCloseRange(List<PlayableCharacter> characters) {
