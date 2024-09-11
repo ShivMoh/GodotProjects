@@ -45,8 +45,6 @@ public partial class EnemyTargetSelectionState : State {
 					MapEntities.targetCandidates = enemySelectionUtility.findTargetsWithinRange(MapEntities.playableCharacters);
 					MapEntities.targetSpotCandidates = enemySelectionUtility.getSpots();
 					
-					
-
 					MapEntities.closeRangeTargets = enemySelectionUtility.findTargetsWithinCloseRange(MapEntities.playableCharacters);
 					MapEntities.attackMetas = enemySelectionUtility.getAvailableAttacks();
 					

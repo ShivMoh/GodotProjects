@@ -248,7 +248,16 @@ y_sort_enabled = true
 y_sort_enabled = true
 
 [node name="EnemyCharacter2" parent="enemyCharacters" instance=ExtResource("9_02how")]
-position = Vector2(784, 451)
+position = Vector2(397, 416)
+
+[node name="EnemyCharacter" parent="enemyCharacters" instance=ExtResource("9_02how")]
+position = Vector2(290, 268)
+
+[node name="EnemyCharacter3" parent="enemyCharacters" instance=ExtResource("9_02how")]
+position = Vector2(856, 224)
+
+[node name="EnemyCharacter4" parent="enemyCharacters" instance=ExtResource("9_02how")]
+position = Vector2(534, 129)
 
 [node name="buildings" type="Node2D" parent="."]
 visible = false

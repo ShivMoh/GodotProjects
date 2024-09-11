@@ -48,7 +48,8 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 		List<AttackMeta> areaOfEffectAttacks  = attackCandidates.Where(attack => attack.attackTargetMeta.areaOfEffect).ToList();
 		List<AttackMeta> multiTargetAttacks = attackCandidates.Where(attack => attack.attackTargetMeta.targetableCount > 1).ToList();
 		List<AttackMeta> viableAttacks = new List<AttackMeta>();
-
+		
+		// if the attack with the greatest range is a area of effect attack or multitarget attack, just go with that
 		if (attackWithGreatestRange.attackTargetMeta.areaOfEffect || attackWithGreatestRange.attackTargetMeta.targetableCount > 1) {		
 			this.chosenAttack = attackWithGreatestRange;
 			Dictionary<Vector2I, List<Character>> pools = this.findPoolsForAttack(this.chosenAttack);
@@ -61,6 +62,7 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 			return targets;
 
 		} 
+		
 
 		if (this.generateRandomFloat() > 0.5 && (areaOfEffectAttacks.Count() != 0 || multiTargetAttacks.Count() != 0)) {
 			
@@ -71,7 +73,6 @@ public partial class CunningCharacterUtility : AttackSelectionUtility{
 					viableAttacks.Add(attack);
 				}
 			}
-
 
 			// prioritize range so we pick viable attacks with greatest range
 			int maxRange = viableAttacks.Max(attack => attack.attackTargetMeta.range);
