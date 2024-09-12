@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://bc1t8ntrkocvq"]
+
+[ext_resource type="Script" path="res://characters/player/player.gd" id="1_lf3kj"]
+[ext_resource type="Texture2D" uid="uid://bfrr6ht6ruocp" path="res://assets/brackeys_game_jam.png" id="2_0oedj"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7dy5j"]
+radius = 9.0
+height = 36.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcarl"]
+atlas = ExtResource("2_0oedj")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8ptc"]
+atlas = ExtResource("2_0oedj")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ufwt"]
+atlas = ExtResource("2_0oedj")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7kcx"]
+atlas = ExtResource("2_0oedj")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k1baq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcarl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i8ptc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ufwt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7kcx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Ann" type="CharacterBody2D"]
+script = ExtResource("1_lf3kj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(9, 18)
+shape = SubResource("CapsuleShape2D_7dy5j")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_k1baq")
+autoplay = "default"
