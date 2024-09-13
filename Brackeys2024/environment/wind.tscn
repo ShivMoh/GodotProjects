@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvn6i46spycon"]
+
+[ext_resource type="Script" path="res://environment/wind.gd" id="1_vjqq7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_58crp"]
+size = Vector2(644, 110)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_md6ow"]
+size = Vector2(649, 113)
+
+[node name="wind" type="RigidBody2D"]
+script = ExtResource("1_vjqq7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(327, 56)
+shape = SubResource("RectangleShape2D_58crp")
+
+[node name="detector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detector"]
+position = Vector2(325.5, 57.5)
+shape = SubResource("RectangleShape2D_md6ow")
+debug_color = Color(0.94902, 0.0509804, 0.541176, 0.419608)
+
+[connection signal="body_entered" from="detector" to="." method="_on_detector_body_entered"]

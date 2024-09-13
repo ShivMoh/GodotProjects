@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bc1t8ntrkocvq"]
 
-[ext_resource type="Script" path="res://characters/player/player.gd" id="1_lf3kj"]
+[ext_resource type="Script" path="res://state_machine/state_machine.gd" id="1_jm358"]
 [ext_resource type="Texture2D" uid="uid://bfrr6ht6ruocp" path="res://assets/brackeys_game_jam.png" id="2_0oedj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7dy5j"]
@@ -43,8 +43,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Ann" type="CharacterBody2D"]
-script = ExtResource("1_lf3kj")
+[node name="Ann" type="CharacterBody2D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_jm358")
+player = NodePath(".")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(9, 18)

@@ -11,9 +11,7 @@ var isWindy = false
 
 func _physics_process(delta):
 	# Add the gravity.
-	
-				
-	
+		
 	if Input.is_action_just_pressed("ui_accept"):
 		isWindy = not isWindy
 

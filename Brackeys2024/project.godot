@@ -15,6 +15,10 @@ run/main_scene="res://testing/test_controllers.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+EnvironmentController="*res://environment/environment_controller.gd"
+
 [dotnet]
 
 project/assembly_name="Brackeys2024"
