@@ -7,39 +7,39 @@
 radius = 9.0
 height = 36.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rcarl"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_a11yo"]
 atlas = ExtResource("2_0oedj")
 region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i8ptc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_v107e"]
 atlas = ExtResource("2_0oedj")
 region = Rect2(128, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6ufwt"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xmji"]
 atlas = ExtResource("2_0oedj")
 region = Rect2(256, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m7kcx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3sa5"]
 atlas = ExtResource("2_0oedj")
 region = Rect2(384, 0, 128, 128)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_k1baq"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_mi2nw"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rcarl")
+"texture": SubResource("AtlasTexture_a11yo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i8ptc")
+"texture": SubResource("AtlasTexture_v107e")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6ufwt")
+"texture": SubResource("AtlasTexture_4xmji")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_m7kcx")
+"texture": SubResource("AtlasTexture_i3sa5")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 5.0
 }]
 
@@ -53,5 +53,8 @@ shape = SubResource("CapsuleShape2D_7dy5j")
 debug_color = Color(0, 0.6, 0.701961, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_k1baq")
-autoplay = "default"
+sprite_frames = SubResource("SpriteFrames_mi2nw")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Camera2D" type="Camera2D" parent="."]
