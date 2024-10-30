@@ -23,7 +23,7 @@ public static partial class BasicMagicAttack {
 			defence: 4,
 			timesUsableUntilReset: 20,
 			accuracy: 80,
-			attackTargetMeta: new AttackTargetMeta(2, 1, radius: 1),
+			attackTargetMeta: new AttackTargetMeta(3, 1, radius: 1),
 			attackAttribute: AttackAttribute.WATER,
 			effect: AttackEffect.FREEZE,
 			attackType: AttackType.MAGICAL

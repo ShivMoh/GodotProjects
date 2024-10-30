@@ -65,12 +65,15 @@ public partial class EnemySelectionUtility {
 
 			foreach (PlayableCharacter playableCharacter in characters) {
 				Vector2I playableTileLocation = tileMap.LocalToMap(playableCharacter.Position);
+
 				spots = this.findTargetSpotCandidates(enemyTileLocation, playableTileLocation, attack.attackTargetMeta.range);
 
 				if (spots.Count > 0) {
 					targetableCandidatesForAttack.Add(playableCharacter);
 				}
-
+				
+				// getting a duplicate key insert here --> the different moves can have the same range
+				// will need a unique key, otherwise, must ensure that the same moves cannot have the same range
 				targetSpotCandidates.Add(playableCharacter.Name + attack.attackTargetMeta.range.ToString(), spots);
 				
 			}          
